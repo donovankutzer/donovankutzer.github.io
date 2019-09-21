@@ -31,28 +31,29 @@ frontpage {
     height: 90vh;
 }
 
-image {
-    display: block;
-    margin-left: 300px;
-    margin-right: 100px;
+portrait {
+    display: flex;
+    margin-left: 5%;
+    margin-right: 45px;
 }
 
 container {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
 intro-paragraph {
-    flex: block;
+    max-height: 500px;
     font-size: 64px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 
-social-links {
-    flex: block;
+social-button {
+    margin-right: 50px;
 }
 
 projects {
