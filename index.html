@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="styles.css">
+<link href="styles.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
 <head>
@@ -13,15 +13,15 @@
     <navigation>
         <navigation-bar>
             <navigation-item>
-                Home
+                <a href="#Home">Home</a>
             </navigation-item>
             <navigation-item>
-                Projects
+                <a href="#Projects">Projects</a>
             </navigation-item>
         </navigation-bar>
         <!-- TO ADD MENU FOR MOBILE HERE, FOR NOW ONLY DESKTOP-->
     </navigation>
-    <frontpage>
+    <frontpage id="Home">
         <portrait>
             <img src="img/portrait-circle.png" alt="Portrait" width="450" height="450">
         </portrait>
@@ -46,7 +46,7 @@
         </container>
 
     </frontpage>
-    <projects>
+    <projects id="Projects">
         Images + small description about each project. Will link to seperate page
     </projects>
     <footer>
