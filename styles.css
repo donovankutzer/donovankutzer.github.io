@@ -8,9 +8,7 @@ body {
     font-size: 32px;
 }
 
-ul {
-    padding: 0;
-}
+
 
 button {
     background-color: #1049c3;
@@ -96,7 +94,9 @@ h3 {
 
 .courses {
     display: flex;
-    height: 100vh;
+    flex-direction: column;
+    height: 95vh;
+    padding-top: 5vh;
     margin-left: 20%;
     margin-right: 20%;
 }
