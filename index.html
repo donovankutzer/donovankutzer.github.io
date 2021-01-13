@@ -1,58 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="styles.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="styles.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+        rel="stylesheet"
+    />
 
-<head>
-    <title>Donovan Kutzer</title>
-</head>
+    <head>
+        <title>Donovan Kutzer</title>
+    </head>
 
-<body>
-    <navigation>
-        <navigation-bar>
-            <navigation-item>
-                <a href="#Home">Home</a>
-            </navigation-item>
-            <navigation-item>
-                <a href="#Projects">Projects</a>
-            </navigation-item>
-        </navigation-bar>
-        <!-- TO ADD MENU FOR MOBILE HERE, FOR NOW ONLY DESKTOP-->
-    </navigation>
-    <frontpage id="Home">
-        <portrait>
-            <img src="img/portrait-circle.png" alt="Portrait" width="450" height="450">
-        </portrait>
-        <container>
-            <intro-paragraph>
-                Hi! I'm Donovan Kutzer, a Computing Science Co-op Student located in the Fraser Valley
-            </intro-paragraph>
-            <social-links>
-                <social-button>
-                    <a href="https://github.com/donovankutzer" target="_blank ">
-                        <img src="img/github-icon.svg" alt="GitHub" width="60" height="60"></a>
-                </social-button>
-                <social-button>
-                    <a href="mailto: donovankutzer@gmail.com">
-                        <img src="img/mail-icon.png" alt="Email" width="60" height="60"></a>
-                </social-button>
-                <social-button>
-                    <a href="https://www.linkedin.com/in/donovan-kutzer/" target="_blank ">
-                        <img src="img/linkedin-icon.svg" alt="LinkedIn" width="60" height="60"></a>
-                </social-button>
-            </social-links>
-        </container>
-
-    </frontpage>
-    <projects id="Projects">
-        Images + small description about each project. Will link to seperate page
-    </projects>
-    <footer>
-        footer
-    </footer>
-
-</body>
-
+    <body>
+        <div class="navigation">
+            <div class="navigation-bar">
+                <div class="navigation-item">
+                    <a href="#Home">Home</a>
+                </div>
+                <div class="navigation-item">
+                    <a href="#Courses">Courses</a>
+                </div>
+                <div class="navigation-item">
+                    <a href="COMP351/COMP351.html">COMP 351</a>
+                </div>
+            </div>
+        </div>
+        <div class="frontpage" id="Home">
+            <div class="main-container">
+                <div class="portrait">
+                    <img
+                        src="img/portrait-circle.png"
+                        alt="Portrait"
+                        width="450"
+                        height="450"
+                    />
+                </div>
+                <div class="about-me">
+                    <div class="intro-paragraph">
+                        Hi! I'm Donovan Kutzer, a Computing Science Student
+                        located in the Fraser Valley
+                    </div>
+                    <div class="social-links">
+                        <div class="social-button">
+                            <a
+                                href="https://github.com/donovankutzer"
+                                target="_blank "
+                            >
+                                <img
+                                    src="img/github-icon.svg"
+                                    alt="GitHub"
+                                    width="60"
+                                    height="60"
+                            /></a>
+                        </div>
+                        <div class="social-button">
+                            <a href="mailto: donovankutzer@gmail.com">
+                                <img
+                                    src="img/mail-icon.png"
+                                    alt="Email"
+                                    width="60"
+                                    height="60"
+                            /></a>
+                        </div>
+                        <div class="social-button">
+                            <a
+                                href="https://www.linkedin.com/in/donovan-kutzer/"
+                                target="_blank "
+                            >
+                                <img
+                                    src="img/linkedin-icon.svg"
+                                    alt="LinkedIn"
+                                    width="60"
+                                    height="60"
+                            /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="down-arrow">
+                <a href="#Courses">
+                    <img
+                        src="img/down-arrow.png"
+                        alt="Down Arrow"
+                        width="60"
+                        ,
+                        height="60"
+                    />
+                </a>
+            </div>
+        </div>
+        <div class="courses" id="Courses">
+            Current Courses
+            <ul>
+                <li>
+                    <a href="COMP351/COMP351.html" target="_self">COMP 351</a>
+                </li>
+                <li>ASTR 101</li>
+                <li>COMP 361</li>
+                <li>COMP 390</li>
+                <li>COMP 430</li>
+            </ul>
+        </div>
+    </body>
 </html>
