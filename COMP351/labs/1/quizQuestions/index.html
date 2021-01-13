@@ -2,7 +2,8 @@
 <html lang="en">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../../../../styles.css" rel="stylesheet" />
+    <link href="../../../../css/styles.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
         rel="stylesheet"
@@ -17,9 +18,9 @@
         <div class="questions" id="Home">
             <h3>1. What is the value of area?</h3>
             <div class="question">
-                <span style="color: blue">let</span> height = 50; <br />
-                <span style="color: blue">let</span> width = 10; <br />
-                <span style="color: blue">let</span> area = (height ?? 100) *
+                <span class="blue-font">let</span> height = 50; <br />
+                <span class="blue-font">let</span> width = 10; <br />
+                <span class="blue-font">let</span> area = (height ?? 100) *
                 (width ?? 100) <br />
                 <input type="radio" id="500" name="q1" value="500" />
                 <label for="500">500</label><br />
@@ -32,9 +33,9 @@
             </div>
             <h3>2. What is the value of area now?</h3>
             <div class="question">
-                <span style="color: blue">let</span> height = null; <br />
-                <span style="color: blue">let</span> width = null; <br />
-                <span style="color: blue">let</span> area = (height ?? 100) *
+                <span class="blue-font">let</span> height = null; <br />
+                <span class="blue-font">let</span> width = null; <br />
+                <span class="blue-font">let</span> area = (height ?? 100) *
                 (width ?? 100) <br />
                 <input type="radio" id="500" name="q2" value="500" />
                 <label for="500">500</label><br />
@@ -47,9 +48,9 @@
             </div>
             <h3>3. What is the value of res?</h3>
             <div class="question">
-                <span style="color: blue">let</span> x = 7; <br />
-                <span style="color: blue">let</span> y = 3; <br />
-                <span style="color: blue">let</span> res = (x, y) => x * y
+                <span class="blue-font">let</span> x = 7; <br />
+                <span class="blue-font">let</span> y = 3; <br />
+                <span class="blue-font">let</span> res = (x, y) => x * y
                 <br />
                 <input type="radio" id="7" name="q3" value="7" />
                 <label for="7">7</label><br />
@@ -62,17 +63,16 @@
             </div>
             <h3>4. Are these two expressions the same?</h3>
             <div class="question">
-                <span style="color: blue">let</span> age = 21; <br />
-                <span style="color: blue">let</span> expression1 = age => (age <
+                <span class="blue-font">let</span> age = 21; <br />
+                <span class="blue-font">let</span> expression1 = age => (age <
                 21?) true : false <br />
-                <span style="color: blue">let</span> expression2 = age) => {
+                <span class="blue-font">let</span> expression2 = age) => {
                 <div class="indent">
-                    <span style="color: red">if</span> (age < 21) return true;
+                    <span class="red-font">if</span> (age < 21) return true;
                     <br />
-                    <span style="color: red">else</span> return false; <br />
+                    <span class="red-font">else</span> return false; <br />
                     }
                 </div>
-                <br />
                 <input type="radio" id="true" name="q4" value="true" />
                 <label for="true">True</label><br />
                 <input type="radio" id="false" name="q4" value="false" />
@@ -97,7 +97,7 @@
             </div>
             <h3>6. True or False: This is a valid expression</h3>
             <div class="question">
-                <span style="color: blue">let</span> sum = () => 5 * 5; <br />
+                <span class="blue-font">let</span> sum = () => 5 * 5; <br />
                 <input type="radio" id="true" name="q6" value="true" />
                 <label for="true">True</label><br />
                 <input type="radio" id="false" name="q6" value="false" />

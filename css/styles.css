@@ -8,8 +8,6 @@ body {
     font-size: 32px;
 }
 
-
-
 button {
     background-color: #1049c3;
     border: none;
@@ -99,20 +97,4 @@ h3 {
     padding-top: 5vh;
     margin-left: 20%;
     margin-right: 20%;
-}
-
-.questions {
-    font-size: 20px;
-}
-
-.question {
-    margin-left: 15px;
-}
-
-.answers {
-    font-size: 20px;
-}
-
-.indent {
-    margin-left: 15px;
 }

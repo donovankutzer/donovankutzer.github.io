@@ -1,0 +1,23 @@
+.questions {
+    font-size: 20px;
+}
+
+.question {
+    margin-left: 15px;
+}
+
+.answers {
+    font-size: 20px;
+}
+
+.indent {
+    margin-left: 15px;
+}
+
+.blue-font {
+    color: blue;
+}
+
+.red-font {
+    color: red;
+}
