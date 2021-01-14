@@ -21,28 +21,28 @@
                 <span class="blue-font">let</span> height = 50; <br />
                 <span class="blue-font">let</span> width = 10; <br />
                 <span class="blue-font">let</span> area = (height ?? 100) *
-                (width ?? 100) <br />
+                (width ?? 100); <br />
                 <input type="radio" id="500" name="q1" value="500" />
                 <label for="500">500</label><br />
-                <input type="radio" id="1000" name="q1" value="1000" />
-                <label for="1000">1000</label><br />
                 <input type="radio" id="5000" name="q1" value="5000" />
                 <label for="5000">5000</label><br />
+                <input type="radio" id="10000" name="q1" value="10000" />
+                <label for="10000">10000</label><br />
                 <input type="radio" id="null" name="q1" value="null" />
                 <label for="null">null</label><br />
             </div>
             <h3>2. What is the value of area now?</h3>
             <div class="question">
                 <span class="blue-font">let</span> height = null; <br />
-                <span class="blue-font">let</span> width = null; <br />
+                <span class="blue-font">let</span> width = 20; <br />
                 <span class="blue-font">let</span> area = (height ?? 100) *
-                (width ?? 100) <br />
-                <input type="radio" id="500" name="q2" value="500" />
-                <label for="500">500</label><br />
-                <input type="radio" id="1000" name="q2" value="1000" />
-                <label for="1000">1000</label><br />
-                <input type="radio" id="5000" name="q2" value="5000" />
-                <label for="5000">5000</label><br />
+                (width ?? 100); <br />
+                <input type="radio" id="20" name="q2" value="20" />
+                <label for="20">20</label><br />
+                <input type="radio" id="2000" name="q2" value="2000" />
+                <label for="2000">2000</label><br />
+                <input type="radio" id="10000" name="q2" value="10000" />
+                <label for="10000">10000</label><br />
                 <input type="radio" id="null" name="q2" value="null" />
                 <label for="null">null</label><br />
             </div>
@@ -65,7 +65,7 @@
             <div class="question">
                 <span class="blue-font">let</span> age = 21; <br />
                 <span class="blue-font">let</span> expression1 = age => (age <
-                21?) true : false <br />
+                21?) true : false; <br />
                 <span class="blue-font">let</span> expression2 = age) => {
                 <div class="indent">
                     <span class="red-font">if</span> (age < 21) return true;
@@ -108,7 +108,7 @@
         <div class="answers">
             <ol>
                 <li>500</li>
-                <li>1000</li>
+                <li>2000</li>
                 <li>21</li>
                 <li>True</li>
                 <li>a is either null or undefined</li>
