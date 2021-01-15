@@ -1,122 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../../../../css/styles.css" rel="stylesheet" />
-    <link href="css/styles.css" rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
-        rel="stylesheet"
-    />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="../../../../css/styles.css" rel="stylesheet" />
+<link href="css/styles.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
 
-    <head>
-        <title>Lab 1</title>
-    </head>
+<head>
+    <title>Lab 1</title>
+</head>
 
-    <body>
-        <h2>Lab 1: JavaScript Multiple Choice Questions</h2>
-        <div class="questions" id="Home">
-            <h3>1. What is the value of area?</h3>
-            <div class="question">
-                <span class="blue-font">let</span> height = 50; <br />
-                <span class="blue-font">let</span> width = 10; <br />
-                <span class="blue-font">let</span> area = (height ?? 100) *
-                (width ?? 100); <br />
-                <input type="radio" id="500" name="q1" value="500" />
-                <label for="500">500</label><br />
-                <input type="radio" id="5000" name="q1" value="5000" />
-                <label for="5000">5000</label><br />
-                <input type="radio" id="10000" name="q1" value="10000" />
-                <label for="10000">10000</label><br />
-                <input type="radio" id="null" name="q1" value="null" />
-                <label for="null">null</label><br />
-            </div>
-            <h3>2. What is the value of area now?</h3>
-            <div class="question">
-                <span class="blue-font">let</span> height = null; <br />
-                <span class="blue-font">let</span> width = 20; <br />
-                <span class="blue-font">let</span> area = (height ?? 100) *
-                (width ?? 100); <br />
-                <input type="radio" id="20" name="q2" value="20" />
-                <label for="20">20</label><br />
-                <input type="radio" id="2000" name="q2" value="2000" />
-                <label for="2000">2000</label><br />
-                <input type="radio" id="10000" name="q2" value="10000" />
-                <label for="10000">10000</label><br />
-                <input type="radio" id="null" name="q2" value="null" />
-                <label for="null">null</label><br />
-            </div>
-            <h3>3. What is the value of res?</h3>
-            <div class="question">
-                <span class="blue-font">let</span> x = 7; <br />
-                <span class="blue-font">let</span> y = 3; <br />
-                <span class="blue-font">let</span> res = (x, y) => x * y
-                <br />
-                <input type="radio" id="7" name="q3" value="7" />
-                <label for="7">7</label><br />
-                <input type="radio" id="3" name="q3" value="3" />
-                <label for="3">3</label><br />
-                <input type="radio" id="21" name="q3" value="21" />
-                <label for="21">21</label><br />
-                <input type="radio" id="null" name="q3" value="null" />
-                <label for="null">null</label><br />
-            </div>
-            <h3>4. Are these two expressions the same?</h3>
-            <div class="question">
-                <span class="blue-font">let</span> age = 21; <br />
-                <span class="blue-font">let</span> expression1 = age => (age <
-                21?) true : false; <br />
-                <span class="blue-font">let</span> expression2 = age) => {
-                <div class="indent">
-                    <span class="red-font">if</span> (age < 21) return true;
-                    <br />
-                    <span class="red-font">else</span> return false; <br />
-                    }
+<body>
+    <h2>Lab 1: JavaScript Multiple Choice Questions</h2>
+    <div class="questions" id="Home">
+        <ol>
+            <li>
+                <p>What is the value of area?</p>
+                <div class="question">
+                    <span class="blue-font">let</span> height = 50; <br />
+                    <span class="blue-font">let</span> width = 10; <br />
+                    <span class="blue-font">let</span> area = (height ??
+                    100) * (width ?? 100); <br />
+                    <input type="radio" id="500" name="q1" value="500" />
+                    <label for="500">500</label><br />
+                    <input type="radio" id="5000" name="q1" value="5000" />
+                    <label for="5000">5000</label><br />
+                    <input type="radio" id="10000" name="q1" value="10000" />
+                    <label for="10000">10000</label><br />
+                    <input type="radio" id="null" name="q1" value="null" />
+                    <label for="null">null</label><br />
                 </div>
-                <input type="radio" id="true" name="q4" value="true" />
-                <label for="true">True</label><br />
-                <input type="radio" id="false" name="q4" value="false" />
-                <label for="false">False</label><br />
-            </div>
-            <h3>5. What would cause a ?? b to return b?</h3>
-            <div class="question">
-                <input type="radio" id="null" name="q5" value="null" />
-                <label for="null">a is null</label><br />
-                <input
-                    type="radio"
-                    id="undefined"
-                    name="q5"
-                    value="undefined"
-                />
-                <label for="undefined">a is undefined</label><br />
-                <input type="radio" id="neither" name="q5" value="neither" />
-                <label for="neither">a is neither null or undefined</label
-                ><br />
-                <input type="radio" id="either" name="q5" value="either" />
-                <label for="either">a is either null or undefined</label><br />
-            </div>
-            <h3>6. True or False: This is a valid expression</h3>
-            <div class="question">
-                <span class="blue-font">let</span> sum = () => 5 * 5; <br />
-                <input type="radio" id="true" name="q6" value="true" />
-                <label for="true">True</label><br />
-                <input type="radio" id="false" name="q6" value="false" />
-                <label for="false">False</label><br />
-            </div>
-        </div>
-        <h3>Answers</h3>
-        <div class="answers">
-            <ol>
-                <li>500</li>
-                <li>2000</li>
-                <li>21</li>
-                <li>True</li>
-                <li>a is either null or undefined</li>
-                <li>True</li>
-            </ol>
-        </div>
-        <button onclick="window.location.href='../../../../index.html'">
-            Return to home
-        </button>
-    </body>
+            </li>
+            <li>
+                <p>What is the value of area now?</p>
+                <div class="question">
+                    <span class="blue-font">let</span> height = null; <br />
+                    <span class="blue-font">let</span> width = 20; <br />
+                    <span class="blue-font">let</span> area = (height ??
+                    100) * (width ?? 100); <br />
+                    <input type="radio" id="20" name="q2" value="20" />
+                    <label for="20">20</label><br />
+                    <input type="radio" id="2000" name="q2" value="2000" />
+                    <label for="2000">2000</label><br />
+                    <input type="radio" id="10000" name="q2" value="10000" />
+                    <label for="10000">10000</label><br />
+                    <input type="radio" id="null" name="q2" value="null" />
+                    <label for="null">null</label><br />
+                </div>
+            </li>
+            <li>
+                <p>What is the value of res?</p>
+                <div class="question">
+                    <span class="blue-font">let</span> x = 7; <br />
+                    <span class="blue-font">let</span> y = 3; <br />
+                    <span class="blue-font">let</span> res = (x, y) => x * y
+                    <br />
+                    <input type="radio" id="7" name="q3" value="7" />
+                    <label for="7">7</label><br />
+                    <input type="radio" id="3" name="q3" value="3" />
+                    <label for="3">3</label><br />
+                    <input type="radio" id="21" name="q3" value="21" />
+                    <label for="21">21</label><br />
+                    <input type="radio" id="null" name="q3" value="null" />
+                    <label for="null">null</label><br />
+                </div>
+            </li>
+            <li>
+                <p>True or False: These two expressions the same</p>
+                <div class="question">
+                    <span class="blue-font">let</span> age = 21; <br />
+                    <span class="blue-font">let</span> expression1 = age =>
+                    (age
+                    < 21?) true : false; <br />
+                    <span class="blue-font">let</span> expression2 = age) =>
+                    {
+                    <div class="indent">
+                        <span class="red-font">if</span> (age
+                        < 21) return true; <br />
+                        <span class="red-font">else</span> return false;
+                        <br />
+                        }
+                    </div>
+                    <input type="radio" id="true" name="q4" value="true" />
+                    <label for="true">True</label><br />
+                    <input type="radio" id="false" name="q4" value="false" />
+                    <label for="false">False</label><br />
+                </div>
+            </li>
+            <li>
+                <p>What would cause a ?? b to return b?</p>
+                <div class="question">
+                    <input type="radio" id="null" name="q5" value="null" />
+                    <label for="null">a is null</label><br />
+                    <input type="radio" id="undefined" name="q5" value="undefined" />
+                    <label for="undefined">a is undefined</label><br />
+                    <input type="radio" id="neither" name="q5" value="neither" />
+                    <label for="neither">a is neither null or undefined</label><br />
+                    <input type="radio" id="either" name="q5" value="either" />
+                    <label for="either">a is either null or undefined</label><br />
+                </div>
+            </li>
+            <li>
+                <p>True or False: This is a valid expression</p>
+                <div class="question">
+                    <span class="blue-font">let</span> sum = () => 5 * 5;
+                    <br />
+                    <input type="radio" id="true" name="q6" value="true" />
+                    <label for="true">True</label><br />
+                    <input type="radio" id="false" name="q6" value="false" />
+                    <label for="false">False</label><br />
+                </div>
+            </li>
+        </ol>
+    </div>
+    <h3>Answers</h3>
+    <div class="answers">
+        <ol>
+            <li>500</li>
+            <li>2000</li>
+            <li>21</li>
+            <li>True</li>
+            <li>a is either null or undefined</li>
+            <li>True</li>
+        </ol>
+    </div>
+    <button onclick="window.location.href='../../../../index.html'">
+        Return to home
+    </button>
+</body>
+
 </html>
