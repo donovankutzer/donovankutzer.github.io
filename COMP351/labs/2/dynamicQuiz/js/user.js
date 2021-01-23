@@ -23,7 +23,9 @@ class Student {
 
     displayQuestions() {
         let questions = this.storage.getQuestions();
-        questions.forEach((question) => this.displayQuestion(question));
+        if (questions.length == 0) {
+            this.displayEmptyQuiz();
+        } else questions.forEach((question) => this.displayQuestion(question));
     }
 
     displayQuestion(question) {
@@ -110,7 +112,8 @@ class Student {
         for (let i = 0; i < radios.length; i++) {
             if (radios[i].checked) {
                 submitted.push(i % 4);
-                if ((i % 4) == (questions[Math.floor(i/4)].answerIndex)) correct++;
+                if (i % 4 == questions[Math.floor(i / 4)].answerIndex)
+                    correct++;
             }
         }
 
@@ -143,5 +146,20 @@ class Student {
                 Final Grade: ${mark} / ${total}
             </div>
         `;
+    }
+
+    displayEmptyQuiz() {
+        let questionsDiv = document.getElementById('questions');
+        let div = document.createElement('div');
+        div.classList = ['container py-2'];
+        div.id = 'empty-quiz';
+
+        div.innerHTML = `
+            <div class="col text-center">
+                <h1> Error: No quiz stored in HTML5 LocalStorage</h1>
+            </div>
+        `;
+        
+        questionsDiv.appendChild(div);
     }
 }

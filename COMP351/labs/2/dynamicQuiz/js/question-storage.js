@@ -72,7 +72,7 @@ export class QuestionStorage {
     }
 
     setLocalStorage(questions) {
-        localStorage.setItem(QuestionStorage.KEY, JSON.stringify(questions));
+        localStorage.setItem(QuestionStorage.QUESTIONS_KEY, JSON.stringify(questions));
     }
 
     getNextID() {
