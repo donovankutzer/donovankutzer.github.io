@@ -1,5 +1,4 @@
 import { QuestionStorage } from './question-storage.js';
-import { Question } from './question.js';
 
 window.addEventListener('DOMContentLoaded', () => {
     const app = new Student();
@@ -131,7 +130,10 @@ class Student {
             if (submitted[i] == questions[i].answerIndex) {
                 answersText[4 * i + submitted[i]].classList.add('bg-success');
             } else {
-                answersText[4 * i + submitted[i]].classList.add('bg-danger');
+                if (i < submitted.length)
+                    answersText[4 * i + submitted[i]].classList.add(
+                        'bg-danger'
+                    );
                 answersText[4 * i + questions[i].answerIndex].classList.add(
                     'bg-success'
                 );
@@ -159,7 +161,7 @@ class Student {
                 <h1> Error: No quiz stored in HTML5 LocalStorage</h1>
             </div>
         `;
-        
+
         questionsDiv.appendChild(div);
     }
 }
