@@ -1,968 +1,961 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DataVec — Web Workers hosting. Native Speed. Flat Rate.</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<style>
-:root{
-  --bg:#04070d;--bg2:#080d16;--surface:#0c1422;--surface2:#101a2e;
-  --border:#172035;--border2:#1e2f4a;
-  --accent:#00b8e6;--accent2:#00e090;--accent3:#ff5533;
-  --brand:#1E2B8F;--brand2:#2a3db5;--brand-light:#4a5fd4;
-  --warn:#f0aa20;
-  --text:#d8eaf8;--text2:#6a8fae;--text3:#334d66;
-  --mono:'IBM Plex Mono',monospace;--body:'IBM Plex Sans',sans-serif;
-  --r:6px;--rl:12px;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.65;overflow-x:hidden;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DataVec — Web Workers Hosting. Native C Speed. Flat Rate.</title>
 
-/* GRID BG */
-body::before{content:'';position:fixed;inset:0;
-  background-image:linear-gradient(rgba(30,43,143,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(30,43,143,0.05) 1px,transparent 1px);
-  background-size:64px 64px;pointer-events:none;z-index:0;}
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="DataVec compiles your Web Workers JavaScript to native C and serves it at native speed on a flat rate. No request meters, no bandwidth overages, just fast, secure, and predictable hosting." />
+  <meta name="keywords"
+    content="web workers, serverless flat rate, cloudflare workers alternative, deno deploy, edge hosting, js to c compiler, hono hosting, hono, elysia" />
 
-/* ORBS */
-.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0;}
-.orb-1{width:800px;height:800px;background:rgba(30,43,143,0.18);top:-350px;right:-250px;}
-.orb-2{width:500px;height:500px;background:rgba(0,184,230,0.07);bottom:5%;left:-200px;}
-.orb-3{width:400px;height:400px;background:rgba(0,224,144,0.05);top:60%;right:-100px;}
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://datavec.io/" />
+  <meta property="og:title" content="DataVec — Web Workers Hosting. Native C Speed. Flat Rate." />
+  <meta property="og:description"
+    content="Deploy Hono, Elysia, and itty-router apps natively compiled to C on a flat monthly bill. Zero cold starts, 300K+ requests/sec." />
 
-/* LAYOUT */
-.z{position:relative;z-index:1;}
-.wrap{max-width:1140px;margin:0 auto;padding:0 40px;}
-section{position:relative;z-index:1;}
+  <!-- Fonts & Script Dependencies -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;padding:0 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(4,7,13,0.88);backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--border);}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.logo-mark{width:30px;height:30px;background:var(--brand);border-radius:7px;
-  display:flex;align-items:center;justify-content:center;}
-.logo-mark svg{width:16px;height:16px;fill:none;stroke:var(--accent);stroke-width:1.8;}
-.logo-text{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.3px;}
-.logo-text em{color:var(--accent);font-style:normal;}
-.nav-links{display:flex;gap:32px;list-style:none;}
-.nav-links a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;transition:color .15s;}
-.nav-links a:hover{color:var(--text);}
-.nav-right{display:flex;align-items:center;gap:12px;}
-.btn-nav{background:var(--brand);color:#fff;font-size:13px;font-weight:600;
-  padding:8px 20px;border-radius:var(--r);text-decoration:none;transition:background .15s;}
-.btn-nav:hover{background:var(--brand2);}
-
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;padding:128px 0 80px;}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;
-  background:rgba(0,184,230,0.08);border:1px solid rgba(0,184,230,0.18);
-  border-radius:20px;padding:5px 14px;margin-bottom:24px;
-  font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;}
-.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);display:inline-block;}
-.hero h1{font-size:54px;font-weight:700;line-height:1.08;letter-spacing:-2px;color:var(--text);margin-bottom:24px;}
-.hero h1 .c1{color:var(--accent);}
-.hero h1 .c2{color:var(--accent2);}
-.hero-sub{font-size:18px;color:var(--text2);line-height:1.75;font-weight:300;margin-bottom:12px;}
-.hero-sub strong{color:var(--text);font-weight:500;}
-.migrate-note{display:inline-flex;align-items:center;gap:8px;
-  background:rgba(0,224,144,0.07);border:1px solid rgba(0,224,144,0.18);
-  border-radius:var(--r);padding:10px 16px;margin-bottom:32px;
-  font-size:13px;color:var(--accent2);line-height:1.5;}
-.migrate-note svg{width:14px;height:14px;fill:none;stroke:var(--accent2);stroke-width:2;flex-shrink:0;}
-.hero-cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
-.btn-primary{background:var(--brand);color:#fff;font-size:14px;font-weight:600;
-  padding:13px 28px;border-radius:var(--r);text-decoration:none;border:none;cursor:pointer;
-  transition:background .15s;}
-.btn-primary:hover{background:var(--brand2);}
-.btn-ghost{background:transparent;color:var(--text);font-size:14px;font-weight:500;
-  padding:13px 24px;border-radius:var(--r);text-decoration:none;
-  border:1px solid var(--border2);transition:border-color .15s,color .15s;cursor:pointer;}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
-.hero-fine{font-size:12px;color:var(--text3);margin-top:14px;}
-
-/* TERMINAL */
-.terminal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);overflow:hidden;
-  box-shadow:0 32px 80px rgba(0,0,0,0.5);}
-.term-bar{background:var(--surface2);padding:12px 16px;display:flex;align-items:center;gap:7px;
-  border-bottom:1px solid var(--border);}
-.td{width:10px;height:10px;border-radius:50%;}
-.td-r{background:#ff5f57;}.td-y{background:#febc2e;}.td-g{background:#28c840;}
-.term-title{font-size:11px;color:var(--text3);margin-left:auto;font-family:var(--mono);}
-.term-body{padding:24px 28px;font-family:var(--mono);font-size:13px;line-height:2;}
-.t-dim{color:var(--text3);}
-.t-blue{color:var(--accent);}
-.t-green{color:var(--accent2);}
-.t-warn{color:var(--warn);}
-.t-w{color:var(--text);}
-.term-cursor{display:inline-block;width:8px;height:14px;background:var(--accent);
-  vertical-align:middle;animation:blink 1.1s step-end infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-
-/* COMPAT STRIP */
-.compat{padding:28px 0;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.compat-inner{display:flex;align-items:center;gap:0;justify-content:center;}
-.compat-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.1em;
-  text-transform:uppercase;padding-right:32px;border-right:1px solid var(--border);margin-right:32px;white-space:nowrap;}
-.compat-items{display:flex;align-items:center;gap:28px;flex-wrap:wrap;}
-.compat-item{font-size:13px;font-weight:500;color:var(--text2);display:flex;align-items:center;gap:7px;}
-.compat-item::before{content:'✓';color:var(--accent2);font-weight:700;}
-.compat-item strong{color:var(--text);}
-
-/* STATS */
-.stats{padding:60px 0;}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);
-  border-radius:var(--rl);overflow:hidden;}
-.stat{background:var(--surface);padding:28px 24px;text-align:center;}
-.stat-val{font-size:38px;font-weight:700;font-family:var(--mono);color:var(--accent);
-  letter-spacing:-2px;margin-bottom:6px;}
-.stat-val.g{color:var(--accent2);}
-.stat-label{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;}
-
-/* THE PITCH — three panel comparison */
-.pitch{padding:100px 0;background:var(--bg2);}
-.pitch-header{text-align:center;max-width:600px;margin:0 auto 64px;}
-.sec-eye{font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;}
-h2{font-size:38px;font-weight:700;letter-spacing:-1px;line-height:1.15;color:var(--text);}
-h2 em{color:var(--accent);font-style:normal;}
-h2 em2{color:var(--accent2);font-style:normal;}
-.sec-sub{font-size:16px;color:var(--text2);line-height:1.7;margin-top:14px;}
-.pitch-panels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);
-  border-radius:var(--rl);overflow:hidden;}
-.panel{background:var(--surface);padding:32px 28px;}
-.panel.highlight{background:var(--surface2);border:1px solid rgba(0,224,144,0.18);position:relative;}
-.panel.highlight::before{content:'DataVec';position:absolute;top:-1px;left:50%;transform:translateX(-50%);
-  background:var(--accent2);color:#04070d;font-size:10px;font-weight:700;letter-spacing:0.1em;
-  padding:3px 12px;border-radius:0 0 6px 6px;}
-.panel-name{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:20px;margin-top:8px;}
-.panel.highlight .panel-name{color:var(--accent2);}
-.pitch-row{display:flex;justify-content:space-between;align-items:flex-start;
-  padding:10px 0;border-bottom:1px solid var(--border);gap:12px;}
-.pitch-row:last-child{border-bottom:none;}
-.pitch-key{font-size:12px;color:var(--text3);}
-.pitch-val{font-size:13px;font-weight:500;color:var(--text);text-align:right;line-height:1.4;}
-.pitch-val.bad{color:var(--accent3);}
-.pitch-val.good{color:var(--accent2);}
-
-/* HOW IT WORKS */
-.how{padding:100px 0;}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);
-  border-radius:var(--rl);overflow:hidden;margin-top:56px;}
-.step{background:var(--surface);padding:32px 24px;}
-.step-n{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--brand-light);
-  letter-spacing:0.12em;margin-bottom:14px;}
-.step-icon{width:40px;height:40px;background:rgba(30,43,143,0.2);border-radius:8px;
-  display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
-.step-icon svg{width:20px;height:20px;fill:none;stroke:var(--accent);stroke-width:1.7;}
-.step h3{font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;}
-.step p{font-size:13px;color:var(--text2);line-height:1.65;}
-
-/* WHAT RUNS */
-.runs{padding:100px 0;background:var(--bg2);}
-.runs-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:56px;}
-.runs-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:32px;
-  position:relative;overflow:hidden;}
-.runs-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.runs-card.yes::before{background:linear-gradient(90deg,var(--accent2),transparent);}
-.runs-card.no::before{background:linear-gradient(90deg,var(--accent3),transparent);}
-.runs-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;}
-.runs-label.yes{color:var(--accent2);}
-.runs-label.no{color:var(--accent3);}
-.run-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;}
-.run-row:last-child{border-bottom:none;}
-.run-icon{flex-shrink:0;font-size:15px;width:18px;}
-.run-text{color:var(--text2);line-height:1.5;}
-.run-text strong{color:var(--text);}
-.run-text small{font-size:11px;color:var(--text3);display:block;margin-top:2px;}
-
-/* FRAMEWORKS */
-.frameworks{padding:64px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.fw-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;
-  margin-bottom:20px;text-align:center;}
-.fw-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
-.fw-tag{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);
-  padding:8px 16px;font-size:13px;font-weight:500;color:var(--text2);font-family:var(--mono);
-  transition:border-color .15s,color .15s;}
-.fw-tag:hover{border-color:var(--accent);color:var(--accent);}
-.fw-tag.featured{border-color:rgba(0,184,230,0.3);color:var(--accent);background:rgba(0,184,230,0.06);}
-
-/* TECH */
-.tech{padding:100px 0;}
-.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:64px;}
-.tech-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);
-  padding:36px;position:relative;overflow:hidden;}
-.tech-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.tech-card.b::before{background:linear-gradient(90deg,var(--accent),transparent);}
-.tech-card.g::before{background:linear-gradient(90deg,var(--accent2),transparent);}
-.tech-tag{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.1em;margin-bottom:20px;}
-.tech-tag.b{color:var(--accent);}
-.tech-tag.g{color:var(--accent2);}
-.tech-card h3{font-size:22px;font-weight:700;color:var(--text);margin-bottom:14px;letter-spacing:-0.3px;}
-.tech-card p{font-size:14px;color:var(--text2);line-height:1.75;}
-.tech-metrics{display:flex;gap:0;margin-top:28px;padding-top:24px;border-top:1px solid var(--border);}
-.tm{flex:1;padding-right:16px;}
-.tm:last-child{padding-right:0;}
-.tm-val{font-family:var(--mono);font-size:22px;font-weight:600;}
-.tm-val.b{color:var(--accent);}
-.tm-val.g{color:var(--accent2);}
-.tm-label{font-size:11px;color:var(--text3);margin-top:3px;}
-
-/* PRICING */
-.pricing{padding:100px 0;background:var(--bg2);}
-.pricing-header{text-align:center;max-width:560px;margin:0 auto 56px;}
-.founder-band{background:rgba(240,170,32,0.06);border:1px solid rgba(240,170,32,0.18);
-  border-radius:var(--rl);padding:18px 28px;display:flex;align-items:center;gap:14px;margin-bottom:36px;}
-.founder-band h4{font-size:13px;font-weight:600;color:var(--warn);}
-.founder-band p{font-size:12px;color:var(--text2);margin-top:2px;}
-.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);
-  border-radius:var(--rl);overflow:hidden;margin-bottom:16px;}
-.price-card{background:var(--surface);padding:36px 32px;}
-.price-card.feat{background:var(--surface2);}
-.price-eye{font-size:10px;font-weight:600;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
-.price-card h3{font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px;}
-.price-desc{font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.6;}
-.price-num{font-family:var(--mono);font-size:40px;font-weight:600;color:var(--text);letter-spacing:-2px;}
-.price-num span{font-size:16px;font-weight:400;color:var(--text2);letter-spacing:0;}
-.price-period{font-size:12px;color:var(--text3);margin-bottom:28px;margin-top:2px;}
-.price-features{list-style:none;margin-bottom:32px;}
-.price-features li{display:flex;gap:10px;padding:8px 0;font-size:13px;color:var(--text2);
-  border-bottom:1px solid var(--border);}
-.price-features li:last-child{border-bottom:none;}
-.price-features li::before{content:'✓';color:var(--accent2);font-weight:700;flex-shrink:0;}
-.btn-outline{display:block;text-align:center;background:transparent;color:var(--text);
-  font-size:13px;font-weight:600;padding:12px;border-radius:var(--r);text-decoration:none;
-  border:1px solid var(--border2);transition:border-color .15s;}
-.btn-outline:hover{border-color:var(--accent);}
-.btn-filled{display:block;text-align:center;background:var(--brand);color:#fff;
-  font-size:13px;font-weight:600;padding:12px;border-radius:var(--r);text-decoration:none;
-  transition:background .15s;}
-.btn-filled:hover{background:var(--brand2);}
-.enterprise-band{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);
-  padding:32px 40px;display:flex;justify-content:space-between;align-items:center;gap:24px;}
-.eb-left h3{font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
-.eb-left p{font-size:14px;color:var(--text2);line-height:1.6;}
-
-/* CALC */
-.calc{padding:100px 0;}
-.calc-header{text-align:center;max-width:600px;margin:0 auto 56px;}
-.calc-wrap{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);overflow:hidden;}
-.calc-controls{padding:32px 40px;border-bottom:1px solid var(--border);
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
-.cf label{display:block;font-size:11px;font-weight:600;color:var(--text2);
-  letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
-.cf select{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);
-  color:var(--text);font-family:var(--body);font-size:13px;padding:9px 12px;
-  appearance:none;cursor:pointer;outline:none;transition:border-color .15s;}
-.cf select:focus{border-color:var(--accent);}
-.calc-results{padding:32px 40px;}
-.provider-rows{margin-bottom:24px;}
-.p-row{display:flex;justify-content:space-between;align-items:center;
-  padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;}
-.p-row:last-child{border-bottom:none;}
-.p-left{display:flex;align-items:center;gap:8px;color:var(--text2);}
-.p-right{font-family:var(--mono);font-weight:600;color:var(--text);font-size:13px;}
-.badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;}
-.b-cheapest{background:rgba(240,170,32,0.12);color:var(--warn);}
-.b-save{background:rgba(0,224,144,0.1);color:var(--accent2);}
-.b-dv{background:rgba(0,184,230,0.1);color:var(--accent);}
-.result-hero{background:linear-gradient(135deg,rgba(30,43,143,0.2),rgba(0,184,230,0.06));
-  border:1px solid rgba(0,184,230,0.2);border-radius:var(--rl);padding:24px 32px;
-  display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.rh-left .rl{font-size:10px;font-weight:600;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
-.rh-left .rv{font-size:34px;font-weight:700;font-family:var(--mono);color:var(--text);letter-spacing:-1px;}
-.rh-right{text-align:right;}
-.rh-right .rl{font-size:10px;font-weight:600;color:var(--accent2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
-.rh-right .rv{font-size:20px;font-weight:600;font-family:var(--mono);color:var(--accent2);}
-.chart-wrap{height:200px;position:relative;}
-.calc-note{font-size:12px;color:var(--text3);margin-top:16px;line-height:1.65;}
-.calc-fine{font-size:12px;color:var(--text3);margin-top:10px;text-align:center;}
-.calc-fine a{color:var(--accent);text-decoration:none;}
-
-/* TABLE */
-.compare{padding:100px 0;background:var(--bg2);}
-.ctable{width:100%;border-collapse:collapse;font-size:14px;margin-top:56px;}
-.ctable th{padding:12px 20px;text-align:left;font-size:10px;font-weight:600;color:var(--text3);
-  letter-spacing:0.08em;text-transform:uppercase;border-bottom:1px solid var(--border);}
-.ctable th.dv{color:var(--accent);background:rgba(0,184,230,0.04);}
-.ctable td{padding:13px 20px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle;}
-.ctable td.dv{background:rgba(0,184,230,0.04);color:var(--text);font-weight:500;}
-.ctable tr:last-child td{border-bottom:none;}
-.ctable tr:hover td{background:rgba(255,255,255,0.02);}
-.ctable tr:hover td.dv{background:rgba(0,184,230,0.07);}
-.ck{color:var(--accent2);font-size:16px;font-weight:700;}
-.cx{color:var(--text3);font-size:14px;}
-
-/* FAQ */
-.faq{padding:100px 0;}
-.faq-list{max-width:760px;margin:56px auto 0;}
-.faq-item{border-bottom:1px solid var(--border);}
-.faq-q{width:100%;background:none;border:none;color:var(--text);font-family:var(--body);
-  font-size:15px;font-weight:500;text-align:left;padding:22px 0;cursor:pointer;
-  display:flex;justify-content:space-between;align-items:center;gap:16px;}
-.faq-arrow{color:var(--text3);font-size:20px;flex-shrink:0;transition:transform .2s;}
-.faq-item.open .faq-arrow{transform:rotate(45deg);color:var(--accent);}
-.faq-a{font-size:14px;color:var(--text2);line-height:1.75;padding-bottom:20px;display:none;}
-.faq-item.open .faq-a{display:block;}
-.faq-code{font-family:var(--mono);background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--r);padding:16px 20px;font-size:12px;color:var(--accent2);
-  margin-top:10px;line-height:1.9;}
-
-/* CTA */
-.cta-final{padding:120px 0;text-align:center;}
-.cta-final h2{font-size:48px;font-weight:700;letter-spacing:-1.5px;margin-bottom:20px;}
-.cta-final p{font-size:18px;color:var(--text2);margin-bottom:40px;}
-.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
-
-/* FOOTER */
-footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 0 32px;}
-.foot-inner{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:36px;}
-.foot-brand p{font-size:13px;color:var(--text3);margin-top:12px;line-height:1.7;max-width:260px;}
-.foot-col h4{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.1em;
-  text-transform:uppercase;margin-bottom:14px;}
-.foot-col a{display:block;font-size:13px;color:var(--text3);text-decoration:none;
-  margin-bottom:8px;transition:color .15s;}
-.foot-col a:hover{color:var(--text);}
-.foot-bottom{border-top:1px solid var(--border);padding-top:24px;
-  display:flex;justify-content:space-between;align-items:center;}
-.foot-bottom p{font-size:12px;color:var(--text3);}
-</style>
+  <!-- Refactored Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+  <!-- Atmospheric Orbs -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#">
-    <div class="logo-mark">
-      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.5"/><line x1="8" y1="1" x2="8" y2="5"/><line x1="8" y1="11" x2="8" y2="15"/><line x1="1" y1="8" x2="5" y2="8"/><line x1="11" y1="8" x2="15" y2="8"/><line x1="3.2" y1="3.2" x2="5.8" y2="5.8"/><line x1="10.2" y1="10.2" x2="12.8" y2="12.8"/><line x1="12.8" y1="3.2" x2="10.2" y2="5.8"/><line x1="5.8" y1="10.2" x2="3.2" y2="12.8"/></svg>
-    </div>
-    <span class="logo-text">Data<em>Vec</em></span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#runs">What runs</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#calc">Calculator</a></li>
-    <li><a href="#faq">FAQ</a></li>
-  </ul>
-  <div class="nav-right">
-    <a href="mailto:hello@datavec.com" class="btn-nav">Get started</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero z">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <div class="eyebrow"><span class="eyebrow-dot"></span>Web Workers · MNVKD · JSMX</div>
-        <h1>Write JS<br><span class="c1">We run it in C</span><br><span class="c2">One flat bill</span></h1>
-        <p class="hero-sub">DataVec compiles your Web Workers JavaScript to native C and serves it on a fixed monthly rate. The same code you deploy to Cloudflare Workers or Deno runs here, faster, for less.</p>
-        <div class="migrate-note">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          Hono, itty-router, Elysia. Deploy without changing a line.
+  <!-- HEADER & NAVIGATION -->
+  <header class="z">
+    <nav aria-label="Main Navigation">
+      <a class="nav-logo" href="#">
+        <div class="logo-mark">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="2.5" />
+            <line x1="8" y1="1" x2="8" y2="5" />
+            <line x1="8" y1="11" x2="8" y2="15" />
+            <line x1="1" y1="8" x2="5" y2="8" />
+            <line x1="11" y1="8" x2="15" y2="8" />
+            <line x1="3.2" y1="3.2" x2="5.8" y2="5.8" />
+            <line x1="10.2" y1="10.2" x2="12.8" y2="12.8" />
+            <line x1="12.8" y1="3.2" x2="10.2" y2="5.8" />
+            <line x1="5.8" y1="10.2" x2="3.2" y2="12.8" />
+          </svg>
         </div>
-        <div class="hero-cta">
-          <a href="#pricing" class="btn-primary">Start for $19/month</a>
-          <a href="#calc" class="btn-ghost">See what you'd pay</a>
-        </div>
-        <p class="hero-fine">No request meters, bandwidth overages, no surprises. · hello@datavec.com</p>
+        <span class="logo-text">Data<em>Vec</em></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#runs">What runs</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#calc">Calculator</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="mailto:hello@datavec.com" class="btn-nav">Get started</a>
       </div>
-      <div>
-        <div class="terminal">
-          <div class="term-bar">
-            <div class="td td-r"></div><div class="td td-y"></div><div class="td td-g"></div>
-            <span class="term-title">datavec deploy</span>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero z">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Web Workers · MNVKD · JSMX
+            </div>
+            <h1>Run standard Web Workers at <span class="c1">native C speed</span> on <span class="c2"> flat-rate
+                plans</span></h1>
+            <p class="hero-sub">DataVec compiles standard JavaScript code directly into highly optimized native C
+              binaries, allowing you to run your Web Worker applications without any interpreter
+              overhead. Since our runtime doesn't require a virtual machine for execution, we pass the massive
+              infrastructure savings directly to you through fixed-price plans with zero request metering.</p>
+            <div class="migrate-note">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Compatible with Hono, itty-router, Elysia, and other standard edge routing libraries out of the box.
+            </div>
+            <div class="btn-group">
+              <a href="#pricing" class="btn-primary">Start for $19/month</a>
+              <a href="#calc" class="btn-ghost">See what you'd pay</a>
+            </div>
+            <p class="hero-fine">We don't charge for individual requests or set up hidden bandwidth thresholds, so you
+              never have to worry about surprise overage bills. Get in touch at hello@datavec.com.</p>
           </div>
-          <div class="term-body">
-            <div><span class="t-dim">// Your existing Hono app</span></div>
-            <div><span class="t-blue">import</span> <span class="t-w">{ Hono } </span><span class="t-blue">from</span> <span class="t-w">'hono'</span></div>
-            <div><span class="t-blue">const</span> <span class="t-w">app = </span><span class="t-blue">new</span> <span class="t-w">Hono()</span></div>
-            <div><span class="t-w">app.get('/', (c) => c.text('fast.'))</span></div>
-            <div><span class="t-blue">export default</span> <span class="t-w">app</span></div>
-            <div>&nbsp;</div>
-            <div><span class="t-dim">$ </span><span class="t-w">datavec deploy</span></div>
-            <div><span class="t-dim">→ </span><span class="t-blue">JSMX compiling JS → C...</span></div>
-            <div><span class="t-dim">→ </span><span class="t-blue">MNVKD runtime: 104 KB</span></div>
-            <div><span class="t-dim">→ </span><span class="t-blue">TLS provisioned</span></div>
-            <div><span class="t-green">✓ Live: https://yourapp.datavec.io</span></div>
-            <div>&nbsp;</div>
-            <div><span class="t-dim"># Cold start: </span><span class="t-green">0ms</span><span class="t-dim">  Deploy: </span><span class="t-green">3.8s</span></div>
-            <div><span class="t-dim"># This month's bill: </span><span class="t-green">$149.00</span><span class="t-dim"> <span class="term-cursor"></span></span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPAT STRIP -->
-<div class="compat z">
-  <div class="wrap">
-    <div class="compat-inner">
-      <div class="compat-label">Runs your existing code from</div>
-      <div class="compat-items">
-        <span class="compat-item"><strong>Cloudflare Workers</strong></span>
-        <span class="compat-item"><strong>Deno Deploy</strong></span>
-        <span class="compat-item"><strong>Vercel Edge</strong></span>
-        <span class="compat-item"><strong>Fastly Compute</strong></span>
-        <span class="compat-item"><strong>Netlify Edge</strong></span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- STATS -->
-<section class="stats z">
-  <div class="wrap">
-    <div class="stats-grid">
-      <div class="stat"><div class="stat-val">0ms</div><div class="stat-label">Cold start time</div></div>
-      <div class="stat"><div class="stat-val">300K+</div><div class="stat-label">Requests/sec per instance</div></div>
-      <div class="stat"><div class="stat-val">104KB</div><div class="stat-label">MNVKD runtime size</div></div>
-      <div class="stat"><div class="stat-val g">Flat</div><div class="stat-label">Rate</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- THE PITCH -->
-<section class="pitch z">
-  <div class="wrap">
-    <div class="pitch-header">
-      <div class="sec-eye">What makes Datavec different?</div>
-      <h2>Same code, <em2>different bill.</em2></h2>
-      <p class="sec-sub">Every other Web Workers platform charges by the request, the CPU millisecond, or the gigabyte. DataVec offers the ability to choose your number at the start of the month.</p>
-    </div>
-    <div class="pitch-panels">
-      <div class="panel">
-        <div class="panel-name">Cloudflare Workers</div>
-        <div class="pitch-row"><span class="pitch-key">Billing model</span><span class="pitch-val bad">Per request + CPU-ms</span></div>
-        <div class="pitch-row"><span class="pitch-key">Base cost</span><span class="pitch-val">$5/mo</span></div>
-        <div class="pitch-row"><span class="pitch-key">Extra requests</span><span class="pitch-val bad">$0.30/M after 10M</span></div>
-        <div class="pitch-row"><span class="pitch-key">CPU overage</span><span class="pitch-val bad">$0.02/M CPU-ms after 30M</span></div>
-        <div class="pitch-row"><span class="pitch-key">Bandwidth</span><span class="pitch-val good">Free</span></div>
-        <div class="pitch-row"><span class="pitch-key">Cold starts</span><span class="pitch-val bad">~5ms</span></div>
-        <div class="pitch-row"><span class="pitch-key">500M req/mo bill</span><span class="pitch-val bad">~$3,200+/mo</span></div>
-      </div>
-      <div class="panel highlight">
-        <div class="panel-name">DataVec</div>
-        <div class="pitch-row"><span class="pitch-key">Billing model</span><span class="pitch-val good">Flat rate</span></div>
-        <div class="pitch-row"><span class="pitch-key">Base cost</span><span class="pitch-val good">From $19/mo</span></div>
-        <div class="pitch-row"><span class="pitch-key">Extra requests</span><span class="pitch-val good">None. Flat.</span></div>
-        <div class="pitch-row"><span class="pitch-key">CPU overage</span><span class="pitch-val good">None. Flat.</span></div>
-        <div class="pitch-row"><span class="pitch-key">Bandwidth</span><span class="pitch-val good">Included flat</span></div>
-        <div class="pitch-row"><span class="pitch-key">Cold starts</span><span class="pitch-val good">0ms</span></div>
-        <div class="pitch-row"><span class="pitch-key">500M req/mo bill</span><span class="pitch-val good">Use the calculator</span></div>
-      </div>
-      <div class="panel">
-        <div class="panel-name">Vercel Edge Functions</div>
-        <div class="pitch-row"><span class="pitch-key">Billing model</span><span class="pitch-val bad">Per CPU-hr + seats</span></div>
-        <div class="pitch-row"><span class="pitch-key">Base cost</span><span class="pitch-val">$20/user/mo</span></div>
-        <div class="pitch-row"><span class="pitch-key">CPU cost</span><span class="pitch-val bad">$0.128/CPU-hr</span></div>
-        <div class="pitch-row"><span class="pitch-key">Memory</span><span class="pitch-val bad">$0.0106/GB-hr</span></div>
-        <div class="pitch-row"><span class="pitch-key">Bandwidth</span><span class="pitch-val bad">$0.15/GB over 1TB</span></div>
-        <div class="pitch-row"><span class="pitch-key">Cold starts</span><span class="pitch-val bad">50–200ms</span></div>
-        <div class="pitch-row"><span class="pitch-key">AI streaming bill</span><span class="pitch-val bad">Quotas gone in days</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how z" id="how">
-  <div class="wrap">
-    <div style="text-align:center;max-width:580px;margin:0 auto;">
-      <div class="sec-eye">How it works</div>
-      <h2>Write JS but ship a binary.</h2>
-      <p class="sec-sub">No new framework. No config. If it runs on Cloudflare Workers today, it runs on DataVec today.</p>
-    </div>
-      <div class="steps">
-      <div class="step">
-        <div class="step-n">01</div>
-        <div class="step-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-        <h3>Write Web Workers JS</h3>
-        <p>Use fetch, Request, Response. The standard APIs you already know. Hono, itty-router, Elysia all work. Nothing to unlearn.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">02</div>
-        <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-        <h3>JSMX compiles it to C</h3>
-        <p>Before your code ships, JSMX translates it to a native binary. No interpreter. No JIT. No GC pauses. Just machine code running on the CPU.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">03</div>
-        <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <h3>MNVKD serves it</h3>
-        <p>A 104 KB runtime handles routing, TLS, HTTP/1.1, HTTP/2, and execution. Cold starts are 0ms because there's nothing to spin up.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">04</div>
-        <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
-        <h3>One number on your invoice</h3>
-        <p>Traffic up? Bill stays flat. Big month? Bill stays flat. Your invoice is the same number every month, regardless of what ships.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT RUNS -->
-<section class="runs z" id="runs">
-  <div class="wrap">
-    <div style="text-align:center;max-width:580px;margin:0 auto;">
-      <div class="sec-eye">Compatibility</div>
-      <h2>What works <em>right now</em></h2>
-      <p class="sec-sub">Here's exactly what you can deploy today and what's still in progress. We don't pad the list.</p>
-    </div>
-    <div class="runs-grid">
-      <div class="runs-card yes">
-        <div class="runs-label yes">✓ Works today</div>
-        <div class="run-row"><span class="run-icon">✓</span><span class="run-text"><strong>REST APIs and HTTP endpoints</strong><small>Hono, itty-router, Elysia. Same code, no changes from Cloudflare Workers.</small></span></div>
-        <div class="run-row"><span class="run-icon">✓</span><span class="run-text"><strong>HTTP/1.1 and HTTP/2</strong><small>Full protocol support including server push</small></span></div>
-        <div class="run-row"><span class="run-icon">✓</span><span class="run-text"><strong>Streaming responses</strong><small>SSE, chunked transfer, AI output streaming, LLM proxies</small></span></div>
-        <div class="run-row"><span class="run-icon">✓</span><span class="run-text"><strong>Background jobs and actors</strong><small>Concurrent workloads via micro-thread model, scheduled tasks</small></span></div>
-        <div class="run-row"><span class="run-icon">✓</span><span class="run-text"><strong>Web Workers APIs</strong><small>fetch, Request, Response, URL, Blob, TextEncoder, setTimeout</small></span></div>
-        <div class="run-row"><span class="run-icon">✓</span><span class="run-text"><strong>Auth endpoints</strong><small>JWT validation, OAuth callbacks, session handling at high volume</small></span></div>
-        <div class="run-row"><span class="run-icon">✓</span><span class="run-text"><strong>SQLite</strong><small>Embedded database via server-client driver. Good for read-heavy apps and config stores.</small></span></div>
-        <div class="run-row"><span class="run-icon">✓</span><span class="run-text"><strong>Automatic HTTPS</strong><small>Point your domain. TLS provisions on deploy.</small></span></div>
-      </div>
-      <div class="runs-card no">
-        <div class="runs-label no">Not yet. In progress.</div>
-        <div class="run-row"><span class="run-icon">◷</span><span class="run-text"><strong>WebSockets</strong><small>The architecture supports it. Implementation coming.</small></span></div>
-        <div class="run-row"><span class="run-icon">◷</span><span class="run-text"><strong>Postgres and MySQL drivers</strong><small>SQLite is live. Postgres is next.</small></span></div>
-        <div class="run-row"><span class="run-icon">◷</span><span class="run-text"><strong>SSR frameworks</strong><small>Next.js, Nuxt, SvelteKit API routes work. Full SSR needs Node internals we're adding.</small></span></div>
-        <div class="run-row"><span class="run-icon">✗</span><span class="run-text"><strong>Node.js-specific APIs</strong><small>fs, net, child_process, native addons. DataVec is Web Workers, not a Node replacement.</small></span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FRAMEWORKS -->
-<section class="frameworks z">
-  <div class="wrap">
-    <div class="fw-label">Web Workers-compatible frameworks that deploy to DataVec today</div>
-    <div class="fw-row">
-      <span class="fw-tag featured">Hono</span>
-      <span class="fw-tag featured">itty-router</span>
-      <span class="fw-tag featured">Elysia</span>
-      <span class="fw-tag">Remix (API routes)</span>
-      <span class="fw-tag">tRPC</span>
-      <span class="fw-tag">Zod</span>
-      <span class="fw-tag">jose (JWT)</span>
-      <span class="fw-tag">Fauna</span>
-      <span class="fw-tag">Upstash</span>
-      <span class="fw-tag">OpenAI SDK</span>
-      <span class="fw-tag">Anthropic SDK</span>
-      <span class="fw-tag">Stripe SDK</span>
-    </div>
-  </div>
-</section>
-
-<!-- TECH -->
-<section class="tech z">
-  <div class="wrap">
-    <div style="text-align:center;max-width:540px;margin:0 auto;">
-      <div class="sec-eye">The technology</div>
-      <h2>Why the bill is lower<br>and the speed is faster</h2>
-      <p class="sec-sub">Two things Ben built that no one else has.</p>
-    </div>
-    <div class="tech-grid">
-      <div class="tech-card b">
-        <div class="tech-tag b">JSMX: JavaScript-to-C Compiler</div>
-        <h3>JS in. Native binary out.</h3>
-        <p>JSMX compiles your JavaScript to C before it ever touches a server. What runs on DataVec is a native binary, not a script inside a runtime. No interpreter overhead, no garbage collector running in the background, no JIT warming up on the first request. Cold start is 0ms because there's nothing to start.</p>
-        <div class="tech-metrics">
-          <div class="tm"><div class="tm-val b">~100x</div><div class="tm-label">faster than interpreted JS</div></div>
-          <div class="tm"><div class="tm-val b">0ms</div><div class="tm-label">cold start</div></div>
-          <div class="tm"><div class="tm-val b">Native</div><div class="tm-label">CPU execution</div></div>
-        </div>
-      </div>
-      <div class="tech-card g">
-        <div class="tech-tag g">MNVKD: Micro-Native Runtime</div>
-        <h3>104 KB. Does everything.</h3>
-        <p>MNVKD is the runtime that runs your compiled code. At 104 KB it handles routing, TLS, HTTP/1.1, HTTP/2, memory, and scheduling in a single binary. AWS Lambda stitches together a dozen services to do the same job. That difference is why our infrastructure costs a fraction of theirs, and why flat-rate billing is something we can actually offer.</p>
-        <div class="tech-metrics">
-          <div class="tm"><div class="tm-val g">104KB</div><div class="tm-label">total runtime</div></div>
-          <div class="tm"><div class="tm-val g">300K+</div><div class="tm-label">req/sec per instance</div></div>
-          <div class="tm"><div class="tm-val g">1 binary</div><div class="tm-label">vs a dozen AWS services</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing z" id="pricing">
-  <div class="wrap">
-    <div class="pricing-header">
-      <div class="sec-eye">Pricing</div>
-      <h2>Pick a number.<br><em>That's your bill.</em></h2>
-      <p class="sec-sub">No request meters. No bandwidth overages. No CPU timers. What you see here is what you pay every month.</p>
-    </div>
-    <div class="founder-band">
-      <span style="font-size:20px;">🔒</span>
-      <div>
-        <h4>Founding Member Pricing. First 50 customers lock this rate forever.</h4>
-        <p>Your price never increases as long as you stay subscribed.</p>
-      </div>
-    </div>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-eye">Starter</div>
-        <h3>Pro</h3>
-        <p class="price-desc">One project. Real traffic. No usage anxiety.</p>
-        <div class="price-num">$19<span>/mo</span></div>
-        <div class="price-period">Founding rate, normally $29/mo</div>
-        <ul class="price-features">
-          <li>1 project</li>
-          <li>Custom domain + automatic HTTPS</li>
-          <li>Up to 50M requests/month</li>
-          <li>Up to 1 TB bandwidth</li>
-          <li>HTTP/1.1 + HTTP/2</li>
-          <li>Developer dashboard</li>
-          <li>Email support</li>
-        </ul>
-        <a href="mailto:hello@datavec.com?subject=DataVec Pro plan" class="btn-outline">Get started</a>
-      </div>
-      <div class="price-card feat">
-        <div class="price-eye">Most popular</div>
-        <h3>Business</h3>
-        <p class="price-desc">Multiple projects, real uptime requirements, a team that ships.</p>
-        <div class="price-num">$149<span>/mo</span></div>
-        <div class="price-period">Founding rate, normally $199/mo</div>
-        <ul class="price-features">
-          <li>Up to 5 projects</li>
-          <li>Unlimited custom domains</li>
-          <li>Up to 500M requests/month</li>
-          <li>Up to 10 TB bandwidth</li>
-          <li>Priority support + SLA</li>
-          <li>Advanced analytics</li>
-          <li>Team access controls</li>
-          <li>99.9% uptime SLA</li>
-        </ul>
-        <a href="mailto:hello@datavec.com?subject=DataVec Business plan" class="btn-filled">Get started</a>
-      </div>
-    </div>
-    <div class="enterprise-band">
-      <div class="eb-left">
-        <h3>Enterprise. Custom Flat Rate.</h3>
-        <p>Over 500M requests/month? We work out a flat rate based on your workload, significantly less than what you're paying today. Use the calculator below to get a number, then talk to us.</p>
-      </div>
-      <a href="mailto:hello@datavec.com?subject=DataVec Enterprise" class="btn-primary">Talk to us</a>
-    </div>
-  </div>
-</section>
-
-<!-- CALCULATOR -->
-<section class="calc z" id="calc">
-  <div class="wrap">
-    <div class="calc-header">
-      <div class="sec-eye">Enterprise pricing calculator</div>
-      <h2>Over 500M requests<br><em>a month?</em></h2>
-      <p class="sec-sub">Pick your current provider, describe your workload, and see what DataVec would charge. No bill needed. Under 500M requests? The Business plan at $149/mo has you covered.</p>
-    </div>
-    <div class="calc-wrap">
-      <div class="calc-controls" style="grid-template-columns:1fr 1fr 1fr 1fr;">
-        <div class="cf">
-          <label>Compare against</label>
-          <select id="provider">
-            <option value="cloudflare" selected>Cloudflare Workers</option>
-            <option value="vercel">Vercel Edge Functions</option>
-            <option value="aws">AWS Lambda</option>
-            <option value="azure">Azure Functions</option>
-            <option value="gcp">Google Cloud Run</option>
-          </select>
-        </div>
-        <div class="cf">
-          <label>Monthly requests</label>
-          <select id="req">
-            <option value="750" selected>500M – 1 billion</option>
-            <option value="2500">1B – 5 billion</option>
-            <option value="7500">5B+</option>
-          </select>
-        </div>
-        <div class="cf">
-          <label>Compute intensity</label>
-          <select id="compute">
-            <option value="light">Light: auth, DB reads, simple APIs</option>
-            <option value="medium" selected>Medium: REST APIs, transforms</option>
-            <option value="heavy">Heavy: AI inference, image and video</option>
-          </select>
-        </div>
-        <div class="cf">
-          <label>Monthly bandwidth</label>
-          <select id="bw">
-            <option value="15000" selected>10 – 25 TB</option>
-            <option value="37500">25 – 50 TB</option>
-            <option value="75000">50 TB+</option>
-          </select>
-        </div>
-      </div>
-      <div class="calc-results">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-          <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:24px;">
-            <div style="font-size:10px;font-weight:600;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;" id="compLabel">Cloudflare Workers est. bill</div>
-            <div style="font-size:32px;font-weight:700;font-family:var(--mono);color:var(--text);letter-spacing:-1px;" id="compBill">—</div>
-            <div style="font-size:12px;color:var(--text3);margin-top:4px;">per month</div>
-          </div>
-          <div style="background:linear-gradient(135deg,rgba(30,43,143,0.2),rgba(0,184,230,0.06));border:1px solid rgba(0,184,230,0.2);border-radius:var(--r);padding:24px;">
-            <div style="font-size:10px;font-weight:600;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">DataVec flat rate</div>
-            <div style="font-size:32px;font-weight:700;font-family:var(--mono);color:var(--text);letter-spacing:-1px;" id="flatRate">—</div>
-            <div style="font-size:12px;color:var(--accent2);margin-top:4px;" id="savingsLine">—</div>
+          <div>
+            <div class="terminal" aria-label="Terminal showing a deploy command">
+              <div class="term-bar">
+                <div class="td td-r"></div>
+                <div class="td td-y"></div>
+                <div class="td td-g"></div>
+                <span class="term-title">datavec deploy</span>
+              </div>
+              <div class="term-body">
+                <div><span class="t-dim">// Your existing Hono app</span></div>
+                <div><span class="t-blue">import</span> <span class="t-w">{ Hono } </span><span
+                    class="t-blue">from</span> <span class="t-w">'hono'</span></div>
+                <div><span class="t-blue">const</span> <span class="t-w">app = </span><span class="t-blue">new</span>
+                  <span class="t-w">Hono()</span>
+                </div>
+                <div><span class="t-w">app.get('/', (c) => c.text('Hello, world!'))</span></div>
+                <div><span class="t-blue">export default</span> <span class="t-w">app</span></div>
+                <div>&nbsp;</div>
+                <div><span class="t-dim">$ </span><span class="t-w">datavec deploy</span></div>
+                <div><span class="t-dim">→ </span><span class="t-blue">JSMX compiling JS → C...</span></div>
+                <div><span class="t-dim">→ </span><span class="t-blue">MNVKD runtime: 104 KB</span></div>
+                <div><span class="t-dim">→ </span><span class="t-blue">TLS provisioned</span></div>
+                <div><span class="t-green">✓ Live: https://yourapp.datavec.io</span></div>
+                <div>&nbsp;</div>
+                <div><span class="t-dim"># Cold start: </span><span class="t-green">0ms</span><span class="t-dim">
+                    Deploy: </span><span class="t-green">3.8s</span></div>
+                <div><span class="t-dim"># This month's bill: </span><span class="t-green">$149.00</span><span
+                    class="t-dim"> <span class="term-cursor" aria-hidden="true"></span></span></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="chart-wrap"><canvas id="chart"></canvas></div>
-        <p class="calc-note">Estimates use verified May 2026 published pricing. AWS includes API Gateway and CloudWatch charges. Cloudflare has no egress fees. DataVec flat rate minimum $2,500/mo.</p>
-        <div style="display:flex;gap:12px;margin-top:20px;">
-          <a href="mailto:hello@datavec.com?subject=DataVec Enterprise pricing inquiry" class="btn-primary">Get a precise quote</a>
-          <a href="#pricing" class="btn-ghost">View standard plans</a>
-        </div>
-        <p class="calc-fine">Running under 500M requests/month? The <a href="#pricing">Business plan at $149/mo</a> covers you with zero metering.</p>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- COMPARISON TABLE -->
-<section class="compare z">
-  <div class="wrap">
-    <div class="sec-eye">Feature comparison</div>
-    <h2>DataVec vs <em>the rest</em></h2>
-    <table class="ctable">
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th class="dv">DataVec</th>
-          <th>Cloudflare Workers</th>
-          <th>Vercel Edge</th>
-          <th>Deno Deploy</th>
-          <th>AWS Lambda</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Web Workers compatible</td><td class="dv"><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="cx">Partial</span></td></tr>
-        <tr><td>Cold start time</td><td class="dv">0ms</td><td>~5ms</td><td>50–200ms</td><td>~0ms</td><td>100–500ms</td></tr>
-        <tr><td>Billing model</td><td class="dv">Flat rate</td><td>Per req + CPU-ms</td><td>Per CPU-hr + seat</td><td>Per req + egress</td><td>Per req + GB-sec</td></tr>
-        <tr><td>Bandwidth charges</td><td class="dv"><span class="ck">✓</span> Included</td><td><span class="ck">✓</span> Free</td><td><span class="cx">✗</span> $0.15/GB</td><td><span class="cx">✗</span> Metered</td><td><span class="cx">✗</span> $0.09/GB</td></tr>
-        <tr><td>Surprise bills possible</td><td class="dv"><span class="ck">✓</span> Impossible</td><td><span class="cx">✗</span> Common</td><td><span class="cx">✗</span> Common</td><td><span class="cx">✗</span> Possible</td><td><span class="cx">✗</span> Very common</td></tr>
-        <tr><td>JS execution</td><td class="dv">Compiled to C</td><td>V8 isolates</td><td>V8 isolates</td><td>V8 isolates</td><td>Node.js runtime</td></tr>
-        <tr><td>HTTP/2 support</td><td class="dv"><span class="ck">✓</span> Native</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="cx">Via ALB only</span></td></tr>
-        <tr><td>Automatic HTTPS</td><td class="dv"><span class="ck">✓</span> Auto</td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="cx">✗</span> Manual</td></tr>
-        <tr><td>Runtime footprint</td><td class="dv">104 KB</td><td>~5 MB</td><td>~20 MB</td><td>~40 MB</td><td>~50 MB</td></tr>
-        <tr><td>Predictable monthly bill</td><td class="dv"><span class="ck">✓</span> Always</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq z" id="faq">
-  <div class="wrap">
-    <div style="text-align:center;max-width:540px;margin:0 auto;">
-      <div class="sec-eye">FAQ</div>
-      <h2>Things people<br>actually ask</h2>
-    </div>
-    <div class="faq-list" id="faqList">
-      <div class="faq-item">
-        <button class="faq-q">Does my Cloudflare Workers code run here without changes? <span class="faq-arrow">+</span></button>
-        <div class="faq-a">
-          Yes, if you're using Web Workers APIs: fetch, Request, Response, URL. Frameworks like Hono, itty-router, and Elysia are designed to be runtime-agnostic, so they work here directly. A typical migration looks like this:
-          <div class="faq-code">
-            # Before<br>
-            wrangler deploy<br><br>
-            # After<br>
-            datavec deploy<br><br>
-            # Code: unchanged.
+    <!-- COMPATIBILITY STRIP -->
+    <div class="compat z">
+      <div class="wrap">
+        <div class="compat-inner">
+          <div class="compat-label">Runs your existing code from</div>
+          <div class="compat-items">
+            <span class="compat-item"><strong>Cloudflare Workers</strong></span>
+            <span class="compat-item"><strong>Deno Deploy</strong></span>
+            <span class="compat-item"><strong>Vercel Edge</strong></span>
+            <span class="compat-item"><strong>Fastly Compute</strong></span>
+            <span class="compat-item"><strong>Netlify Edge</strong></span>
           </div>
-          If your code uses Node.js-specific APIs (fs, net, child_process) or WebSockets, those aren't supported yet. We say so upfront on the compatibility page.
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">What is the Web Workers standard? <span class="faq-arrow">+</span></button>
-        <div class="faq-a">Web Workers is an Ecma International standard (TC55) that defines a shared JavaScript API surface across environments: browser, server, and edge. It covers fetch, Request, Response, URL, TextEncoder, Streams, and more. Cloudflare Workers, Deno Deploy, Vercel Edge, and Fastly Compute all implement it. So does DataVec. If your code targets these APIs, it runs here without modification.</div>
+    </div>
+
+    <!-- STATS SECTION -->
+    <section class="stats z">
+      <div class="wrap">
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-val">0ms</div>
+            <div class="stat-label">Cold start time</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">300K+</div>
+            <div class="stat-label">Requests/sec per instance</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">104KB</div>
+            <div class="stat-label">MNVKD runtime size</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val g">Flat</div>
+            <div class="stat-label">Rate</div>
+          </div>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">What exactly does the flat rate include? <span class="faq-arrow">+</span></button>
-        <div class="faq-a">Compute, bandwidth, TLS, routing, HTTP/1.1 and HTTP/2, automatic HTTPS, and the developer dashboard. No request counters, no CPU timers, no bandwidth caps, no seat fees. The number on your invoice is what you pay every month, regardless of traffic.</div>
+    </section>
+
+    <!-- THE PITCH -->
+    <section class="pitch z">
+      <div class="wrap">
+        <div class="section-header-center">
+          <span class="sec-eye">What makes Datavec different?</span>
+          <h2>Enjoy standard runtime compatibility with <em2>predictable flat pricing.</em2>
+          </h2>
+          <p class="sec-sub">Unlike other modern serverless providers that dynamic-charge you for every million
+            requests, CPU millisecond, or gigabyte of transit, DataVec lets you lock in a static, predictable monthly
+            hosting cost based entirely on your high-level project size.</p>
+        </div>
+        <div class="pitch-panels">
+          <div class="panel highlight">
+            <div class="panel-name">DataVec</div>
+            <div class="pitch-row"><span class="pitch-key">Billing model</span><span class="pitch-val good">Flat
+                rate</span></div>
+            <div class="pitch-row"><span class="pitch-key">Base cost</span><span class="pitch-val good">From
+                $19/mo</span></div>
+            <div class="pitch-row"><span class="pitch-key">Extra requests</span><span class="pitch-val good">None.
+                Flat.</span></div>
+            <div class="pitch-row"><span class="pitch-key">CPU overage</span><span class="pitch-val good">None.
+                Flat.</span></div>
+            <div class="pitch-row"><span class="pitch-key">Bandwidth</span><span class="pitch-val good">Included
+                flat</span></div>
+            <div class="pitch-row"><span class="pitch-key">Cold starts</span><span class="pitch-val good">0ms</span>
+            </div>
+            <div class="pitch-row"><span class="pitch-key">500M req/mo bill</span><span class="pitch-val good">Use the
+                calculator</span></div>
+          </div>
+          <div class="panel">
+            <div class="panel-name">Cloudflare Workers</div>
+            <div class="pitch-row"><span class="pitch-key">Billing model</span><span class="pitch-val bad">Per request +
+                CPU-ms</span></div>
+            <div class="pitch-row"><span class="pitch-key">Base cost</span><span class="pitch-val">$5/mo</span></div>
+            <div class="pitch-row"><span class="pitch-key">Extra requests</span><span class="pitch-val bad">$0.30/M
+                after 10M</span></div>
+            <div class="pitch-row"><span class="pitch-key">CPU overage</span><span class="pitch-val bad">$0.02/M CPU-ms
+                after 30M</span></div>
+            <div class="pitch-row"><span class="pitch-key">Bandwidth</span><span class="pitch-val good">Free</span>
+            </div>
+            <div class="pitch-row"><span class="pitch-key">Cold starts</span><span class="pitch-val bad">~5ms</span>
+            </div>
+            <div class="pitch-row"><span class="pitch-key">500M req/mo bill</span><span
+                class="pitch-val bad">~$3,200+/mo</span></div>
+          </div>
+          <div class="panel">
+            <div class="panel-name">Vercel Edge Functions</div>
+            <div class="pitch-row"><span class="pitch-key">Billing model</span><span class="pitch-val bad">Per CPU-hr +
+                seats</span></div>
+            <div class="pitch-row"><span class="pitch-key">Base cost</span><span class="pitch-val">$20/user/mo</span>
+            </div>
+            <div class="pitch-row"><span class="pitch-key">CPU cost</span><span
+                class="pitch-val bad">$0.128/CPU-hr</span></div>
+            <div class="pitch-row"><span class="pitch-key">Memory</span><span class="pitch-val bad">$0.0106/GB-hr</span>
+            </div>
+            <div class="pitch-row"><span class="pitch-key">Bandwidth</span><span class="pitch-val bad">$0.15/GB over
+                1TB</span></div>
+            <div class="pitch-row"><span class="pitch-key">Cold starts</span><span class="pitch-val bad">50–200ms</span>
+            </div>
+            <div class="pitch-row"><span class="pitch-key">AI streaming bill</span><span class="pitch-val bad">Quotas
+                gone in days</span></div>
+          </div>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">How are cold starts actually 0ms? <span class="faq-arrow">+</span></button>
-        <div class="faq-a">JSMX compiles your JavaScript to a native C binary before deployment. When a request arrives, there's no interpreter to start, no V8 to initialize, no JIT to warm up. MNVKD loads the binary and runs it. The cold start problem exists on other platforms because they're starting a runtime on first request. We're not.</div>
+    </section>
+
+    <!-- HOW IT WORKS (STEPS) -->
+    <section class="how z" id="how">
+      <div class="wrap">
+        <div class="section-header-center">
+          <span class="sec-eye">How it works</span>
+          <h2>Deploy with standard JavaScript APIs while serving high-speed native binaries</h2>
+          <p class="sec-sub">You do not have to learn a proprietary framework or write complex configuration files,
+            because any application targeting standard Web Workers specifications will execute seamlessly on our
+            compiled infrastructure.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-n">01</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+              </svg>
+            </div>
+            <h3>Write standard Web Workers code</h3>
+            <p>Build your endpoints using standard APIs such as fetch, Request, and Response. Popular routing libraries
+              like Hono, Elysia, and itty-router are fully supported out of the box without any special configuration.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-n">02</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 3l14 9-14 9V3z" />
+              </svg>
+            </div>
+            <h3>Compile natively with JSMX</h3>
+            <p>Our JSMX compilation toolchain translates your JavaScript directly into native C code during deployment,
+              eliminating virtual machine overhead, JIT compiler lag, and garbage collection pauses.</p>
+          </div>
+          <div class="step">
+            <div class="step-n">03</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <h3>Serve requests using MNVKD</h3>
+            <p>Requests are handled by our ultra-compact 104 KB native execution layer which manages routing, TLS
+              handshakes, HTTP protocols, and database bindings with zero cold start delays.</p>
+          </div>
+          <div class="step">
+            <div class="step-n">04</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="1" y="4" width="22" height="16" rx="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
+            </div>
+            <h3>Rely on flat-rate billing</h3>
+            <p>Enjoy stable monthly operating expenses because your invoice remains the same even during massive traffic
+              spikes, giving you absolute predictability for your production budgets.</p>
+          </div>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">What if I go over the limits on Pro or Business? <span class="faq-arrow">+</span></button>
-        <div class="faq-a">We reach out and have a conversation. We don't throttle you automatically or charge overage. If your usage consistently exceeds the plan, we'll move you to the right tier or set up a custom flat rate. No surprise charges.</div>
+    </section>
+
+    <!-- COMPATIBILITY (WHAT RUNS) -->
+    <section class="runs z" id="runs">
+      <div class="wrap">
+        <div class="section-header-center">
+          <span class="sec-eye">Compatibility</span>
+          <h2>Current API compatibility and feature support</h2>
+          <p class="sec-sub">Review our production-ready integrations alongside the features we are actively building,
+            represented with complete technical honesty.</p>
+        </div>
+        <div class="runs-grid">
+          <div class="runs-card yes">
+            <div class="runs-label yes">✓ Works today</div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✓</span>
+              <span class="run-text">
+                <strong>REST APIs and HTTP endpoints</strong>
+                <small>Hono, itty-router, Elysia. Same code, no changes from Cloudflare Workers.</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✓</span>
+              <span class="run-text">
+                <strong>HTTP/1.1 and HTTP/2</strong>
+                <small>Full protocol support including server push</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✓</span>
+              <span class="run-text">
+                <strong>Streaming responses</strong>
+                <small>SSE, chunked transfer, AI output streaming, LLM proxies</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✓</span>
+              <span class="run-text">
+                <strong>Background jobs and actors</strong>
+                <small>Concurrent workloads via micro-thread model, scheduled tasks</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✓</span>
+              <span class="run-text">
+                <strong>Web Workers APIs</strong>
+                <small>fetch, Request, Response, URL, Blob, TextEncoder, setTimeout</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✓</span>
+              <span class="run-text">
+                <strong>Auth endpoints</strong>
+                <small>JWT validation, OAuth callbacks, session handling at high volume</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✓</span>
+              <span class="run-text">
+                <strong>SQLite</strong>
+                <small>Embedded database via server-client driver. Good for read-heavy apps and config stores.</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✓</span>
+              <span class="run-text">
+                <strong>Automatic HTTPS</strong>
+                <small>Point your domain. TLS provisions on deploy.</small>
+              </span>
+            </div>
+          </div>
+          <div class="runs-card no">
+            <div class="runs-label no">Not yet. In progress.</div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">◷</span>
+              <span class="run-text">
+                <strong>WebSockets</strong>
+                <small>The architecture supports it. Implementation coming.</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">◷</span>
+              <span class="run-text">
+                <strong>Postgres and MySQL drivers</strong>
+                <small>SQLite is live. Postgres is next.</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">◷</span>
+              <span class="run-text">
+                <strong>SSR frameworks</strong>
+                <small>Next.js, Nuxt, SvelteKit API routes work. Full SSR needs Node internals we're adding.</small>
+              </span>
+            </div>
+            <div class="run-row">
+              <span class="run-icon" aria-hidden="true">✗</span>
+              <span class="run-text">
+                <strong>Node.js-specific APIs</strong>
+                <small>fs, net, child_process, native addons. DataVec is Web Workers, not a Node replacement.</small>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">Does this work for AI workloads? <span class="faq-arrow">+</span></button>
-        <div class="faq-a">Yes. Streaming responses, SSE, chunked transfer, and proxy patterns to upstream AI providers all work today. The OpenAI and Anthropic SDKs are Web Workers-compatible and deploy without changes. AI streaming endpoints are where flat-rate billing helps most. A long-running stream costs you nothing extra here.</div>
+    </section>
+
+    <!-- FRAMEWORKS STRIP -->
+    <section class="frameworks z">
+      <div class="wrap">
+        <h2 class="fw-label">Web Workers-compatible frameworks that deploy to DataVec today</h2>
+        <div class="fw-row">
+          <span class="fw-tag featured">Hono</span>
+          <span class="fw-tag featured">itty-router</span>
+          <span class="fw-tag featured">Elysia</span>
+          <span class="fw-tag">Remix (API routes)</span>
+          <span class="fw-tag">tRPC</span>
+          <span class="fw-tag">Zod</span>
+          <span class="fw-tag">jose (JWT)</span>
+          <span class="fw-tag">Fauna</span>
+          <span class="fw-tag">Upstash</span>
+          <span class="fw-tag">OpenAI SDK</span>
+          <span class="fw-tag">Anthropic SDK</span>
+          <span class="fw-tag">Stripe SDK</span>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">Can I test it before committing? <span class="faq-arrow">+</span></button>
-        <div class="faq-a">Yes. Email hello@datavec.com and we'll set up a test deployment on your actual code. Usually takes about 20 minutes. You'll see your own benchmark numbers on your own workload before deciding anything.</div>
+    </section>
+
+    <!-- THE TECHNOLOGY -->
+    <section class="tech z">
+      <div class="wrap">
+        <div class="section-header-center">
+          <span class="sec-eye">The technology</span>
+          <h2>The architectural design behind our performance and cost efficiency</h2>
+          <p class="sec-sub">We developed two core infrastructure pieces that allow us to bypass standard cloud
+            computing overhead entirely.</p>
+        </div>
+        <div class="tech-grid">
+          <div class="tech-card b">
+            <div class="tech-tag b">JSMX: JavaScript-to-C Compiler</div>
+            <h3>Direct compilation of JavaScript to optimized native code</h3>
+            <p>JSMX processes your standard JavaScript files during deployment and compiles them directly into native C
+              code before they ever reach a production node. This ensures that what runs on DataVec is a true native
+              binary rather than a script executing inside a bulky virtual machine, eliminating interpreter lag,
+              background garbage collection pauses, and JIT compilation overhead. As a direct result, cold start delays
+              are physically reduced to absolute zero since the executable is loaded directly by the kernel.</p>
+            <div class="tech-metrics">
+              <div class="tm">
+                <div class="tm-val b">~100x</div>
+                <div class="tm-label">faster than interpreted JS</div>
+              </div>
+              <div class="tm">
+                <div class="tm-val b">0ms</div>
+                <div class="tm-label">cold start</div>
+              </div>
+              <div class="tm">
+                <div class="tm-val b">Native</div>
+                <div class="tm-label">CPU execution</div>
+              </div>
+            </div>
+          </div>
+          <div class="tech-card g">
+            <div class="tech-tag g">MNVKD: Micro-Native Runtime</div>
+            <h3>A highly consolidated, ultra-compact native runtime</h3>
+            <p>MNVKD acts as our ultra-lightweight execution container, packing routing, secure TLS handshakes, HTTP/1.1
+              and HTTP/2 protocol support, memory management, and microthread scheduling into a single 104 KB binary.
+              While legacy cloud platforms like AWS Lambda stitch together more than a dozen discrete backend services
+              to coordinate the same request pipeline, MNVKD processes all operations natively inside a single process,
+              enabling us to run infrastructure at a fraction of typical industry costs and confidently offer fixed
+              flat-rate pricing plans.</p>
+            <div class="tech-metrics">
+              <div class="tm">
+                <div class="tm-val g">104KB</div>
+                <div class="tm-label">total runtime</div>
+              </div>
+              <div class="tm">
+                <div class="tm-val g">300K+</div>
+                <div class="tm-label">req/sec per instance</div>
+              </div>
+              <div class="tm">
+                <div class="tm-val g">1 binary</div>
+                <div class="tm-label">vs a dozen AWS services</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING PLANS -->
+    <section class="pricing z" id="pricing">
+      <div class="wrap">
+        <div class="section-header-center">
+          <span class="sec-eye">Pricing</span>
+          <h2>Transparent flat-rate pricing with<br><em>zero usage-based metering</em></h2>
+          <p class="sec-sub">We eliminate the anxiety of modern serverless infrastructure by removing individual request
+            meters, arbitrary CPU timing limits, and bandwidth overage charges, guaranteeing that your monthly invoice
+            remains completely predictable.</p>
+        </div>
+
+        <div class="founder-band">
+          <span class="founder-lock-icon" aria-hidden="true">🔒</span>
+          <div>
+            <h4>Founding Member Pricing. First 50 customers lock this rate forever.</h4>
+            <p>Your price never increases as long as you stay subscribed.</p>
+          </div>
+        </div>
+
+        <div class="pricing-grid">
+          <div class="price-card">
+            <div class="price-eye">Starter</div>
+            <h3>Pro</h3>
+            <p class="price-desc">Ideal for individual developers running production-level projects with constant
+              traffic and no worries about scaling thresholds.</p>
+            <div class="price-num">$19<span>/mo</span></div>
+            <div class="price-period">Founding rate, normally $29/mo</div>
+            <ul class="price-features">
+              <li>1 project</li>
+              <li>Custom domain + automatic HTTPS</li>
+              <li>Up to 50M requests/month</li>
+              <li>Up to 1 TB bandwidth</li>
+              <li>HTTP/1.1 + HTTP/2</li>
+              <li>Developer dashboard</li>
+              <li>Email support</li>
+            </ul>
+            <a href="mailto:hello@datavec.com?subject=DataVec Pro plan" class="btn-outline">Get started</a>
+          </div>
+          <div class="price-card feat">
+            <div class="price-eye">Most popular</div>
+            <h3>Business</h3>
+            <p class="price-desc">Perfect for growing teams that need high-availability deployments across multiple
+              distinct projects and prioritised support channels.</p>
+            <div class="price-num">$149<span>/mo</span></div>
+            <div class="price-period">Founding rate, normally $199/mo</div>
+            <ul class="price-features">
+              <li>Up to 5 projects</li>
+              <li>Unlimited custom domains</li>
+              <li>Up to 500M requests/month</li>
+              <li>Up to 10 TB bandwidth</li>
+              <li>Priority support + SLA</li>
+              <li>Advanced analytics</li>
+              <li>Team access controls</li>
+              <li>99.9% uptime SLA</li>
+            </ul>
+            <a href="mailto:hello@datavec.com?subject=DataVec Business plan" class="btn-filled">Get started</a>
+          </div>
+        </div>
+
+        <div class="enterprise-band">
+          <div class="eb-left">
+            <h3>Customized Enterprise Scaling</h3>
+            <p>For applications processing over 500 million monthly requests, we design a customized flat-rate contract
+              tailored to your specific system architecture and transit requirements. You can use the calculator below
+              to estimate your potential savings, then reach out to schedule a consultation with our infrastructure
+              team.</p>
+          </div>
+          <a href="mailto:hello@datavec.com?subject=DataVec Enterprise" class="btn-primary">Talk to us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULATOR -->
+    <section class="calc z" id="calc">
+      <div class="wrap">
+        <div class="section-header-center">
+          <span class="sec-eye">Enterprise pricing calculator</span>
+          <h2>Calculate your enterprise savings compared<br><em>to traditional providers</em></h2>
+          <p class="sec-sub">Select your current cloud provider and configure your estimated resource footprint to see a
+            direct cost comparison against our flat-rate alternatives. If your monthly usage falls below 500 million
+            requests, our standard Business tier offers complete coverage without any complex utility calculations.</p>
+        </div>
+        <div class="calc-wrap">
+          <div class="calc-controls">
+            <div class="cf">
+              <label for="provider">Compare against</label>
+              <select id="provider">
+                <option value="cloudflare" selected>Cloudflare Workers</option>
+                <option value="vercel">Vercel Edge Functions</option>
+                <option value="aws">AWS Lambda</option>
+                <option value="azure">Azure Functions</option>
+                <option value="gcp">Google Cloud Run</option>
+              </select>
+            </div>
+            <div class="cf">
+              <label for="req">Monthly requests</label>
+              <select id="req">
+                <option value="750" selected>500M – 1 billion</option>
+                <option value="2500">1B – 5 billion</option>
+                <option value="7500">5B+</option>
+              </select>
+            </div>
+            <div class="cf">
+              <label for="compute">Compute intensity</label>
+              <select id="compute">
+                <option value="light">Light: auth, DB reads, simple APIs</option>
+                <option value="medium" selected>Medium: REST APIs, transforms</option>
+                <option value="heavy">Heavy: AI inference, image and video</option>
+              </select>
+            </div>
+            <div class="cf">
+              <label for="bw">Monthly bandwidth</label>
+              <select id="bw">
+                <option value="15000" selected>10 – 25 TB</option>
+                <option value="37500">25 – 50 TB</option>
+                <option value="75000">50 TB+</option>
+              </select>
+            </div>
+          </div>
+          <div class="calc-results">
+            <div class="calc-summary-grid">
+              <div class="calc-card">
+                <div class="calc-card-label" id="compLabel">Cloudflare Workers Est. Bill</div>
+                <div class="calc-card-value" id="compBill">—</div>
+                <div class="calc-card-note">per month</div>
+              </div>
+              <div class="calc-card-accent">
+                <div class="calc-card-label">DataVec Flat Rate</div>
+                <div class="calc-card-value" id="flatRate">—</div>
+                <div class="calc-card-note" id="savingsLine">—</div>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="chart"></canvas>
+            </div>
+            <p class="calc-note">Estimates use verified May 2026 published pricing. AWS includes API Gateway and
+              CloudWatch charges. Cloudflare has no egress fees. DataVec flat rate minimum $2,500/mo.</p>
+            <div class="calc-actions">
+              <a href="mailto:hello@datavec.com?subject=DataVec Enterprise pricing inquiry" class="btn-primary">Get a
+                precise quote</a>
+              <a href="#pricing" class="btn-ghost">View standard plans</a>
+            </div>
+            <p class="calc-fine">Running under 500M requests/month? The <a href="#pricing">Business plan at $149/mo</a>
+              covers you with zero metering.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="compare z">
+      <div class="wrap">
+        <div class="section-header-center small-margin">
+          <span class="sec-eye">Feature comparison</span>
+          <h2>DataVec vs <em>the rest</em></h2>
+        </div>
+        <div class="table-wrap">
+          <table class="ctable">
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col" class="dv">DataVec</th>
+                <th scope="col">Cloudflare Workers</th>
+                <th scope="col">Vercel Edge</th>
+                <th scope="col">Deno Deploy</th>
+                <th scope="col">AWS Lambda</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Web Workers compatible</th>
+                <td class="dv"><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="cx">Partial</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Cold start time</th>
+                <td class="dv">0ms</td>
+                <td>~5ms</td>
+                <td>50–200ms</td>
+                <td>~0ms</td>
+                <td>100–500ms</td>
+              </tr>
+              <tr>
+                <th scope="row">Billing model</th>
+                <td class="dv">Flat rate</td>
+                <td>Per req + CPU-ms</td>
+                <td>Per CPU-hr + seat</td>
+                <td>Per req + egress</td>
+                <td>Per req + GB-sec</td>
+              </tr>
+              <tr>
+                <th scope="row">Bandwidth charges</th>
+                <td class="dv"><span class="ck" aria-label="Yes">✓</span> Included</td>
+                <td><span class="ck" aria-label="Yes">✓</span> Free</td>
+                <td><span class="cx" aria-label="No">✗</span> $0.15/GB</td>
+                <td><span class="cx" aria-label="No">✗</span> Metered</td>
+                <td><span class="cx" aria-label="No">✗</span> $0.09/GB</td>
+              </tr>
+              <tr>
+                <th scope="row">Surprise bills possible</th>
+                <td class="dv"><span class="ck" aria-label="Yes">✓</span> Impossible</td>
+                <td><span class="cx" aria-label="No">✗</span> Common</td>
+                <td><span class="cx" aria-label="No">✗</span> Common</td>
+                <td><span class="cx" aria-label="No">✗</span> Possible</td>
+                <td><span class="cx" aria-label="No">✗</span> Very common</td>
+              </tr>
+              <tr>
+                <th scope="row">JS execution</th>
+                <td class="dv">Compiled to C</td>
+                <td>V8 isolates</td>
+                <td>V8 isolates</td>
+                <td>V8 isolates</td>
+                <td>Node.js runtime</td>
+              </tr>
+              <tr>
+                <th scope="row">HTTP/2 support</th>
+                <td class="dv"><span class="ck" aria-label="Yes">✓</span> Native</td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="cx">Via ALB only</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Automatic HTTPS</th>
+                <td class="dv"><span class="ck" aria-label="Yes">✓</span> Auto</td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="ck" aria-label="Yes">✓</span></td>
+                <td><span class="cx" aria-label="No">✗</span> Manual</td>
+              </tr>
+              <tr>
+                <th scope="row">Runtime footprint</th>
+                <td class="dv">104 KB</td>
+                <td>~5 MB</td>
+                <td>~20 MB</td>
+                <td>~40 MB</td>
+                <td>~50 MB</td>
+              </tr>
+              <tr>
+                <th scope="row">Predictable monthly bill</th>
+                <td class="dv"><span class="ck" aria-label="Yes">✓</span> Always</td>
+                <td><span class="cx" aria-label="No">✗</span></td>
+                <td><span class="cx" aria-label="No">✗</span></td>
+                <td><span class="cx" aria-label="No">✗</span></td>
+                <td><span class="cx" aria-label="No">✗</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION WITH ACCORDION EFFECT -->
+    <section class="faq z" id="faq">
+      <div class="wrap">
+        <div class="section-header-center">
+          <span class="sec-eye">FAQ</span>
+          <h2>Frequently asked questions about our technology and billing</h2>
+        </div>
+
+        <div class="faq-list" id="faqList">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Does my Cloudflare Workers code run here without changes?
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a-container">
+              <div class="faq-a">
+                <div class="faq-a-inner">
+                  Yes, provided that your codebase relies on standard Web Workers APIs such as fetch, Request, Response,
+                  and URL. Frameworks like Hono, itty-router, and Elysia are designed to be runtime-agnostic by default,
+                  meaning you can migrate them directly to our infrastructure. A typical migration requires no code
+                  changes whatsoever: you simply swap out your wrangler commands for our deploy CLI tools. Please note
+                  that Node.js-specific APIs or legacy WebSockets are not supported at this stage.
+                  <div class="faq-code" aria-label="Code block detailing migration commands">
+                    # Before<br>
+                    wrangler deploy<br><br>
+                    # After<br>
+                    datavec deploy<br><br>
+                    # Code: unchanged.
+                  </div>
+                  If your code uses Node.js-specific APIs (fs, net, child_process) or WebSockets, those aren't supported
+                  yet. We say so upfront on the compatibility page.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              What is the Web Workers standard?
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a-container">
+              <div class="faq-a">
+                <div class="faq-a-inner">
+                  The Web Workers standard is an Ecma International specification (TC55) establishing a uniform
+                  JavaScript API surface across browsers, edge nodes, and servers. This baseline covers standard
+                  functions like fetch, Request, Response, URL, TextEncoder, and Streams. Because major modern platforms
+                  like Cloudflare Workers, Deno Deploy, Vercel Edge, and Fastly Compute conform to this standard, any
+                  application targeting these APIs will run identically on DataVec without manual modifications.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              What exactly does the flat rate include?
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a-container">
+              <div class="faq-a">
+                <div class="faq-a-inner">
+                  Our standard plans cover all compute resources, bandwidth transit, automatic HTTPS provisioning, edge
+                  routing, HTTP/1.1 and HTTP/2 support, and full developer dashboard access. We do not count requests,
+                  cap network bandwidth, meter CPU cycles, or charge seat fees, so your monthly invoice remains
+                  completely static regardless of traffic spikes.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              How are cold starts actually 0ms?
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a-container">
+              <div class="faq-a">
+                <div class="faq-a-inner">
+                  Cold start latency is eliminated because our JSMX compiler translates your source JavaScript files
+                  directly into high-performance native C binaries before deployment. When an incoming request reaches
+                  your endpoint, our micro-runtime loads the binary directly, avoiding the need to spin up a JavaScript
+                  interpreter, initialize a V8 engine instance, or warm up a JIT compiler. While standard platforms
+                  suffer cold starts by initializing fresh virtualized runtimes, DataVec executes native machine code
+                  instantly.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              What if I go over the limits on Pro or Business?
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a-container">
+              <div class="faq-a">
+                <div class="faq-a-inner">
+                  If your application consistently exceeds the high-level recommendations of your tier, we will reach
+                  out directly to discuss your resource needs instead of automatically throttling your traffic or
+                  billing you for overage. We prefer to work with you to transition your project to a more suitable plan
+                  or customized flat rate, ensuring your billing remains entirely transparent and free of surprise
+                  charges.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Does this work for AI workloads?
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a-container">
+              <div class="faq-a">
+                <div class="faq-a-inner">
+                  Yes, our infrastructure is optimized for AI integrations, with full native support for streaming HTTP
+                  responses, Server-Sent Events (SSE), chunked transfer encoding, and secure upstream proxy
+                  configurations. Standard tools like the OpenAI and Anthropic SDKs conform to Web Workers standards and
+                  deploy without adjustments. This environment is highly advantageous for AI streaming workflows, as
+                  long-running connection durations do not incur the microsecond-based execution surcharges common on
+                  traditional serverless platforms.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Can I test it before committing?
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a-container">
+              <div class="faq-a">
+                <div class="faq-a-inner">
+                  Yes, you can email hello@datavec.com to request a temporary test deployment of your actual codebase.
+                  Setting up a sandbox deployment typically takes about twenty minutes, allowing you to run performance
+                  benchmarks on your own endpoints and review real resource consumption metrics before making any
+                  long-term decisions.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA SECTION -->
+    <section class="cta-final z">
+      <div class="wrap section-header-center small-margin">
+        <h2>Upgrade to simple, predictable hosting today without usage metering constraints</h2>
+        <p>Deploy standard Web Workers code to run at native speed under a transparent, fixed monthly plan.</p>
+        <div class="btn-group">
+          <a href="mailto:hello@datavec.com?subject=DataVec - get started" class="btn-primary">Get started today</a>
+          <a href="mailto:hello@datavec.com?subject=DataVec - test deployment" class="btn-ghost">Request a test
+            deployment</a>
+        </div>
+        <p class="cta-final-subnote">No credit card for the test · hello@datavec.com · Founding pricing locked for first
+          50 customers</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-inner">
+        <div class="foot-brand">
+          <a class="nav-logo" href="#">
+            <div class="logo-mark">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <circle cx="8" cy="8" r="2.5" />
+                <line x1="8" y1="1" x2="8" y2="5" />
+                <line x1="8" y1="11" x2="8" y2="15" />
+                <line x1="1" y1="8" x2="5" y2="8" />
+                <line x1="11" y1="8" x2="15" y2="8" />
+              </svg>
+            </div>
+            <span class="logo-text">Data<em>Vec</em></span>
+          </a>
+          <p>Web Workers hosting. Native C speed. Flat rate billing.</p>
+        </div>
+        <div class="foot-col">
+          <h4>Product</h4>
+          <a href="#how">How it works</a>
+          <a href="#runs">Compatibility</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#calc">Calculator</a>
+        </div>
+        <div class="foot-col">
+          <h4>Developers</h4>
+          <a href="#">Hono guide</a>
+          <a href="#">itty-router guide</a>
+          <a href="#">Migration from Workers</a>
+          <a href="#">Web Workers docs</a>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="mailto:hello@datavec.com">hello@datavec.com</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <p>© 2026 DataVec. All rights reserved.</p>
+        <p>Not affiliated with Cloudflare, Vercel, AWS, Google, or Microsoft. All trademarks belong to their respective
+          owners.</p>
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- FINAL CTA -->
-<section class="cta-final z">
-  <div class="wrap" style="text-align:center;max-width:620px;margin:0 auto;">
-    <h2>Stop watching the meter.<br><span style="color:var(--accent)">Just ship.</span></h2>
-    <p>Web Workers code. Native C speed. One flat bill every month.</p>
-    <div class="cta-actions">
-      <a href="mailto:hello@datavec.com?subject=DataVec - get started" class="btn-primary">Get started today</a>
-      <a href="mailto:hello@datavec.com?subject=DataVec - test deployment" class="btn-ghost">Request a test deployment</a>
-    </div>
-    <p style="font-size:12px;color:var(--text3);margin-top:20px;">No credit card for the test · hello@datavec.com · Founding pricing locked for first 50 customers</p>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="wrap">
-    <div class="foot-inner">
-      <div class="foot-brand">
-        <a class="nav-logo" href="#" style="display:inline-flex;">
-          <div class="logo-mark"><svg viewBox="0 0 16 16" style="width:14px;height:14px;fill:none;stroke:var(--accent);stroke-width:2;"><circle cx="8" cy="8" r="2.5"/><line x1="8" y1="1" x2="8" y2="5"/><line x1="8" y1="11" x2="8" y2="15"/><line x1="1" y1="8" x2="5" y2="8"/><line x1="11" y1="8" x2="15" y2="8"/></svg></div>
-          <span class="logo-text">Data<em>Vec</em></span>
-        </a>
-        <p>Web Workers hosting. Native C speed. Flat rate billing.</p>
-      </div>
-      <div class="foot-col">
-        <h4>Product</h4>
-        <a href="#how">How it works</a>
-        <a href="#runs">Compatibility</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#calc">Calculator</a>
-      </div>
-      <div class="foot-col">
-        <h4>Developers</h4>
-        <a href="#">Hono guide</a>
-        <a href="#">itty-router guide</a>
-        <a href="#">Migration from Workers</a>
-        <a href="#">Web Workers docs</a>
-      </div>
-      <div class="foot-col">
-        <h4>Company</h4>
-        <a href="mailto:hello@datavec.com">hello@datavec.com</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Privacy Policy</a>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <p>© 2026 DataVec. All rights reserved.</p>
-      <p>Not affiliated with Cloudflare, Vercel, AWS, Google, or Microsoft. All trademarks belong to their respective owners.</p>
-    </div>
-  </div>
-</footer>
-
-<script>
-// CALCULATOR
-const NAMES={vercel:'Vercel Edge Functions',aws:'AWS Lambda',cloudflare:'Cloudflare Workers',azure:'Azure Functions',gcp:'Google Cloud Run'};
-const COLORS={vercel:'#BA7517',aws:'#E24B4A',cloudflare:'#f77f00',azure:'#185FA5',gcp:'#534AB7'};
-
-function dur(c){return c==='light'?0.15:c==='medium'?0.6:2.5;}
-function mem(c){return c==='light'?0.25:c==='medium'?0.5:1.0;}
-
-function est(p,reqM,c,bwGB){
-  const d=dur(c),m=mem(c),r=reqM*1e6;
-  if(p==='vercel'){
-    const inv=Math.max(0,reqM-10)*0.60;
-    const cpu=((r*d*0.4)/3600)*0.128;
-    const memory=((r*d*m)/3600)*0.0106;
-    const bw=Math.max(0,bwGB-1000)*0.15;
-    return Math.max(20,inv+cpu+memory+bw);
-  }
-  if(p==='aws'){
-    const inv=Math.max(0,reqM-1)*0.20;
-    const compute=Math.max(0,r*d*m-400000)*0.0000166667;
-    const apigw=reqM*3.50;
-    const bw=Math.max(0,bwGB-100)*0.09;
-    const logs=(r*5000/1e9)*0.50;
-    return Math.max(5,inv+compute+apigw+bw+logs);
-  }
-  if(p==='cloudflare'){
-    const req=Math.max(0,reqM-10)*0.30;
-    const cpu=Math.max(0,r*d*1000-30e6)*0.02/1e6;
-    return Math.max(5,5+req+cpu);
-  }
-  if(p==='azure'){
-    const exec=Math.max(0,reqM-1)*0.20;
-    const compute=Math.max(0,r*d*m-400000)*0.000016;
-    const bw=Math.max(0,bwGB-100)*0.087;
-    return Math.max(5,exec+compute+bw);
-  }
-  if(p==='gcp'){
-    const cpu=Math.max(0,r*d-180000)*0.000024;
-    const memory=Math.max(0,r*d*m-360000)*0.0000025;
-    const req=Math.max(0,reqM-2)*0.40;
-    const bw=Math.max(0,bwGB-1)*0.12;
-    return Math.max(5,cpu+memory+req+bw);
-  }
-  return 0;
-}
-
-const ff=n=>'$'+Math.round(n).toLocaleString();
-let chart=null;
-
-function run(){
-  const provider=document.getElementById('provider').value;
-  const reqM=parseFloat(document.getElementById('req').value);
-  const c=document.getElementById('compute').value;
-  const bwGB=parseFloat(document.getElementById('bw').value);
-
-  // Always calculate against ALL providers — flat rate is fixed below the cheapest, not the selected one
-  const allProviders=['vercel','aws','cloudflare','azure','gcp'];
-  const allBills=allProviders.map(p=>est(p,reqM,c,bwGB));
-  const cheapestBill=Math.min(...allBills);
-
-  // Set flat rate at 22.5% below cheapest (midpoint of 20–25% range), floor $2,500
-  const flatRate=Math.max(cheapestBill*0.775,2500);
-
-  const compBill=est(provider,reqM,c,bwGB);
-  const savings=compBill-flatRate;
-
-  document.getElementById('compLabel').textContent=NAMES[provider]+' est. bill';
-  document.getElementById('compBill').textContent=ff(compBill)+'/mo';
-  document.getElementById('flatRate').textContent=ff(flatRate)+'/mo';
-  document.getElementById('savingsLine').textContent='You save '+ff(savings)+'/mo vs '+NAMES[provider];
-
-  const labels=[NAMES[provider].split(' ')[0],'DataVec'];
-  const data=[Math.round(compBill),Math.round(flatRate)];
-  const bg=[COLORS[provider],'#1D9E75'];
-
-  if(chart){
-    chart.data.labels=labels;
-    chart.data.datasets[0].data=data;
-    chart.data.datasets[0].backgroundColor=bg;
-    chart.update();
-  } else {
-    chart=new Chart(document.getElementById('chart'),{
-      type:'bar',
-      data:{labels,datasets:[{data,backgroundColor:bg,borderRadius:6,borderSkipped:false}]},
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ff(ctx.parsed.y)+'/mo'}}},
-        scales:{
-          x:{ticks:{font:{size:13,weight:'500'},color:'#d8eaf8',maxRotation:0},grid:{display:false},border:{display:false}},
-          y:{ticks:{font:{size:11},color:'#6a8fae',callback:v=>v>=1000?'$'+Math.round(v/1000)+'K':'$'+v},grid:{color:'rgba(23,32,53,0.8)'},border:{display:false}}
-        }
-      }
-    });
-  }
-}
-['provider','req','compute','bw'].forEach(id=>document.getElementById(id).addEventListener('change',run));
-run();
-
-// FAQ
-document.getElementById('faqList').querySelectorAll('.faq-item').forEach(item=>{
-  item.querySelector('.faq-q').addEventListener('click',()=>item.classList.toggle('open'));
-});
-</script>
+  <!-- Script Modules -->
+  <script defer src="js/script.js"></script>
 </body>
+
 </html>
