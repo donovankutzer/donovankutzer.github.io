@@ -4,7 +4,7 @@ export default function Pitch() {
       <div className="wrap">
         <div className="section-header-center">
           <span className="sec-eye">What makes Datavec different?</span>
-          <h2>Enjoy standard runtime compatibility with <em className="em2">predictable flat pricing.</em></h2>
+          <h2>Enjoy standard runtime compatibility with <em className="em2">predictable flat pricing</em></h2>
           <p className="sec-sub">Unlike other modern serverless providers that dynamic-charge you for every million
             requests, CPU millisecond, or gigabyte of transit, DataVec lets you lock in a static, predictable monthly
             hosting cost based entirely on your high-level project size.</p>

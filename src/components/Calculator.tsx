@@ -182,7 +182,7 @@ export default function Calculator() {
       <div className="wrap">
         <div className="section-header-center">
           <span className="sec-eye">Enterprise pricing calculator</span>
-          <h2>Calculate your enterprise savings compared<br /><em>to traditional providers</em></h2>
+          <h2>Calculate your <em className="em2">enterprise savings</em> compared<br />to traditional providers</h2>
           <p className="sec-sub">Select your current cloud provider and configure your estimated resource footprint to see a
             direct cost comparison against our flat-rate alternatives. If your monthly usage falls below 500 million
             requests, our standard Business tier offers complete coverage without any complex utility calculations.</p>

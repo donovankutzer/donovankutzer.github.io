@@ -8,7 +8,7 @@ export default function Hero() {
               <span className="eyebrow-dot"></span>
               JavaScript Cloud Platform · Web Workers · Flat Rate
             </div>
-            <h1><span className="c1">JavaScript </span> that runs like <span className="c2"> C.</span></h1>
+            <h1><span className="c1">JavaScript </span> that runs like <span className="c2"> C</span></h1>
             <p className="hero-sub">A high-performance alternative for teams currently on Cloudflare Workers, Vercel Edge, or Deno. No garbage collector, no cold starts, and one flat monthly rate.</p>
             <div className="migrate-note">
               <svg viewBox="0 0 24 24" aria-hidden="true">

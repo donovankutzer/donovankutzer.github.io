@@ -6,7 +6,7 @@ export default function Pricing() {
         <div className="wrap">
           <div className="section-header-center">
             <span className="sec-eye">Pricing</span>
-            <h2>Transparent flat-rate pricing with<br /><em>zero usage-based metering</em></h2>
+            <h2>Transparent flat-rate pricing with<br /><em className="em2">zero usage-based metering</em></h2>
             <p className="sec-sub">We eliminate the anxiety of modern serverless infrastructure by removing individual request
               meters, arbitrary CPU timing limits, and bandwidth overage charges, guaranteeing that your monthly invoice
               remains completely predictable.</p>
