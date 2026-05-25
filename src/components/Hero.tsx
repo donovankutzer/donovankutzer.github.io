@@ -50,7 +50,7 @@ export default function Hero() {
                 <div><span className="t-dim">→ </span><span className="t-blue">TLS provisioned</span></div>
                 <div><span className="t-green">✓ Live: https://yourapp.datavec.io</span></div>
                 <div>{" "}</div>
-                <div><span className="t-dim"># Cold start: </span><span className="t-green">0ms</span><span className="t-dim">
+                <div><span className="t-dim"># Cold start: </span><span className="t-green">0ms </span><span className="t-dim">
                   Deploy: </span><span className="t-green">3.8s</span></div>
                 <div><span className="t-dim"># This month's bill: </span><span className="t-green">$149.00</span><span
                   className="t-dim"> <span className="term-cursor" aria-hidden="true"></span></span></div>
