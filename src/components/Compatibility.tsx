@@ -6,98 +6,90 @@ export default function Compatibility() {
         <div className="wrap">
           <div className="section-header-center">
             <span className="sec-eye">Compatibility</span>
-            <h2>Current API compatibility and feature support</h2>
-            <p className="sec-sub">Review our production-ready integrations alongside the features we are actively building,
-              represented with complete technical honesty.</p>
+            <h2>Production compatibility and design focus</h2>
+            <p className="sec-sub">DataVec is designed as a high-performance alternative to traditional edge runtimes. Review our current Web Workers compatibility alongside our active engineering focus.</p>
           </div>
           <div className="runs-grid">
             <div className="runs-card yes">
-              <div className="runs-label yes">✓ Works today</div>
+              <div className="runs-label yes">✓ Fully Supported Today</div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">✓</span>
                 <span className="run-text">
-                  <strong>REST APIs and HTTP endpoints</strong>
-                  <small>Hono, itty-router, Elysia. Same code, no changes from Cloudflare Workers.</small>
+                  <strong>Standard Edge Routers</strong>
+                  <small>Run Hono, itty-router, Elysia, and other modern routing libraries with zero code changes.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">✓</span>
                 <span className="run-text">
-                  <strong>HTTP/1.1 and HTTP/2</strong>
-                  <small>Full protocol support including server push</small>
+                  <strong>Web Workers Standard APIs</strong>
+                  <small>Full native support for `fetch`, `Request`, `Response`, `URL`, `Blob`, `TextEncoder`, and cryptographic functions.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">✓</span>
                 <span className="run-text">
-                  <strong>Streaming responses</strong>
-                  <small>SSE, chunked transfer, AI output streaming, LLM proxies</small>
+                  <strong>Real-Time AI Streaming</strong>
+                  <small>Optimized pipelines for server-sent events (SSE), chunked transfers, and zero-buffering LLM/AI outputs.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">✓</span>
                 <span className="run-text">
-                  <strong>Background jobs and actors</strong>
-                  <small>Concurrent workloads via micro-thread model, scheduled tasks</small>
+                  <strong>Micro-Thread Actor Workloads</strong>
+                  <small>Concurrent tasks, background workers, and scheduled jobs orchestrated by our custom low-overhead native scheduler.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">✓</span>
                 <span className="run-text">
-                  <strong>Web Workers APIs</strong>
-                  <small>fetch, Request, Response, URL, Blob, TextEncoder, setTimeout</small>
+                  <strong>High-Volume Cryptography</strong>
+                  <small>Native Web Crypto API implementations for blistering-fast JWT token verification and OAuth session operations.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">✓</span>
                 <span className="run-text">
-                  <strong>Auth endpoints</strong>
-                  <small>JWT validation, OAuth callbacks, session handling at high volume</small>
+                  <strong>Embedded Storage</strong>
+                  <small>Blazing-fast embedded SQLite database access via server-client drivers. Perfect for configurations and state cache.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">✓</span>
                 <span className="run-text">
-                  <strong>SQLite</strong>
-                  <small>Embedded database via server-client driver. Good for read-heavy apps and config stores.</small>
-                </span>
-              </div>
-              <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✓</span>
-                <span className="run-text">
-                  <strong>Automatic HTTPS</strong>
-                  <small>Point your domain. TLS provisions on deploy.</small>
+                  <strong>Automated Global TLS</strong>
+                  <small>Point your domain and deploy. Automatic, instant HTTPS certification and global routing are provisioned natively.</small>
                 </span>
               </div>
             </div>
             <div className="runs-card no">
-              <div className="runs-label no">Not yet. In progress.</div>
+              <div className="runs-label no">Active Focus & Core Scope</div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">◷</span>
                 <span className="run-text">
-                  <strong>WebSockets</strong>
-                  <small>The architecture supports it. Implementation coming.</small>
+                  <strong>Edge SSR Frameworks</strong>
+                  <small>API routes and Edge runtimes for Next.js, Remix, and SvelteKit deploy today. Full HTML SSR rendering pipelines are in active development.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">◷</span>
                 <span className="run-text">
-                  <strong>Postgres and MySQL drivers</strong>
-                  <small>SQLite is live. Postgres is next.</small>
+                  <strong>External Database Pools</strong>
+                  <small>Direct integration with SQLite and HTTP storage (Upstash/Redis) is live. Lightweight connection pooling for PostgreSQL/MySQL is next.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">◷</span>
                 <span className="run-text">
-                  <strong>SSR frameworks</strong>
-                  <small>Next.js, Nuxt, SvelteKit API routes work. Full SSR needs Node internals we're adding.</small>
+                  <strong>Native WebSockets</strong>
+                  <small>Our event-driven compilation pipeline supports the protocol; production-ready WebSocket routing gateways are coming soon.</small>
                 </span>
               </div>
               <div className="run-row">
                 <span className="run-icon" aria-hidden="true">✗</span>
                 <span className="run-text">
-                  <strong>Node.js-specific APIs</strong>
-                  <small>fs, net, child_process, native addons. DataVec is a high-performance alternative designed for Web Workers, not a general Node.js replacement.</small>
+                  <strong>What it's NOT: A Node.js Replacement</strong>
+                  <small>We do not support legacy, heavy Node.js APIs (such as `fs`, `child_process`, or legacy native addons). DataVec is a sleek, purpose-built alternative for modern Web Workers environments.</small>
                 </span>
               </div>
             </div>
@@ -108,12 +100,12 @@ export default function Compatibility() {
       {/* FRAMEWORKS STRIP */}
       <section className="frameworks z">
         <div className="wrap">
-          <h2 className="fw-label">Web Workers-compatible frameworks that deploy to DataVec today</h2>
+          <h2 className="fw-label">Deploy your modern Web Workers stack to DataVec today</h2>
           <div className="fw-row">
             <span className="fw-tag featured">Hono</span>
             <span className="fw-tag featured">itty-router</span>
             <span className="fw-tag featured">Elysia</span>
-            <span className="fw-tag">Remix (API routes)</span>
+            <span className="fw-tag">Remix (Edge)</span>
             <span className="fw-tag">tRPC</span>
             <span className="fw-tag">Zod</span>
             <span className="fw-tag">jose (JWT)</span>

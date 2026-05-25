@@ -8,13 +8,13 @@ export default function Hero() {
               <span className="eyebrow-dot"></span>
               JavaScript Cloud Platform · Web Workers · Flat Rate
             </div>
-            <h1><span className="c1">JavaScript </span> compiled to <span className="c2"> native C.</span></h1>
+            <h1><span className="c1">JavaScript </span> that runs like <span className="c2"> C.</span></h1>
             <p className="hero-sub">A high-performance alternative for teams currently on Cloudflare Workers, Vercel Edge, or Deno. No garbage collector, no cold starts, and one flat monthly rate.</p>
             <div className="migrate-note">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              Compatible with Hono, itty-router, Elysia, and other standard edge routing libraries out of the box.
+              Drop-in compatibility with standard Web Workers APIs, Hono, itty-router, and Elysia.
             </div>
             <div className="btn-group">
               <a href="#pricing" className="btn-primary">Start for $19/month</a>
