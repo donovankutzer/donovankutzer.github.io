@@ -144,7 +144,7 @@ export default function Calculator() {
           scales: {
             x: {
               ticks: {
-                font: { size: 13, weight: '500' },
+                font: { size: 13, weight: 500 },
                 color: '#d8eaf8',
                 maxRotation: 0
               },
@@ -155,7 +155,10 @@ export default function Calculator() {
               ticks: {
                 font: { size: 11 },
                 color: '#6a8fae',
-                callback: (value) => value >= 1000 ? '$' + Math.round(value / 1000) + 'K' : '$' + value
+                callback: (value) => {
+                  const num = typeof value === 'number' ? value : parseFloat(value);
+                  return num >= 1000 ? '$' + Math.round(num / 1000) + 'K' : '$' + num;
+                }
               },
               grid: { color: 'rgba(23, 32, 53, 0.4)' },
               border: { display: false }
