@@ -32,14 +32,17 @@ export default function Hero() {
                 <span className="term-title">datavec deploy</span>
               </div>
               <div className="term-body">
-                <div><span className="t-dim">// Your existing Hono app</span></div>
-                <div><span className="t-blue">import</span> <span className="t-w">{"{ Hono }"} </span><span
-                  className="t-blue">from</span> <span className="t-w">'hono'</span></div>
-                <div><span className="t-blue">const</span> <span className="t-w">app = </span><span className="t-blue">new</span>
-                  <span className="t-w">Hono()</span>
-                </div>
-                <div><span className="t-w">{"app.get('/', (c) => c.text('Hello, world!'))"}</span></div>
-                <div><span className="t-blue">export default</span> <span className="t-w">app</span></div>
+                <div><span className="t-dim">// Your existing Web Worker</span></div>
+                <div><span className="t-blue">export default</span> <span className="t-w">{"{"}</span></div>
+                <div><span className="t-blue">  async</span> <span className="t-w">fetch(request) {"{"}</span></div>
+                <div><span className="t-blue">    const</span> <span className="t-w">auth = request.headers.get(</span><span className="t-green">'Authorization'</span><span className="t-w">);</span></div>
+                <div><span className="t-blue">    if</span> <span className="t-w">(!auth?.startsWith(</span><span className="t-green">'Bearer '</span><span className="t-w">)) {"{"}</span></div>
+                <div><span className="t-blue">      return new</span> <span className="t-w">Response(</span><span className="t-green">'Unauthorized'</span><span className="t-w">, {"{"} status: 401 {"}"});</span></div>
+                <div><span className="t-w">    {"}"}</span></div>
+                <div><span className="t-blue">    const</span> <span className="t-w">data = </span><span className="t-blue">await</span> <span className="t-w">request.json();</span></div>
+                <div><span className="t-blue">    return</span> <span className="t-w">Response.json({"{"} success: </span><span className="t-blue">true</span><span className="t-w">, data {"}"});</span></div>
+                <div><span className="t-w">  {"}"}</span></div>
+                <div><span className="t-w">{"}"}</span></div>
                 <div>{" "}</div>
                 <div><span className="t-dim">$ </span><span className="t-w">datavec deploy</span></div>
                 <div><span className="t-dim">→ </span><span className="t-blue">DataVec compiling JS → C...</span></div>
