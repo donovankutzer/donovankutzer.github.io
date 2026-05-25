@@ -1,6 +1,6 @@
 export default function Navbar() {
   return (
-    <header className="z">
+    <header>
       <nav aria-label="Main Navigation">
         <a className="nav-logo" href="#">
           <div className="logo-mark">
