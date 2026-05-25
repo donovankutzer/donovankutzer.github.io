@@ -97,7 +97,7 @@ export default function Compatibility() {
                 <span className="run-icon" aria-hidden="true">✗</span>
                 <span className="run-text">
                   <strong>Node.js-specific APIs</strong>
-                  <small>fs, net, child_process, native addons. DataVec is Web Workers, not a Node replacement.</small>
+                  <small>fs, net, child_process, native addons. DataVec is a high-performance alternative designed for Web Workers, not a general Node.js replacement.</small>
                 </span>
               </div>
             </div>

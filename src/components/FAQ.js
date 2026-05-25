@@ -34,7 +34,7 @@ const FAQ_DATA = [
   },
   {
     question: "How are cold starts actually 0ms?",
-    answer: "Cold start latency is eliminated because our JSMX compiler translates your source JavaScript files directly into high-performance native C binaries before deployment. When an incoming request reaches your endpoint, our micro-runtime loads the binary directly, avoiding the need to spin up a JavaScript interpreter, initialize a V8 engine instance, or warm up a JIT compiler. While standard platforms suffer cold starts by initializing fresh virtualized runtimes, DataVec executes native machine code instantly."
+    answer: "Cold start latency is eliminated because our native compiler translates your source JavaScript files directly into high-performance native C binaries before deployment. When an incoming request reaches your endpoint, our purpose-built native runtime loads the binary directly, avoiding the need to spin up a JavaScript interpreter, initialize a V8 engine instance, or warm up a JIT compiler. While standard platforms suffer cold starts by initializing fresh virtualized runtimes, DataVec executes native machine code instantly."
   },
   {
     question: "What if I go over the limits on Pro or Business?",

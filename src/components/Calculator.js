@@ -46,7 +46,7 @@ function estimateBill(provider, reqM, intensity, bandwidthGB) {
     const bandwidth = Math.max(0, bandwidthGB - 1000) * 0.15;
     return Math.max(20, invoices + cpu + memory + bandwidth);
   }
-  
+
   if (provider === 'aws') {
     const invoices = Math.max(0, reqM - 1) * 0.20;
     const compute = Math.max(0, totalRequests * d * m - 400000) * 0.0000166667;
@@ -55,20 +55,20 @@ function estimateBill(provider, reqM, intensity, bandwidthGB) {
     const logs = (totalRequests * 5000 / 1e9) * 0.50;
     return Math.max(5, invoices + compute + apigw + bandwidth + logs);
   }
-  
+
   if (provider === 'cloudflare') {
     const requestsOverage = Math.max(0, reqM - 10) * 0.30;
     const cpuOverage = Math.max(0, totalRequests * d * 1000 - 30e6) * 0.02 / 1e6;
     return Math.max(5, 5 + requestsOverage + cpuOverage);
   }
-  
+
   if (provider === 'azure') {
     const executions = Math.max(0, reqM - 1) * 0.20;
     const compute = Math.max(0, totalRequests * d * m - 400000) * 0.000016;
     const bandwidth = Math.max(0, bandwidthGB - 100) * 0.087;
     return Math.max(5, executions + compute + bandwidth);
   }
-  
+
   if (provider === 'gcp') {
     const cpu = Math.max(0, totalRequests * d - 180000) * 0.000024;
     const memory = Math.max(0, totalRequests * d * m - 360000) * 0.0000025;
@@ -76,7 +76,7 @@ function estimateBill(provider, reqM, intensity, bandwidthGB) {
     const bandwidth = Math.max(0, bandwidthGB - 1) * 0.12;
     return Math.max(5, cpu + memory + requests + bandwidth);
   }
-  
+
   return 0;
 }
 
@@ -96,10 +96,10 @@ export default function Calculator() {
   const providers = ['vercel', 'aws', 'cloudflare', 'azure', 'gcp'];
   const bills = providers.map(p => estimateBill(p, reqM, intensity, bandwidthGB));
   const cheapestBill = Math.min(...bills);
-  
+
   // Flat rate is 22.5% below the cheapest provider, floor of $2,500
   const flatRate = Math.max(cheapestBill * 0.775, 2500);
-  
+
   const selectedProviderBill = estimateBill(provider, reqM, intensity, bandwidthGB);
   const savings = selectedProviderBill - flatRate;
 
@@ -188,9 +188,9 @@ export default function Calculator() {
           <div className="calc-controls">
             <div className="cf">
               <label htmlFor="provider">Compare against</label>
-              <select 
-                id="provider" 
-                value={provider} 
+              <select
+                id="provider"
+                value={provider}
                 onChange={(e) => setProvider(e.target.value)}
               >
                 <option value="cloudflare">Cloudflare Workers</option>
@@ -202,9 +202,9 @@ export default function Calculator() {
             </div>
             <div className="cf">
               <label htmlFor="req">Monthly requests</label>
-              <select 
-                id="req" 
-                value={reqM} 
+              <select
+                id="req"
+                value={reqM}
                 onChange={(e) => setReqM(parseFloat(e.target.value))}
               >
                 <option value="750">500M – 1 billion</option>
@@ -214,9 +214,9 @@ export default function Calculator() {
             </div>
             <div className="cf">
               <label htmlFor="compute">Compute intensity</label>
-              <select 
-                id="compute" 
-                value={intensity} 
+              <select
+                id="compute"
+                value={intensity}
                 onChange={(e) => setIntensity(e.target.value)}
               >
                 <option value="light">Light: auth, DB reads, simple APIs</option>
@@ -226,9 +226,9 @@ export default function Calculator() {
             </div>
             <div className="cf">
               <label htmlFor="bw">Monthly bandwidth</label>
-              <select 
-                id="bw" 
-                value={bandwidthGB} 
+              <select
+                id="bw"
+                value={bandwidthGB}
                 onChange={(e) => setBandwidthGB(parseFloat(e.target.value))}
               >
                 <option value="15000">10 – 25 TB</option>
@@ -253,11 +253,11 @@ export default function Calculator() {
                 <div className="calc-card-value" id="flatRate">
                   {formatCurrency(flatRate)}/mo
                 </div>
-                <div className="calc-card-note" id="savingsLine" style={{ 
-                  color: savings > 0 ? 'var(--accent2)' : 'var(--text2)' 
+                <div className="calc-card-note" id="savingsLine" style={{
+                  color: savings > 0 ? 'var(--accent2)' : 'var(--text2)'
                 }}>
-                  {savings > 0 
-                    ? `You save ${formatCurrency(savings)}/mo vs ${NAMES[provider].split(' ')[0]}` 
+                  {savings > 0
+                    ? `You save ${formatCurrency(savings)}/mo vs ${NAMES[provider].split(' ')[0]}`
                     : 'DataVec provides stable enterprise flat rate billing'
                   }
                 </div>

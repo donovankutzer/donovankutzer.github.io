@@ -30,8 +30,8 @@ export default function HowItWorks() {
                 <path d="M5 3l14 9-14 9V3z" />
               </svg>
             </div>
-            <h3>Compile natively with JSMX</h3>
-            <p>Our JSMX compilation toolchain translates your JavaScript directly into native C code during deployment,
+            <h3>Compile natively to C</h3>
+            <p>Our compilation toolchain translates your standard JavaScript directly into native C code during deployment,
               eliminating virtual machine overhead, JIT compiler lag, and garbage collection pauses.</p>
           </div>
           <div className="step">
@@ -43,9 +43,9 @@ export default function HowItWorks() {
                 <line x1="12" y1="17" x2="12" y2="21" />
               </svg>
             </div>
-            <h3>Serve requests using MNVKD</h3>
-            <p>Requests are handled by our ultra-compact 104 KB native execution layer which manages routing, TLS
-              handshakes, HTTP protocols, and database bindings with zero cold start delays.</p>
+            <h3>Purpose-built native runtime</h3>
+            <p>Requests are handled directly by our purpose-built, ultra-compact 104 KB native execution layer, which manages
+              routing, TLS handshakes, HTTP protocols, and database bindings with zero cold start delays.</p>
           </div>
           <div className="step">
             <div className="step-n">04</div>

@@ -6,13 +6,10 @@ export default function Hero() {
           <div>
             <div className="eyebrow">
               <span className="eyebrow-dot"></span>
-              Web Workers · MNVKD · JSMX
+              JavaScript Cloud Platform · Web Workers · Flat Rate
             </div>
-            <h1>Run standard Web Workers at <span className="c1">native C speed</span> on <span className="c2"> flat-rate plans</span></h1>
-            <p className="hero-sub">DataVec compiles standard JavaScript code directly into highly optimized native C
-              binaries, allowing you to run your Web Worker applications without any interpreter
-              overhead. Since our runtime doesn't require a virtual machine for execution, we pass the
-              infrastructure savings directly to you through fixed-price plans with no request metering.</p>
+            <h1><span className="c1">JavaScript </span> compiled to <span className="c2"> native C.</span></h1>
+            <p className="hero-sub">A high-performance alternative for teams currently on Cloudflare Workers, Vercel Edge, or Deno. No garbage collector, no cold starts, and one flat monthly rate.</p>
             <div className="migrate-note">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
@@ -45,8 +42,8 @@ export default function Hero() {
                 <div><span className="t-blue">export default</span> <span className="t-w">app</span></div>
                 <div>{" "}</div>
                 <div><span className="t-dim">$ </span><span className="t-w">datavec deploy</span></div>
-                <div><span className="t-dim">→ </span><span className="t-blue">JSMX compiling JS → C...</span></div>
-                <div><span className="t-dim">→ </span><span className="t-blue">MNVKD runtime: 104 KB</span></div>
+                <div><span className="t-dim">→ </span><span className="t-blue">DataVec compiling JS → C...</span></div>
+                <div><span className="t-dim">→ </span><span className="t-blue">DataVec runtime: 104 KB</span></div>
                 <div><span className="t-dim">→ </span><span className="t-blue">TLS provisioned</span></div>
                 <div><span className="t-green">✓ Live: https://yourapp.datavec.io</span></div>
                 <div>{" "}</div>

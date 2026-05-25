@@ -31,7 +31,7 @@ export default function Stats() {
             </div>
             <div className="stat">
               <div className="stat-val">104KB</div>
-              <div className="stat-label">MNVKD runtime size</div>
+              <div className="stat-label">Native runtime size</div>
             </div>
             <div className="stat">
               <div className="stat-val g">Flat</div>

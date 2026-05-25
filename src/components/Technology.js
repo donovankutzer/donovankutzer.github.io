@@ -10,9 +10,9 @@ export default function Technology() {
         </div>
         <div className="tech-grid">
           <div className="tech-card b">
-            <div className="tech-tag b">JSMX: JavaScript-to-C Compiler</div>
-            <h3>Direct compilation of JavaScript to optimized native code</h3>
-            <p>JSMX processes your standard JavaScript files during deployment and compiles them directly into native C
+            <div className="tech-tag b">The DataVec Compiler</div>
+            <h3>Direct compilation of JavaScript to optimized native C code</h3>
+            <p>Our native compilation toolchain processes your standard JavaScript files during deployment and compiles them directly into native C
               code before they ever reach a production node. This ensures that what runs on DataVec is a true native
               binary rather than a script executing inside a bulky virtual machine, eliminating interpreter lag,
               background garbage collection pauses, and JIT compilation overhead. As a direct result, cold start delays
@@ -33,12 +33,12 @@ export default function Technology() {
             </div>
           </div>
           <div className="tech-card g">
-            <div className="tech-tag g">MNVKD: Micro-Native Runtime</div>
-            <h3>A highly consolidated, ultra-compact native runtime</h3>
-            <p>MNVKD acts as our ultra-lightweight execution container, packing routing, secure TLS handshakes, HTTP/1.1
+            <div className="tech-tag g">The DataVec Runtime</div>
+            <h3>A highly consolidated, purpose-built native runtime</h3>
+            <p>Our consolidated native runtime acts as our ultra-lightweight execution container, packing routing, secure TLS handshakes, HTTP/1.1
               and HTTP/2 protocol support, memory management, and microthread scheduling into a single 104 KB binary.
               While legacy cloud platforms like AWS Lambda stitch together more than a dozen discrete backend services
-              to coordinate the same request pipeline, MNVKD processes all operations natively inside a single process,
+              to coordinate the same request pipeline, DataVec processes all operations natively inside a single process,
               enabling us to run infrastructure at a fraction of typical industry costs and confidently offer fixed
               flat-rate pricing plans.</p>
             <div className="tech-metrics">
