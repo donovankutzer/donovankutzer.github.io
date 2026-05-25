@@ -325,6 +325,8 @@ nav {
   align-items: center;
   justify-content: center;
   transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-primary:hover {
@@ -347,6 +349,8 @@ nav {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-ghost:hover {

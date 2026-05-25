@@ -14,9 +14,9 @@ export default function Pitch() {
             <div className="panel-name">DataVec</div>
             <div className="pitch-row"><span className="pitch-key">Billing model</span><span className="pitch-val good">Flat rate</span></div>
             <div className="pitch-row"><span className="pitch-key">Base cost</span><span className="pitch-val good">From $19/mo</span></div>
-            <div className="pitch-row"><span className="pitch-key">Extra requests</span><span className="pitch-val good">None. Flat.</span></div>
-            <div className="pitch-row"><span className="pitch-key">CPU overage</span><span className="pitch-val good">None. Flat.</span></div>
-            <div className="pitch-row"><span className="pitch-key">Bandwidth</span><span className="pitch-val good">Included flat</span></div>
+            <div className="pitch-row"><span className="pitch-key">Extra requests</span><span className="pitch-val good">None</span></div>
+            <div className="pitch-row"><span className="pitch-key">CPU overage</span><span className="pitch-val good">None</span></div>
+            <div className="pitch-row"><span className="pitch-key">Bandwidth</span><span className="pitch-val good">None</span></div>
             <div className="pitch-row"><span className="pitch-key">Cold starts</span><span className="pitch-val good">0ms</span></div>
             <div className="pitch-row"><span className="pitch-key">500M req/mo bill</span><span className="pitch-val good">Use the calculator</span></div>
           </div>
