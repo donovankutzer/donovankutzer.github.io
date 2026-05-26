@@ -1,45 +1,81 @@
+'use client';
+
+import { Container, SimpleGrid, Paper, Text, Group, Flex, Stack } from '@mantine/core';
+
 export default function Stats() {
   return (
-    <>
+    <Stack gap="xl" style={{ position: 'relative', zIndex: 1 }}>
       {/* COMPATIBILITY STRIP */}
-      <div className="compat z">
-        <div className="wrap">
-          <div className="compat-inner">
-            <div className="compat-label">Runs existing code from</div>
-            <div className="compat-items">
-              <span className="compat-item"><strong>Cloudflare Workers</strong></span>
-              <span className="compat-item"><strong>Deno Deploy</strong></span>
-              <span className="compat-item"><strong>Vercel Edge</strong></span>
-              <span className="compat-item"><strong>Fastly Compute</strong></span>
-              <span className="compat-item"><strong>Netlify Edge</strong></span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Container size="lg" w="100%">
+        <Paper
+          p="md"
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border-strong)',
+            borderRadius: 'var(--r-md)',
+          }}
+        >
+          <Flex
+            direction={{ base: 'column', sm: 'row' }}
+            align="center"
+            justify="space-between"
+            gap="md"
+          >
+            <Text size="sm" fw={600} c="dimmed" style={{ fontFamily: 'var(--font-mono)' }}>
+              Runs existing code from
+            </Text>
+            <Group gap="lg" justify="center">
+              {['Cloudflare Workers', 'Deno Deploy', 'Vercel Edge', 'Fastly Compute', 'Netlify Edge'].map((item) => (
+                <Text key={item} size="sm" fw={700} c="white">
+                  {item}
+                </Text>
+              ))}
+            </Group>
+          </Flex>
+        </Paper>
+      </Container>
 
       {/* CORE METRICS GRID SECTION */}
-      <section className="stats z" id="stats" style={{ padding: '60px 0' }}>
-        <div className="wrap">
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-val">0ms</div>
-              <div className="stat-label">Cold start time</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-val indigo">300K+</div>
-              <div className="stat-label">Requests/sec per instance</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-val">104KB</div>
-              <div className="stat-label">Native runtime footprint</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-val indigo">Flat</div>
-              <div className="stat-label">Predictable Rate</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+      <Container size="lg" w="100%" py={40}>
+        <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="lg">
+          {[
+            { val: '0ms', label: 'Cold start time', color: 'var(--accent-mint)' },
+            { val: '300K+', label: 'Requests/sec per instance', color: 'var(--accent)' },
+            { val: '104KB', label: 'Native runtime footprint', color: 'var(--accent-mint)' },
+            { val: 'Flat', label: 'Predictable Rate', color: 'var(--accent)' }
+          ].map((stat, i) => (
+            <Paper
+              key={i}
+              p="xl"
+              style={{
+                background: 'var(--surface)',
+                border: '1px solid var(--border-strong)',
+                borderRadius: 'var(--r-md)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                alignItems: 'center',
+                textAlign: 'center'
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: '36px',
+                  fontWeight: 800,
+                  color: stat.color,
+                  fontFamily: 'var(--font-sans)',
+                  letterSpacing: '-0.02em'
+                }}
+              >
+                {stat.val}
+              </Text>
+              <Text size="xs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                {stat.label}
+              </Text>
+            </Paper>
+          ))}
+        </SimpleGrid>
+      </Container>
+    </Stack>
   );
 }

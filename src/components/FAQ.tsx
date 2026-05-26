@@ -1,26 +1,41 @@
 'use client';
 
-import { Accordion } from '@mantine/core';
+import { Accordion, Container, Title, Text, Stack } from '@mantine/core';
 
 const FAQ_DATA = [
   {
     question: "Does my Cloudflare Workers code run on DataVec without modifications?",
     answer: (
-      <>
-        Yes, as long as your application targets standard Web Workers specification APIs such as fetch, Request, Response, URL, and Web Crypto. Modern frameworks like Next.js static builds, Elysia, and standard web runtimes are fully supported by default. Migrating standard static deployments or API service codebases usually requires zero code changes: you simply substitute your build command with our compiled deploy CLI tool.
-        <div className="faq-code" aria-label="Code block detailing migration commands">
+      <Stack gap="sm">
+        <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
+          Yes, as long as your application targets standard Web Workers specification APIs such as fetch, Request, Response, URL, and Web Crypto. Modern frameworks like Next.js static builds, Elysia, and standard web runtimes are fully supported by default. Migrating standard static deployments or API service codebases usually requires zero code changes: you simply substitute your build command with our compiled deploy CLI tool.
+        </Text>
+        <div 
+          aria-label="Code block detailing migration commands"
+          style={{ 
+            background: 'rgba(0, 0, 0, 0.3)', 
+            border: '1px solid var(--border-strong)', 
+            borderRadius: 'var(--r-md)', 
+            padding: '16px', 
+            fontFamily: 'var(--font-mono)',
+            fontSize: '12px',
+            color: '#a78bfa',
+            lineHeight: 1.5,
+            whiteSpace: 'pre-wrap'
+          }}
+        >
           # Before (Cloudflare)<br />
           $ wrangler deploy<br /><br />
           # After (DataVec Compiled C)<br />
           $ datavec deploy<br /><br />
           # Application codebase: 100% unchanged.
         </div>
-      </>
+      </Stack>
     )
   },
   {
     question: "What exactly is the Web Workers API standard?",
-    answer: "The Web Workers standard (maintained by standard organizations including TC55) specifies a standard, uniform JavaScript API surface across browsers, server runtimes, and edge environments. It establishes baseline APIs like fetch, Request, Response, URL, URLSearchParams, Headers, TextEncoder, and Streams. Since platforms like Deno Deploy, Vercel Edge, and Cloudflare Workers adhere to these standard specs, applications targetting them compile flawlessly onto DataVec native edge process containers."
+    answer: "The Web Workers standard (maintained by standard organizations including TC55) specifies a uniform JavaScript API surface across browsers, server runtimes, and edge environments. It establishes baseline APIs like fetch, Request, Response, URL, URLSearchParams, Headers, TextEncoder, and Streams. Since platforms like Deno Deploy, Vercel Edge, and Cloudflare Workers adhere to these standard specs, applications targetting them compile flawlessly onto DataVec native edge process containers."
   },
   {
     question: "What resource limits are included in standard flat-rate plans?",
@@ -42,11 +57,15 @@ const FAQ_DATA = [
 
 export default function FAQ() {
   return (
-    <section className="faq z" id="faq">
-      <div className="wrap">
-        <div className="section-header-center">
-          <span className="sec-eye">Developer FAQ</span>
-          <h2>Frequently asked questions about technology and pricing</h2>
+    <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="faq">
+      <Container size="lg">
+        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
+            Developer FAQ
+          </span>
+          <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+            Frequently asked questions about technology and pricing
+          </Title>
         </div>
 
         <Accordion 
@@ -55,12 +74,12 @@ export default function FAQ() {
           defaultValue={null}
           styles={{
             root: { maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' },
-            item: { background: 'var(--surface)', border: '1px solid var(--border)', transition: 'var(--transition)' },
-            control: { padding: '12px 24px', outline: 'none' },
+            item: { background: 'var(--surface)', border: '1px solid var(--border-strong)', transition: 'var(--transition)' },
+            control: { padding: '16px 24px', outline: 'none' },
             label: { color: 'var(--text)', fontSize: '15.5px', fontWeight: 700, fontFamily: 'var(--font-sans)', textAlign: 'left' },
             chevron: { color: 'var(--accent-mint)', fontSize: '18px' },
             panel: { background: 'rgba(255, 255, 255, 0.01)', borderTop: '1px solid var(--border)' },
-            content: { padding: '24px', fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6 }
+            content: { padding: '24px', fontSize: '14.5px', color: 'var(--text-muted)', lineHeight: 1.6 }
           }}
         >
           {FAQ_DATA.map((item, index) => (
@@ -72,8 +91,7 @@ export default function FAQ() {
             </Accordion.Item>
           ))}
         </Accordion>
-      </div>
+      </Container>
     </section>
   );
 }
-

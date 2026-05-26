@@ -1,222 +1,329 @@
 'use client';
 
 import { useState } from 'react';
+import { Container, SimpleGrid, Paper, Tabs, Stack, Flex, Group, Title, Text, Button } from '@mantine/core';
 
 export default function Pricing() {
   const [activeTier, setActiveTier] = useState<'pro' | 'business' | 'enterprise'>('pro');
 
   return (
-    <section className="pricing z" id="pricing">
-      <div className="wrap">
-        <div className="section-header-center">
-          <span className="sec-eye">Configurator Console</span>
-          <h2>Tactile compute tiers configurator</h2>
-          <p className="sec-sub">
+    <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="pricing">
+      <Container size="lg">
+        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
+            Configurator Console
+          </span>
+          <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+            Tactile compute tiers configurator
+          </Title>
+          <Text size="md" c="dimmed" style={{ maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
             Click standard plans or select the Enterprise option to simulate custom compute requirements and check specifications.
-          </p>
+          </Text>
         </div>
 
         {/* Founding Member Notice */}
-        <div className="founder-band" style={{ marginBottom: '32px' }}>
-          <span className="founder-lock-icon" aria-hidden="true">🔒</span>
+        <Paper
+          p="md"
+          mb="xl"
+          style={{
+            background: 'rgba(16, 185, 129, 0.03)',
+            border: '1px solid rgba(16, 185, 129, 0.2)',
+            borderRadius: 'var(--r-md)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px'
+          }}
+        >
+          <span style={{ fontSize: '20px' }}>🔒</span>
           <div>
-            <h4>Founding Developer Tiers. First 50 signups lock this subscription rate forever.</h4>
-            <p>Your locked rate will never increase as long as your service remains active.</p>
+            <Text size="sm" fw={700} c="white">
+              Founding Developer Tiers. First 50 signups lock this subscription rate forever.
+            </Text>
+            <Text size="xs" c="dimmed" mt={2}>
+              Your locked rate will never increase as long as your service remains active.
+            </Text>
           </div>
-        </div>
+        </Paper>
 
-        {/* Unified Spec Sheet Pricing Configurator */}
-        <div className="spec-sheet-wrap">
+        <Tabs 
+          value={activeTier} 
+          onChange={(val) => setActiveTier(val as 'pro' | 'business' | 'enterprise')}
+          orientation="vertical"
+          variant="unstyled"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1.3fr',
+            gap: '40px',
+            background: 'var(--surface)',
+            border: '1px solid var(--border-strong)',
+            borderRadius: 'var(--r-lg)',
+            overflow: 'hidden',
+            boxShadow: 'var(--shadow-sm)',
+            minHeight: '480px'
+          }}
+        >
           {/* Spec Selectors on Left */}
-          <div className="spec-sheet-controls">
-            <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-dim)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>
+          <Tabs.List 
+            style={{ 
+              padding: '44px',
+              background: '#0d1016',
+              borderRight: '1px solid var(--border)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '28px'
+            }}
+          >
+            <Text size="xs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '8px', letterSpacing: '0.05em' }}>
               Select Core Subscription Plan
-            </h4>
+            </Text>
 
-            {/* Plan Nodes togglers */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button 
-                className={`cockpit-tab-item ${activeTier === 'pro' ? 'active' : ''}`}
-                onClick={() => setActiveTier('pro')}
-              >
-                <span>🚀</span>
-                [Starter Pro Plan — $19/mo]
-              </button>
-              <button 
-                className={`cockpit-tab-item ${activeTier === 'business' ? 'active' : ''}`}
-                onClick={() => setActiveTier('business')}
-              >
-                <span>🔥</span>
-                [Team Business — $149/mo]
-              </button>
-              <button 
-                className={`cockpit-tab-item ${activeTier === 'enterprise' ? 'active' : ''}`}
-                onClick={() => setActiveTier('enterprise')}
-              >
-                <span>💎</span>
-                [Enterprise Custom Plan]
-              </button>
-            </div>
-          </div>
+            <Stack gap="sm">
+              {[
+                { val: 'pro', icon: '🚀', label: '[Starter Pro Plan — $19/mo]' },
+                { val: 'business', icon: '🔥', label: '[Team Business — $149/mo]' },
+                { val: 'enterprise', icon: '💎', label: '[Enterprise Custom Plan]' }
+              ].map((tier) => (
+                <Tabs.Tab
+                  key={tier.val}
+                  value={tier.val}
+                  style={{
+                    width: '100%',
+                    background: activeTier === tier.val ? 'rgba(16, 185, 129, 0.06)' : 'transparent',
+                    border: '1px solid',
+                    borderColor: activeTier === tier.val ? 'rgba(16, 185, 129, 0.25)' : 'transparent',
+                    borderRadius: 'var(--r-md)',
+                    color: activeTier === tier.val ? 'var(--accent-mint)' : 'var(--text-muted)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    padding: '12px 16px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    transition: 'var(--transition)',
+                    textAlign: 'left'
+                  }}
+                >
+                  <span>{tier.icon}</span>
+                  {tier.label}
+                </Tabs.Tab>
+              ))}
+            </Stack>
+          </Tabs.List>
 
           {/* Spec Telemetry details on Right */}
-          <div className="spec-sheet-telemetry">
-            {/* Standard Tiers: Pro, Business, or Enterprise */}
-            {activeTier === 'pro' && (
-              <div>
-                <div className="cockpit-screen-title" style={{ marginBottom: '20px' }}>
-                  <div className="price-num">
-                    $19
-                    <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/month</span>
-                  </div>
-                  <h3 style={{ marginTop: '8px' }}>Developer Pro Tier</h3>
-                  <p>
+          <div style={{ padding: '44px', display: 'flex', flexDirection: 'column' }}>
+            {/* Pro Panel */}
+            <Tabs.Panel value="pro">
+              <Stack gap="xl">
+                <div>
+                  <Flex align="baseline" gap="xs">
+                    <Text style={{ fontSize: '36px', fontWeight: 800, color: 'white', letterSpacing: '-0.02em' }}>$19</Text>
+                    <Text size="sm" c="dimmed" fw={600} style={{ fontFamily: 'var(--font-mono)' }}>/month</Text>
+                  </Flex>
+                  <Title order={3} style={{ fontSize: '20px', fontWeight: 700, mt: 8 }}>
+                    Developer Pro Tier
+                  </Title>
+                  <Text size="sm" c="dimmed" mt={4}>
                     Ideal for individual engineers serving high-traffic production workloads.
-                  </p>
+                  </Text>
                 </div>
 
-                <ul className="price-features" style={{ margin: '0 0 32px' }}>
-                  <li>1 active edge project compile boundary</li>
-                  <li>Custom domain integration + automated HTTPS</li>
-                  <li>Up to 50 Million requests / month included</li>
-                  <li>Up to 1 TB network egress bandwidth</li>
-                  <li>Full HTTP/1.1 & HTTP/2 transport protocols</li>
-                  <li>Email support with engineering queue</li>
+                <ul className="price-features" style={{ margin: 0, paddingLeft: '20px', listStyleType: 'square', color: 'var(--text-muted)' }}>
+                  {['1 active edge project compile boundary', 'Custom domain integration + automated HTTPS', 'Up to 50 Million requests / month included', 'Up to 1 TB network egress bandwidth', 'Full HTTP/1.1 & HTTP/2 transport protocols', 'Email support with engineering queue'].map((feat, i) => (
+                    <li key={i} style={{ marginBottom: '8px', fontSize: '13.5px' }}>{feat}</li>
+                  ))}
                 </ul>
 
-                <a 
-                  href="mailto:hello@datavec.com?subject=DataVec - Pro Plan Subscription" 
-                  className="btn-primary"
-                  style={{ width: '100%', textAlign: 'center' }}
+                <Button
+                  component="a"
+                  href="mailto:hello@datavec.com?subject=DataVec - Pro Plan Subscription"
+                  size="md"
+                  style={{
+                    background: 'var(--accent)',
+                    color: 'white',
+                    fontWeight: 600,
+                    borderRadius: 'var(--r-md)',
+                    textAlign: 'center'
+                  }}
                 >
                   Configure system now
-                </a>
+                </Button>
 
                 {/* System Specs Telemetry Grid */}
-                <div className="system-spec-grid">
-                  <div className="system-card active-mint">
-                    <span className="system-card-label">CPU Nodes</span>
-                    <div className="system-card-value">Static</div>
-                  </div>
-                  <div className="system-card">
-                    <span className="system-card-label">Cold Latency</span>
-                    <div className="system-card-value">0.00ms</div>
-                  </div>
-                  <div className="system-card active-mint">
-                    <span className="system-card-label">GC Pauses</span>
-                    <div className="system-card-value">None</div>
-                  </div>
-                </div>
-              </div>
-            )}
+                <SimpleGrid cols={3} spacing="md" mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
+                  {[
+                    { label: 'CPU Nodes', val: 'Static', active: true },
+                    { label: 'Cold Latency', val: '0.00ms', active: false },
+                    { label: 'GC Pauses', val: 'None', active: true }
+                  ].map((card, i) => (
+                    <Paper
+                      key={i}
+                      p="xs"
+                      style={{
+                        background: 'rgba(255,255,255,0.01)',
+                        border: '1px solid',
+                        borderColor: card.active ? 'rgba(16, 185, 129, 0.2)' : 'var(--border-strong)',
+                        borderRadius: 'var(--r-sm)',
+                        textAlign: 'center'
+                      }}
+                    >
+                      <Text size="xxs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>{card.label}</Text>
+                      <Text size="sm" fw={700} mt={4} c={card.active ? 'var(--accent-mint)' : 'white'}>{card.val}</Text>
+                    </Paper>
+                  ))}
+                </SimpleGrid>
+              </Stack>
+            </Tabs.Panel>
 
-            {activeTier === 'business' && (
-              <div>
-                <div className="cockpit-screen-title" style={{ marginBottom: '20px' }}>
-                  <div className="price-num">
-                    $149
-                    <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/month</span>
-                  </div>
-                  <h3 style={{ marginTop: '8px' }}>Team Business Tier</h3>
-                  <p>
+            {/* Business Panel */}
+            <Tabs.Panel value="business">
+              <Stack gap="xl">
+                <div>
+                  <Flex align="baseline" gap="xs">
+                    <Text style={{ fontSize: '36px', fontWeight: 800, color: 'white', letterSpacing: '-0.02em' }}>$149</Text>
+                    <Text size="sm" c="dimmed" fw={600} style={{ fontFamily: 'var(--font-mono)' }}>/month</Text>
+                  </Flex>
+                  <Title order={3} style={{ fontSize: '20px', fontWeight: 700, mt: 8 }}>
+                    Team Business Tier
+                  </Title>
+                  <Text size="sm" c="dimmed" mt={4}>
                     Perfect for scaling operations and squads needing dedicated project scopes.
-                  </p>
+                  </Text>
                 </div>
 
-                <ul className="price-features" style={{ margin: '0 0 32px' }}>
-                  <li>Up to 5 active edge project compile boundaries</li>
-                  <li>Unlimited custom domains + automated HTTPS</li>
-                  <li>Up to 500 Million requests / month included</li>
-                  <li>Up to 10 TB network egress bandwidth</li>
-                  <li>Priority support tickets + 99.9% uptime SLA</li>
-                  <li>Advanced analytics telemetry metrics & logs</li>
+                <ul className="price-features" style={{ margin: 0, paddingLeft: '20px', listStyleType: 'square', color: 'var(--text-muted)' }}>
+                  {['Up to 5 active edge project compile boundaries', 'Unlimited custom domains + automated HTTPS', 'Up to 500 Million requests / month included', 'Up to 10 TB network egress bandwidth', 'Priority support tickets + 99.9% uptime SLA', 'Advanced analytics telemetry metrics & logs'].map((feat, i) => (
+                    <li key={i} style={{ marginBottom: '8px', fontSize: '13.5px' }}>{feat}</li>
+                  ))}
                 </ul>
 
-                <a 
-                  href="mailto:hello@datavec.com?subject=DataVec - Business Plan Subscription" 
-                  className="btn-filled"
-                  style={{ width: '100%', textAlign: 'center' }}
+                <Button
+                  component="a"
+                  href="mailto:hello@datavec.com?subject=DataVec - Business Plan Subscription"
+                  size="md"
+                  style={{
+                    background: 'var(--surface-hover)',
+                    border: '1px solid var(--border-strong)',
+                    color: 'white',
+                    fontWeight: 600,
+                    borderRadius: 'var(--r-md)',
+                    textAlign: 'center'
+                  }}
                 >
                   Configure system now
-                </a>
+                </Button>
 
                 {/* System Specs Telemetry Grid */}
-                <div className="system-spec-grid">
-                  <div className="system-card active-mint">
-                    <span className="system-card-label">CPU Nodes</span>
-                    <div className="system-card-value">Dynamic</div>
-                  </div>
-                  <div className="system-card">
-                    <span className="system-card-label">Cold Latency</span>
-                    <div className="system-card-value">0.00ms</div>
-                  </div>
-                  <div className="system-card active-mint">
-                    <span className="system-card-label">GC Pauses</span>
-                    <div className="system-card-value">None</div>
-                  </div>
-                </div>
-              </div>
-            )}
+                <SimpleGrid cols={3} spacing="md" mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
+                  {[
+                    { label: 'CPU Nodes', val: 'Dynamic', active: true },
+                    { label: 'Cold Latency', val: '0.00ms', active: false },
+                    { label: 'GC Pauses', val: 'None', active: true }
+                  ].map((card, i) => (
+                    <Paper
+                      key={i}
+                      p="xs"
+                      style={{
+                        background: 'rgba(255,255,255,0.01)',
+                        border: '1px solid',
+                        borderColor: card.active ? 'rgba(16, 185, 129, 0.2)' : 'var(--border-strong)',
+                        borderRadius: 'var(--r-sm)',
+                        textAlign: 'center'
+                      }}
+                    >
+                      <Text size="xxs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>{card.label}</Text>
+                      <Text size="sm" fw={700} mt={4} c={card.active ? 'var(--accent-mint)' : 'white'}>{card.val}</Text>
+                    </Paper>
+                  ))}
+                </SimpleGrid>
+              </Stack>
+            </Tabs.Panel>
 
-            {activeTier === 'enterprise' && (
-              <div>
-                <div className="cockpit-screen-title" style={{ marginBottom: '20px' }}>
-                  <div className="price-num">
-                    Custom
-                    <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}> (starts at $2,500/mo)</span>
-                  </div>
-                  <h3 style={{ marginTop: '8px' }}>Enterprise Custom Tier</h3>
-                  <p>
+            {/* Enterprise Panel */}
+            <Tabs.Panel value="enterprise">
+              <Stack gap="xl">
+                <div>
+                  <Flex align="baseline" gap="xs">
+                    <Text style={{ fontSize: '36px', fontWeight: 800, color: 'white', letterSpacing: '-0.02em' }}>Custom</Text>
+                    <Text size="xs" c="dimmed" fw={600} style={{ fontFamily: 'var(--font-mono)' }}> (starts at $2,500/mo)</Text>
+                  </Flex>
+                  <Title order={3} style={{ fontSize: '20px', fontWeight: 700, mt: 8 }}>
+                    Enterprise Custom Tier
+                  </Title>
+                  <Text size="sm" c="dimmed" mt={4}>
                     Dedicated hardware isolation, custom memory page scaling, and prioritized network routes for maximum enterprise compliance.
-                  </p>
+                  </Text>
                 </div>
 
-                <ul className="price-features" style={{ margin: '0 0 32px' }}>
-                  <li>Custom memory limits & dedicated virtual heaps</li>
-                  <li>Dedicated edge compiler lanes for custom binaries</li>
-                  <li>Multi-tenant & private single-tenant network routing</li>
-                  <li>Premium SLA with 24/7/365 dedicated developer support</li>
-                  <li>Custom POSIX scheduling priorities</li>
-                  <li>Dedicated enterprise solutions architect</li>
+                <ul className="price-features" style={{ margin: 0, paddingLeft: '20px', listStyleType: 'square', color: 'var(--text-muted)' }}>
+                  {['Custom memory limits & dedicated virtual heaps', 'Dedicated edge compiler lanes for custom binaries', 'Multi-tenant & private single-tenant network routing', 'Premium SLA with 24/7/365 dedicated developer support', 'Custom POSIX scheduling priorities', 'Dedicated enterprise solutions architect'].map((feat, i) => (
+                    <li key={i} style={{ marginBottom: '8px', fontSize: '13.5px' }}>{feat}</li>
+                  ))}
                 </ul>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <a 
-                    href="#calc" 
-                    className="btn-primary"
-                    style={{ width: '100%', textAlign: 'center' }}
+                <Stack gap="sm">
+                  <Button
+                    component="a"
+                    href="#calc"
+                    size="md"
+                    style={{
+                      background: 'var(--accent)',
+                      color: 'white',
+                      fontWeight: 600,
+                      borderRadius: 'var(--r-md)',
+                      textAlign: 'center'
+                    }}
                   >
                     Estimate enterprise savings below
-                  </a>
-                  <a 
-                    href="mailto:hello@datavec.com?subject=DataVec Enterprise Custom Plan inquiry" 
-                    className="btn-ghost"
-                    style={{ width: '100%', textAlign: 'center' }}
+                  </Button>
+                  <Button
+                    component="a"
+                    href="mailto:hello@datavec.com?subject=DataVec Enterprise Custom Plan inquiry"
+                    variant="outline"
+                    size="md"
+                    style={{
+                      borderColor: 'var(--border-strong)',
+                      color: 'white',
+                      fontWeight: 600,
+                      borderRadius: 'var(--r-md)',
+                      textAlign: 'center',
+                      background: 'rgba(255,255,255,0.01)'
+                    }}
                   >
                     Request custom enterprise quote
-                  </a>
-                </div>
+                  </Button>
+                </Stack>
 
                 {/* System Specs Telemetry Grid */}
-                <div className="system-spec-grid">
-                  <div className="system-card active-mint">
-                    <span className="system-card-label">CPU Nodes</span>
-                    <div className="system-card-value">Dedicated</div>
-                  </div>
-                  <div className="system-card">
-                    <span className="system-card-label">Cold Latency</span>
-                    <div className="system-card-value">0.00ms</div>
-                  </div>
-                  <div className="system-card active-mint">
-                    <span className="system-card-label">GC Pauses</span>
-                    <div className="system-card-value">None</div>
-                  </div>
-                </div>
-              </div>
-            )}
+                <SimpleGrid cols={3} spacing="md" mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
+                  {[
+                    { label: 'CPU Nodes', val: 'Dedicated', active: true },
+                    { label: 'Cold Latency', val: '0.00ms', active: false },
+                    { label: 'GC Pauses', val: 'None', active: true }
+                  ].map((card, i) => (
+                    <Paper
+                      key={i}
+                      p="xs"
+                      style={{
+                        background: 'rgba(255,255,255,0.01)',
+                        border: '1px solid',
+                        borderColor: card.active ? 'rgba(16, 185, 129, 0.2)' : 'var(--border-strong)',
+                        borderRadius: 'var(--r-sm)',
+                        textAlign: 'center'
+                      }}
+                    >
+                      <Text size="xxs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>{card.label}</Text>
+                      <Text size="sm" fw={700} mt={4} c={card.active ? 'var(--accent-mint)' : 'white'}>{card.val}</Text>
+                    </Paper>
+                  ))}
+                </SimpleGrid>
+              </Stack>
+            </Tabs.Panel>
           </div>
-        </div>
-      </div>
+        </Tabs>
+      </Container>
     </section>
   );
 }

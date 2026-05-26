@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
-import { Select } from '@mantine/core';
+import { Select, Container, SimpleGrid, Paper, Stack, Flex, Group, Title, Text, Button } from '@mantine/core';
 
 // Register only the required Chart.js elements for a lightweight bundle
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
@@ -16,11 +16,11 @@ const NAMES = {
 };
 
 const COLORS = {
-  vercel: '#a78bfa',     // Brand Electric Violet-ish
-  aws: '#f87171',        // Soft red
-  cloudflare: '#fbbf24', // Amber/Orange
-  azure: '#3b82f6',      // Blue
-  gcp: '#06b6d4'         // Cyan
+  vercel: '#a78bfa',
+  aws: '#f87171',
+  cloudflare: '#fbbf24',
+  azure: '#3b82f6',
+  gcp: '#06b6d4'
 };
 
 // Helper metrics functions
@@ -81,7 +81,6 @@ function estimateBill(provider: string, reqM: number, intensity: string, bandwid
   return 0;
 }
 
-// Format currency helper
 const formatCurrency = (amount: number) => '$' + Math.round(amount).toLocaleString();
 
 export default function Calculator() {
@@ -93,15 +92,9 @@ export default function Calculator() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<Chart | null>(null);
 
-  // Perform bill estimations
-  const providers = ['vercel', 'aws', 'cloudflare', 'azure', 'gcp'];
-  const bills = providers.map(p => estimateBill(p, reqM, intensity, bandwidthGB));
-  const cheapestBill = Math.min(...bills);
-
-  // Flat rate is 22.5% below the cheapest provider, floor of $2,500
-  const flatRate = Math.max(cheapestBill * 0.775, 2500);
-
   const selectedProviderBill = estimateBill(provider, reqM, intensity, bandwidthGB);
+  const cheapestBill = Math.min(...['vercel', 'aws', 'cloudflare', 'azure', 'gcp'].map(p => estimateBill(p, reqM, intensity, bandwidthGB)));
+  const flatRate = Math.max(cheapestBill * 0.775, 2500);
   const savings = selectedProviderBill - flatRate;
 
   useEffect(() => {
@@ -111,16 +104,14 @@ export default function Calculator() {
     const providerShortName = NAMES[provider].split(' ')[0];
     const labels = [providerShortName, 'DataVec Flat'];
     const data = [Math.round(selectedProviderBill), Math.round(flatRate)];
-    const bgColors = [COLORS[provider], '#00f5a0']; // Hyper Mint for DataVec
+    const bgColors = [COLORS[provider], '#00f5a0'];
 
     if (chartInstanceRef.current) {
-      // Update existing chart
       chartInstanceRef.current.data.labels = labels;
       chartInstanceRef.current.data.datasets[0].data = data;
       chartInstanceRef.current.data.datasets[0].backgroundColor = bgColors;
       chartInstanceRef.current.update();
     } else {
-      // Create new chart instance
       chartInstanceRef.current = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -178,7 +169,6 @@ export default function Calculator() {
       });
     }
 
-    // Cleanup on destroy
     return () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
@@ -187,7 +177,6 @@ export default function Calculator() {
     };
   }, [provider, reqM, intensity, bandwidthGB, selectedProviderBill, flatRate]);
 
-  // Mantine Styles configuration helper
   const selectStyles = {
     root: { display: 'flex', flexDirection: 'column' as const, gap: '8px' },
     label: { 
@@ -225,19 +214,33 @@ export default function Calculator() {
   };
 
   return (
-    <section className="calc z" id="calc">
-      <div className="wrap">
-        <div className="section-header-center">
-          <span className="sec-eye">Cost Optimization</span>
-          <h2>Estimate your enterprise hosting <em className="em2">savings margins</em></h2>
-          <p className="sec-sub">
+    <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="calc">
+      <Container size="lg">
+        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
+            Cost Optimization
+          </span>
+          <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+            Estimate your enterprise hosting <em className="em2" style={{ color: 'var(--accent-mint)', fontStyle: 'normal' }}>savings margins</em>
+          </Title>
+          <Text size="md" c="dimmed" style={{ maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
             Configure your monthly application footprint metrics below. See a transparent comparative estimate detailing the savings compiled native infrastructure yields over utility-metered serverless clouds.
-          </p>
+          </Text>
         </div>
 
-        <div className="calc-wrap">
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
           {/* Controls Box */}
-          <div className="calc-controls">
+          <Paper 
+            p="xl"
+            style={{
+              background: '#0d1016',
+              border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--r-lg)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px'
+            }}
+          >
             <Select
               label="Current Edge Provider"
               value={provider}
@@ -291,68 +294,116 @@ export default function Calculator() {
               styles={selectStyles}
               allowDeselect={false}
             />
-          </div>
+          </Paper>
 
           {/* Results Summary & Interactive Graph */}
-          <div className="calc-results">
-            <div className="calc-summary-grid">
-              <div className="calc-card">
-                <div className="calc-card-label">
+          <Paper 
+            p="xl"
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--r-lg)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px'
+            }}
+          >
+            <SimpleGrid cols={2} spacing="md">
+              <Paper 
+                p="md" 
+                style={{ 
+                  background: 'rgba(255,255,255,0.01)', 
+                  border: '1px solid var(--border-strong)', 
+                  borderRadius: 'var(--r-md)' 
+                }}
+              >
+                <Text size="xxs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>
                   {NAMES[provider].split(' ')[0]} Bill
-                </div>
-                <div className="calc-card-value">
-                  {formatCurrency(selectedProviderBill)}<span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text-muted)' }}>/mo</span>
-                </div>
-                <div className="calc-card-note">Metered utility pricing</div>
-              </div>
+                </Text>
+                <Text size="xl" fw={800} mt={4} c="white">
+                  {formatCurrency(selectedProviderBill)}
+                  <span style={{ fontSize: '11px', fontWeight: 500, color: 'var(--text-muted)' }}>/mo</span>
+                </Text>
+                <Text size="xxs" c="dimmed" mt={4}>Metered utility pricing</Text>
+              </Paper>
 
-              <div className="calc-card-accent">
-                <div className="calc-card-label" style={{ color: 'var(--accent-mint)' }}>
+              <Paper 
+                p="md" 
+                style={{ 
+                  background: 'rgba(16, 185, 129, 0.03)', 
+                  border: '1px solid rgba(16, 185, 129, 0.25)', 
+                  borderRadius: 'var(--r-md)' 
+                }}
+              >
+                <Text size="xxs" fw={700} c="var(--accent-mint)" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>
                   DataVec Flat Rate
-                </div>
-                <div className="calc-card-value" style={{ color: 'var(--accent-mint)' }}>
-                  {formatCurrency(flatRate)}<span style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(0, 245, 160, 0.7)' }}>/mo</span>
-                </div>
-                <div 
-                  className="calc-card-note"
-                  style={{
-                    color: savings > 0 ? 'var(--accent-mint)' : 'var(--text-muted)',
-                    fontWeight: savings > 0 ? 600 : 400
-                  }}
+                </Text>
+                <Text size="xl" fw={800} mt={4} c="var(--accent-mint)">
+                  {formatCurrency(flatRate)}
+                  <span style={{ fontSize: '11px', fontWeight: 500, color: 'rgba(0, 245, 160, 0.7)' }}>/mo</span>
+                </Text>
+                <Text 
+                  size="xxs" 
+                  c={savings > 0 ? 'var(--accent-mint)' : 'var(--text-dim)'} 
+                  fw={savings > 0 ? 600 : 400} 
+                  mt={4}
                 >
                   {savings > 0
                     ? `Saves ${formatCurrency(savings)}/month`
-                    : 'Guaranteed predictable flat pricing'
+                    : 'Guaranteed flat rate'
                   }
-                </div>
-              </div>
-            </div>
+                </Text>
+              </Paper>
+            </SimpleGrid>
 
             {/* Savings Bar Chart */}
-            <div className="chart-wrap">
+            <div style={{ height: '220px', position: 'relative', width: '100%', background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)', padding: '16px' }}>
               <canvas ref={canvasRef} id="chart"></canvas>
             </div>
 
-            <p className="calc-note">
+            <Text size="xxs" c="dimmed" style={{ fontFamily: 'var(--font-mono)', lineHeight: 1.45 }}>
               Calculations utilize verified May 2026 published vendor rates. AWS Lambda includes API Gateway overhead. Cloudflare features zero egress. DataVec enterprise baseline floor starts at $2,500/mo.
-            </p>
+            </Text>
 
-            <div className="calc-actions">
-              <a href="mailto:hello@datavec.com?subject=DataVec Enterprise pricing savings quote" className="btn-primary">
+            <Group gap="sm">
+              <Button
+                component="a"
+                href="mailto:hello@datavec.com?subject=DataVec Enterprise pricing savings quote"
+                size="md"
+                style={{
+                  background: 'var(--accent)',
+                  color: 'white',
+                  fontWeight: 600,
+                  borderRadius: 'var(--r-md)',
+                  flex: 1
+                }}
+              >
                 Get a custom quote
-              </a>
-              <a href="#pricing" className="btn-ghost">
+              </Button>
+              <Button
+                component="a"
+                href="#pricing"
+                variant="outline"
+                size="md"
+                style={{
+                  borderColor: 'var(--border-strong)',
+                  color: 'white',
+                  fontWeight: 600,
+                  borderRadius: 'var(--r-md)',
+                  background: 'rgba(255,255,255,0.01)',
+                  flex: 1
+                }}
+              >
                 View standard plans
-              </a>
-            </div>
+              </Button>
+            </Group>
 
-            <p className="calc-fine">
-              Serving under 500M operations/month? Our standard <a href="#pricing">Business Plan at $149/mo</a> has you fully covered with zero utility metering.
-            </p>
-          </div>
-        </div>
-      </div>
+            <Text size="xxs" c="dimmed" style={{ textAlign: 'center' }}>
+              Serving under 500M operations/month? Our standard <a href="#pricing" style={{ color: 'var(--accent-mint)', fontWeight: 600 }}>Business Plan at $149/mo</a> has you fully covered with zero utility metering.
+            </Text>
+          </Paper>
+        </SimpleGrid>
+      </Container>
     </section>
   );
 }
-

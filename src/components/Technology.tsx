@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Container, SimpleGrid, Paper, Stack, Flex, Group, Title, Text } from '@mantine/core';
 
 type SymbolId = 'header' | 'db' | 'json' | null;
 
@@ -26,140 +27,254 @@ export default function Technology() {
   const [hoveredSymbol, setHoveredSymbol] = useState<SymbolId>(null);
 
   return (
-    <section className="tech z" id="tech">
-      <div className="wrap">
-        <div className="section-header-center">
-          <span className="sec-eye">Architectural Schematics</span>
-          <h2>Visualizing compiler &amp; runtime efficiency</h2>
-          <p className="sec-sub">
+    <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="tech">
+      <Container size="lg">
+        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
+            Architectural Schematics
+          </span>
+          <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+            Visualizing compiler &amp; runtime efficiency
+          </Title>
+          <Text size="md" c="dimmed" style={{ maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
             DataVec replaces layers of virtualization with pre-compiled native execution. Hover over the symbol map and stack diagrams below to inspect the design.
-          </p>
+          </Text>
         </div>
 
-        <div className="tech-grid">
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
           {/* Column 1: The Compiler (Interactive Symbol Map) */}
-          <div className="tech-card b">
-            <div className="tech-tag" style={{ background: 'rgba(99, 102, 241, 0.1)', color: 'var(--accent)', border: '1px solid var(--border-active)' }}>
+          <Paper 
+            p="xl" 
+            style={{ 
+              background: 'var(--surface)', 
+              border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--r-lg)',
+              boxShadow: 'var(--shadow-sm)'
+            }}
+          >
+            <span 
+              style={{ 
+                display: 'inline-block', 
+                background: 'rgba(99, 102, 241, 0.08)', 
+                color: 'var(--accent)', 
+                border: '1px solid var(--border-active)',
+                borderRadius: 'var(--r-sm)',
+                padding: '4px 10px',
+                fontSize: '11px',
+                fontWeight: 700,
+                fontFamily: 'var(--font-mono)',
+                marginBottom: '16px'
+              }}
+            >
               The Compiler
-            </div>
-            <h3>Direct AST Translation Showcase</h3>
-            <p style={{ marginBottom: '20px' }}>
+            </span>
+            <Title order={3} style={{ fontSize: '20px', fontWeight: 700, marginBottom: '12px' }}>
+              Direct AST Translation Showcase
+            </Title>
+            <Text size="sm" c="dimmed" mb="xl" style={{ lineHeight: 1.5 }}>
               Our compiler parses your standard JavaScript AST (Abstract Syntax Tree) during deployment and maps statements directly into native C structures. Under the hood, this leverages our stackless coroutine framework to execute concurrent micro-threads in isolated, partitioned micro-heaps:
-            </p>
+            </Text>
 
-            <div className="symbol-playground">
-              {/* JS Column */}
-              <div className="symbol-play-col">
-                <span className="symbol-play-label">JavaScript (Next.js / Web Standard)</span>
-                <div 
-                  className={`symbol-node ${hoveredSymbol === 'header' ? 'active' : ''}`}
-                  onMouseEnter={() => setHoveredSymbol('header')}
-                  onMouseLeave={() => setHoveredSymbol(null)}
-                >
-                  req.headers.get(...)
-                </div>
-                <div 
-                  className={`symbol-node ${hoveredSymbol === 'db' ? 'active' : ''}`}
-                  onMouseEnter={() => setHoveredSymbol('db')}
-                  onMouseLeave={() => setHoveredSymbol(null)}
-                >
-                  env.DB_BINDING.query
-                </div>
-                <div 
-                  className={`symbol-node ${hoveredSymbol === 'json' ? 'active' : ''}`}
-                  onMouseEnter={() => setHoveredSymbol('json')}
-                  onMouseLeave={() => setHoveredSymbol(null)}
-                >
-                  Response.json(data)
-                </div>
+            <div className="symbol-playground" style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
+              {/* Column Headers */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                <Text size="xs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em', minHeight: '20px', display: 'flex', alignItems: 'flex-end' }}>
+                  JavaScript Source
+                </Text>
+                <Text size="xs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em', minHeight: '20px', display: 'flex', alignItems: 'flex-end' }}>
+                  Compiled C Target
+                </Text>
               </div>
 
-              {/* C Column */}
-              <div className="symbol-play-col">
-                <span className="symbol-play-label">Statically Compiled C</span>
-                <div 
-                  className={`symbol-node ${hoveredSymbol === 'header' ? 'active-mint' : ''}`}
-                  onMouseEnter={() => setHoveredSymbol('header')}
-                  onMouseLeave={() => setHoveredSymbol(null)}
-                >
-                  get_header(...)
-                </div>
-                <div 
-                  className={`symbol-node ${hoveredSymbol === 'db' ? 'active-mint' : ''}`}
-                  onMouseEnter={() => setHoveredSymbol('db')}
-                  onMouseLeave={() => setHoveredSymbol(null)}
-                >
-                  db_query(...)
-                </div>
-                <div 
-                  className={`symbol-node ${hoveredSymbol === 'json' ? 'active-mint' : ''}`}
-                  onMouseEnter={() => setHoveredSymbol('json')}
-                  onMouseLeave={() => setHoveredSymbol(null)}
-                >
-                  create_response(...)
-                </div>
+              {/* Column Nodes */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                {/* JS Column */}
+                <Stack gap="xs">
+                  {[
+                    { id: 'header' as SymbolId, label: 'req.headers.get(...)' },
+                    { id: 'db' as SymbolId, label: 'env.DB_BINDING.query' },
+                    { id: 'json' as SymbolId, label: 'Response.json(data)' }
+                  ].map((node) => (
+                    <div 
+                      key={node.id}
+                      className={`symbol-node ${hoveredSymbol === node.id ? 'active' : ''}`}
+                      onMouseEnter={() => setHoveredSymbol(node.id)}
+                      onMouseLeave={() => setHoveredSymbol(null)}
+                      style={{
+                        background: hoveredSymbol === node.id ? 'rgba(99, 102, 241, 0.06)' : 'rgba(255,255,255,0.01)',
+                        border: '1px solid',
+                        borderColor: hoveredSymbol === node.id ? 'var(--accent)' : 'var(--border-strong)',
+                        padding: '12px',
+                        borderRadius: 'var(--r-md)',
+                        fontSize: '12.5px',
+                        fontFamily: 'var(--font-mono)',
+                        color: hoveredSymbol === node.id ? 'white' : 'var(--text-muted)',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                        height: '48px',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {node.label}
+                    </div>
+                  ))}
+                </Stack>
+
+                {/* C Column */}
+                <Stack gap="xs">
+                  {[
+                    { id: 'header' as SymbolId, label: 'get_header(...)' },
+                    { id: 'db' as SymbolId, label: 'db_query(...)' },
+                    { id: 'json' as SymbolId, label: 'create_response(...)' }
+                  ].map((node) => (
+                    <div 
+                      key={node.id}
+                      className={`symbol-node ${hoveredSymbol === node.id ? 'active-mint' : ''}`}
+                      onMouseEnter={() => setHoveredSymbol(node.id)}
+                      onMouseLeave={() => setHoveredSymbol(null)}
+                      style={{
+                        background: hoveredSymbol === node.id ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255,255,255,0.01)',
+                        border: '1px solid',
+                        borderColor: hoveredSymbol === node.id ? 'var(--accent-mint)' : 'var(--border-strong)',
+                        padding: '12px',
+                        borderRadius: 'var(--r-md)',
+                        fontSize: '12.5px',
+                        fontFamily: 'var(--font-mono)',
+                        color: hoveredSymbol === node.id ? 'var(--accent-mint)' : 'var(--text-muted)',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                        height: '48px',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {node.label}
+                    </div>
+                  ))}
+                </Stack>
               </div>
             </div>
 
             {/* Translation Details Box */}
-            <div className="symbol-details-box">
+            <Paper 
+              p="md" 
+              style={{ 
+                background: 'rgba(0,0,0,0.2)', 
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--r-md)',
+                minHeight: '80px',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
               {hoveredSymbol ? (
-                <div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-mint)', marginBottom: '4px' }}>
+                <Stack gap={4} w="100%">
+                  <Text size="xs" fw={700} c="var(--accent-mint)" style={{ fontFamily: 'var(--font-mono)' }}>
                     Mapping: {SYMBOLS[hoveredSymbol].js} → {SYMBOLS[hoveredSymbol].c}
-                  </div>
-                  <div style={{ color: 'var(--text-muted)', fontSize: '12px', lineHeight: 1.4 }}>
+                  </Text>
+                  <Text size="xs" c="dimmed" style={{ lineHeight: 1.45 }}>
                     {SYMBOLS[hoveredSymbol].desc}
-                  </div>
-                </div>
+                  </Text>
+                </Stack>
               ) : (
-                <div style={{ color: 'var(--text-dim)', fontStyle: 'italic', fontFamily: 'var(--font-mono)', fontSize: '12px' }}>
+                <Text size="xs" c="dimmed" style={{ fontStyle: 'italic', fontFamily: 'var(--font-mono)' }}>
                   → Hover over any JavaScript or C node above to inspect compiled symbols.
-                </div>
+                </Text>
               )}
-            </div>
-          </div>
+            </Paper>
+          </Paper>
 
           {/* Column 2: The Runtime (Visual Stack Comparison) */}
-          <div className="tech-card g">
-            <div className="tech-tag" style={{ background: 'var(--accent-mint-dim)', color: 'var(--accent-mint)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+          <Paper 
+            p="xl" 
+            style={{ 
+              background: 'var(--surface)', 
+              border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--r-lg)',
+              boxShadow: 'var(--shadow-sm)'
+            }}
+          >
+            <span 
+              style={{ 
+                display: 'inline-block', 
+                background: 'rgba(16, 185, 129, 0.08)', 
+                color: 'var(--accent-mint)', 
+                border: '1px solid rgba(16, 185, 129, 0.2)',
+                borderRadius: 'var(--r-sm)',
+                padding: '4px 10px',
+                fontSize: '11px',
+                fontWeight: 700,
+                fontFamily: 'var(--font-mono)',
+                marginBottom: '16px'
+              }}
+            >
               The Runtime
-            </div>
-            <h3>Virtualization Layer Comparison</h3>
-            <p style={{ marginBottom: '20px' }}>
+            </span>
+            <Title order={3} style={{ fontSize: '20px', fontWeight: 700, marginBottom: '12px' }}>
+              Virtualization Layer Comparison
+            </Title>
+            <Text size="sm" c="dimmed" mb="xl" style={{ lineHeight: 1.5 }}>
               Standard serverless architectures stack execution layers (virtual machines, JIT layers, and heavy JS engines) which adds CPU duration latency. DataVec compiles your service into a standalone, memory-protected virtual kernel daemon process.
-            </p>
+            </Text>
 
-            <div className="stack-comparison">
-              <div className="stack-bars-wrap">
-                {/* DataVec Compact Stack */}
-                <div className="stack-flow dv">
-                  <span className="stack-title">DataVec compiled C</span>
-                  <div className="stack-flow-node" style={{ fontWeight: 'bold' }}>Deductive Socket Poller (0ms)</div>
-                  <div className="stack-flow-node" style={{ fontWeight: 'bold' }}>Stackless Coroutine (0ms)</div>
-                  <div className="stack-flow-node" style={{ fontWeight: 'bold' }}>Isolated Micro-Heap SQLite (0ms)</div>
-                  <div style={{ textAlign: 'center', fontSize: '11px', marginTop: '12px', color: 'var(--accent-mint)', fontFamily: 'var(--font-mono)' }}>
-                    Total: 104 KB Single Binary<br />Cold Start: 0.00ms (M:N Scheduled)
-                  </div>
-                </div>
+            <SimpleGrid cols={2} spacing="lg" style={{ marginTop: '24px' }}>
+              {/* DataVec Compact Stack */}
+              <Stack gap="xs" align="stretch">
+                <Text size="xs" fw={700} c="var(--accent-mint)" style={{ fontFamily: 'var(--font-mono)', textAlign: 'center' }}>
+                  DataVec compiled C
+                </Text>
+                {['Deductive Socket Poller (0ms)', 'Stackless Coroutine (0ms)', 'Isolated Micro-Heap SQLite (0ms)'].map((layer, idx) => (
+                  <Paper 
+                    key={idx}
+                    p="xs" 
+                    style={{
+                      background: 'rgba(16, 185, 129, 0.04)',
+                      border: '1px solid var(--accent-mint)',
+                      borderRadius: 'var(--r-sm)',
+                      textAlign: 'center',
+                      color: 'var(--accent-mint)',
+                      fontSize: '12px',
+                      fontWeight: 700
+                    }}
+                  >
+                    {layer}
+                  </Paper>
+                ))}
+                <Text size="xxs" c="var(--accent-mint)" style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '11px', marginTop: '8px', lineHeight: 1.4 }}>
+                  Total: 104 KB Single Binary<br />Cold Start: 0.00ms (M:N Scheduled)
+                </Text>
+              </Stack>
 
-                {/* AWS/Vercel Isolate Stack */}
-                <div className="stack-flow aw">
-                  <span className="stack-title">Virtualized Edge Isolate</span>
-                  <div className="stack-flow-node">API Gateway (metered)</div>
-                  <div className="stack-flow-node">Firecracker VM (startup)</div>
-                  <div className="stack-flow-node">V8 Isolate engine</div>
-                  <div className="stack-flow-node">Node.js Runtime &amp; GC</div>
-                  <div className="stack-flow-node">Dynamic JS Route (V8 Heap)</div>
-                  <div style={{ textAlign: 'center', fontSize: '11px', marginTop: '12px', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
-                    Total: 50 MB+ Layer Stack<br />Cold Start: ~5ms - 50ms (Unstructured)
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              {/* AWS/Vercel Isolate Stack */}
+              <Stack gap="xs" align="stretch">
+                <Text size="xs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textAlign: 'center' }}>
+                  Virtualized Edge Isolate
+                </Text>
+                {['API Gateway (metered)', 'Firecracker VM (startup)', 'V8 Isolate engine', 'Node.js Runtime & GC', 'Dynamic JS Route (V8 Heap)'].map((layer, idx) => (
+                  <Paper 
+                    key={idx}
+                    p="xs" 
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.01)',
+                      border: '1px solid var(--border-strong)',
+                      borderRadius: 'var(--r-sm)',
+                      textAlign: 'center',
+                      color: 'var(--text-muted)',
+                      fontSize: '11px'
+                    }}
+                  >
+                    {layer}
+                  </Paper>
+                ))}
+                <Text size="xxs" c="dimmed" style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '11px', marginTop: '8px', lineHeight: 1.4 }}>
+                  Total: 50 MB+ Layer Stack<br />Cold Start: ~5ms - 50ms (Unstructured)
+                </Text>
+              </Stack>
+            </SimpleGrid>
+          </Paper>
+        </SimpleGrid>
+      </Container>
     </section>
   );
 }

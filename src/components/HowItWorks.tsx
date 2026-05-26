@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Container, SimpleGrid, Paper, Stack, Flex, Title, Text, Timeline, Code } from '@mantine/core';
 
 const MONITOR_LOGS = [
   // Step 0: Write
@@ -75,88 +76,138 @@ export default function HowItWorks() {
   const [activeStep, setActiveStep] = useState<number>(0);
 
   return (
-    <section className="how z" id="how">
-      <div className="wrap">
-        <div className="section-header-center">
-          <span className="sec-eye">Infrastructure Pipeline</span>
-          <h2>The compiled edge deployment pipeline</h2>
-          <p className="sec-sub">
+    <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="how">
+      <Container size="lg">
+        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
+            Infrastructure Pipeline
+          </span>
+          <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+            The compiled edge deployment pipeline
+          </Title>
+          <Text size="md" c="dimmed" style={{ maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
             Hover over the compilation phases to inspect how standard JavaScript code is compiled, linked, and hosted on our native edge network.
-          </p>
+          </Text>
         </div>
 
-        <div className="timeline-wrap">
-          {/* Timeline Pipeline on the left */}
-          <div className="timeline-steps">
-            <div 
-              className={`timeline-step-item ${activeStep === 0 ? 'active' : ''}`}
-              onMouseEnter={() => setActiveStep(0)}
-              onClick={() => setActiveStep(0)}
-            >
-              <span className="timeline-step-badge">[PHASE 01 / BUILD]</span>
-              <h3>Write standard JavaScript</h3>
-              <p>
-                Build endpoints using Next.js static layouts or standard Web Worker APIs conforming to edge specifications.
-              </p>
-            </div>
-
-            <div 
-              className={`timeline-step-item ${activeStep === 1 ? 'active' : ''}`}
-              onMouseEnter={() => setActiveStep(1)}
-              onClick={() => setActiveStep(1)}
-            >
-              <span className="timeline-step-badge">[PHASE 02 / TRANSLATE]</span>
-              <h3>Compile directly to C</h3>
-              <p>
-                Our compiler translates JavaScript AST logic into highly optimized, statically allocated native C structures.
-              </p>
-            </div>
-
-            <div 
-              className={`timeline-step-item ${activeStep === 2 ? 'active' : ''}`}
-              onMouseEnter={() => setActiveStep(2)}
-              onClick={() => setActiveStep(2)}
-            >
-              <span className="timeline-step-badge">[PHASE 03 / RUN]</span>
-              <h3>104 KB Runtime Engine</h3>
-              <p>
-                Serve requests instantly on a standalone native process coordinating SSL handshakes, routing, and database drivers.
-              </p>
-            </div>
-
-            <div 
-              className={`timeline-step-item ${activeStep === 3 ? 'active' : ''}`}
-              onMouseEnter={() => setActiveStep(3)}
-              onClick={() => setActiveStep(3)}
-            >
-              <span className="timeline-step-badge">[PHASE 04 / AUDIT]</span>
-              <h3>Predictable Billing Locks</h3>
-              <p>
-                Maintain total budget control with fixed monthly billing caps that physically disable metered surge invoices.
-              </p>
-            </div>
-          </div>
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
+          {/* Timeline steps on the left */}
+          <Timeline 
+            active={activeStep} 
+            bulletSize={30} 
+            lineWidth={2}
+            styles={{
+              item: { cursor: 'pointer', transition: 'all 0.2s ease' }
+            }}
+          >
+            {[
+              { title: 'Write standard JavaScript', desc: 'Build endpoints using Next.js static layouts or standard Web Worker APIs conforming to edge specifications.', badge: 'PHASE 01 / BUILD' },
+              { title: 'Compile directly to C', desc: 'Our compiler translates JavaScript AST logic into highly optimized, statically allocated native C structures.', badge: 'PHASE 02 / TRANSLATE' },
+              { title: '104 KB Runtime Engine', desc: 'Serve requests instantly on a standalone native process coordinating SSL handshakes, routing, and database drivers.', badge: 'PHASE 03 / RUN' },
+              { title: 'Predictable Billing Locks', desc: 'Maintain total budget control with fixed monthly billing caps that physically disable metered overage invoices.', badge: 'PHASE 04 / AUDIT' }
+            ].map((step, idx) => (
+              <Timeline.Item 
+                key={idx}
+                bullet={
+                  <span style={{ fontSize: '11px', fontWeight: 'bold', color: activeStep === idx ? 'var(--accent-mint)' : 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
+                    0{idx + 1}
+                  </span>
+                }
+                onMouseEnter={() => setActiveStep(idx)}
+                onClick={() => setActiveStep(idx)}
+                style={{
+                  opacity: activeStep === idx ? 1 : 0.45,
+                  transform: activeStep === idx ? 'translateX(8px)' : 'none',
+                  transition: 'all 0.25s ease'
+                }}
+              >
+                <Paper 
+                  p="md" 
+                  style={{ 
+                    background: activeStep === idx ? 'var(--surface)' : 'transparent',
+                    border: '1px solid',
+                    borderColor: activeStep === idx ? 'var(--border-strong)' : 'transparent',
+                    borderRadius: 'var(--r-md)',
+                    boxShadow: activeStep === idx ? 'var(--shadow-sm)' : 'none'
+                  }}
+                >
+                  <Text size="xs" fw={700} c="var(--accent)" style={{ fontFamily: 'var(--font-mono)' }}>
+                    [{step.badge}]
+                  </Text>
+                  <Text size="md" fw={700} mt={4} c="white">
+                    {step.title}
+                  </Text>
+                  <Text size="sm" c="dimmed" mt={6} style={{ lineHeight: 1.5 }}>
+                    {step.desc}
+                  </Text>
+                </Paper>
+              </Timeline.Item>
+            ))}
+          </Timeline>
 
           {/* Interactive Compiler Inspector Monitor on the right */}
-          <div className="compiler-monitor">
-            <div className="term-bar" style={{ background: '#0d1016' }}>
-              <div className="term-dots">
-                <span className="dot-r" />
-                <span className="dot-y" />
-                <span className="dot-g" />
-              </div>
-              <span className="term-title">compiler_inspector.log</span>
-              <span className="term-lang">telemetry</span>
-            </div>
-            <div className="monitor-screen">
-              <span className="monitor-tag">active_screen_0{activeStep + 1}</span>
-              <pre style={{ margin: 0, whiteSpace: 'pre', overflowX: 'auto' }}>
-                <code>{MONITOR_LOGS[activeStep]}</code>
+          <Stack gap={0} w="100%">
+            <Paper 
+              p="xs"
+              style={{ 
+                background: '#0d1016',
+                borderTop: '1px solid var(--border-strong)',
+                borderLeft: '1px solid var(--border-strong)',
+                borderRight: '1px solid var(--border-strong)',
+                borderTopLeftRadius: 'var(--r-lg)',
+                borderTopRightRadius: 'var(--r-lg)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 16px'
+              }}
+            >
+              <Flex gap="xs">
+                <span className="dot-r" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }} />
+                <span className="dot-y" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }} />
+                <span className="dot-g" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }} />
+              </Flex>
+              <Text size="xs" fw={600} c="dimmed" style={{ fontFamily: 'var(--font-mono)' }}>
+                compiler_inspector.log
+              </Text>
+              <Text size="xs" fw={600} c="var(--accent)" style={{ fontFamily: 'var(--font-mono)' }}>
+                telemetry
+              </Text>
+            </Paper>
+            
+            <Paper
+              p="xl"
+              style={{
+                background: '#090b10',
+                border: '1px solid var(--border-strong)',
+                borderBottomLeftRadius: 'var(--r-lg)',
+                borderBottomRightRadius: 'var(--r-lg)',
+                minHeight: '400px',
+                position: 'relative'
+              }}
+            >
+              <span style={{ position: 'absolute', top: '12px', right: '16px', fontSize: '10px', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)', letterSpacing: '0.05em' }}>
+                active_screen_0{activeStep + 1}
+              </span>
+              <pre style={{ margin: 0, overflowX: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                <Code 
+                  block
+                  style={{
+                    background: 'transparent',
+                    padding: 0,
+                    color: '#a78bfa',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '12.5px',
+                    lineHeight: 1.55
+                  }}
+                >
+                  {MONITOR_LOGS[activeStep]}
+                </Code>
               </pre>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Paper>
+          </Stack>
+        </SimpleGrid>
+      </Container>
     </section>
   );
 }
