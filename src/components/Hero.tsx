@@ -10,11 +10,11 @@ const BENCHMARKS = {
     title: "Next.js Static Routing",
     sub: "Processes a complex nested endpoint router with custom JSON payload returns.",
     data: [
-      { name: "DataVec compiled C", val: "0.08ms", pct: 1.5, tag: "dv" },
-      { name: "Deno Deploy", val: "0.95ms", pct: 2.1, tag: "de" },
-      { name: "Cloudflare Workers", val: "1.15ms", pct: 2.5, tag: "cf" },
-      { name: "Vercel Edge", val: "12.40ms", pct: 27.4, tag: "ve" },
-      { name: "AWS Lambda (Node.js)", val: "45.20ms", pct: 100, tag: "aw" }
+      { name: "DataVec compiled C", ms: 0.08, tag: "dv" },
+      { name: "Deno Deploy", ms: 0.95, tag: "de" },
+      { name: "Cloudflare Workers", ms: 1.15, tag: "cf" },
+      { name: "Vercel Edge", ms: 12.40, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", ms: 45.20, tag: "aw" }
     ],
     winner: "Compiling JavaScript AST to C stateful coroutines yields direct machine execution speed."
   },
@@ -22,11 +22,11 @@ const BENCHMARKS = {
     title: "JWT Token Verification",
     sub: "Decodes, parses, and cryptographically signs high-volume OAuth signatures.",
     data: [
-      { name: "DataVec compiled C", val: "0.12ms", pct: 1.5, tag: "dv" },
-      { name: "Deno Deploy", val: "1.48ms", pct: 2.4, tag: "de" },
-      { name: "Cloudflare Workers", val: "1.84ms", pct: 3.0, tag: "cf" },
-      { name: "Vercel Edge", val: "18.20ms", pct: 29.3, tag: "ve" },
-      { name: "AWS Lambda (Node.js)", val: "62.10ms", pct: 100, tag: "aw" }
+      { name: "DataVec compiled C", ms: 0.12, tag: "dv" },
+      { name: "Deno Deploy", ms: 1.48, tag: "de" },
+      { name: "Cloudflare Workers", ms: 1.84, tag: "cf" },
+      { name: "Vercel Edge", ms: 18.20, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", ms: 62.10, tag: "aw" }
     ],
     winner: "Native C crypto APIs execute inside isolated micro-heaps with zero lock overhead."
   },
@@ -34,11 +34,11 @@ const BENCHMARKS = {
     title: "SSE AI Streaming Payload",
     sub: "Maintains concurrent chunked transfer streams optimized for generative outputs.",
     data: [
-      { name: "DataVec compiled C", val: "4.80ms", pct: 1.5, tag: "dv" },
-      { name: "Deno Deploy", val: "24.20ms", pct: 7.1, tag: "de" },
-      { name: "Cloudflare Workers", val: "28.50ms", pct: 8.4, tag: "cf" },
-      { name: "Vercel Edge", val: "128.40ms", pct: 37.7, tag: "ve" },
-      { name: "AWS Lambda (Node.js)", val: "340.50ms", pct: 100, tag: "aw" }
+      { name: "DataVec compiled C", ms: 4.80, tag: "dv" },
+      { name: "Deno Deploy", ms: 24.20, tag: "de" },
+      { name: "Cloudflare Workers", ms: 28.50, tag: "cf" },
+      { name: "Vercel Edge", ms: 128.40, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", ms: 340.50, tag: "aw" }
     ],
     winner: "Stackless coroutines coordinate I/O stream buffers without memory GC pauses."
   }
@@ -47,6 +47,7 @@ const BENCHMARKS = {
 export default function Hero() {
   const [activeWorkload, setActiveWorkload] = useState<WorkloadType>('routing');
   const current = BENCHMARKS[activeWorkload];
+  const maxMs = Math.max(...current.data.map(row => row.ms));
 
   return (
     <section style={{ padding: '80px 0 100px', position: 'relative', zIndex: 1 }}>
@@ -228,7 +229,7 @@ export default function Hero() {
                         <div
                           className={`benchmark-bar ${row.tag}`}
                           style={{ 
-                            width: `${row.pct}%`, 
+                            width: `${maxMs > 0 ? Math.max(2, (row.ms / maxMs) * 100) : 0}%`, 
                             height: '100%', 
                             background: isWinner ? 'var(--accent-mint)' : 'var(--border-strong)',
                             borderRadius: '4px',
@@ -238,7 +239,7 @@ export default function Hero() {
                       </div>
                       
                       <Text size="xs" fw={700} c={isWinner ? 'var(--accent-mint)' : 'dimmed'} ta="right" style={{ fontFamily: 'var(--font-mono)' }}>
-                        {row.val}
+                        {row.ms}ms
                       </Text>
                     </SimpleGrid>
                   );
