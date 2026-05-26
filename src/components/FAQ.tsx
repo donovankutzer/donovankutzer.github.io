@@ -1,97 +1,79 @@
 'use client';
 
-import { useState } from 'react';
+import { Accordion } from '@mantine/core';
 
 const FAQ_DATA = [
   {
-    question: "Does my Cloudflare Workers code run here without changes?",
+    question: "Does my Cloudflare Workers code run on DataVec without modifications?",
     answer: (
       <>
-        Yes, provided that your codebase relies on standard Web Workers APIs such as fetch, Request, Response,
-        and URL. Frameworks like Hono, itty-router, and Elysia are designed to be runtime-agnostic by default,
-        meaning you can migrate them directly to our infrastructure. A typical migration requires no code
-        changes whatsoever: you simply swap out your wrangler commands for our deploy CLI tools. Please note
-        that Node.js-specific APIs or legacy WebSockets are not supported at this stage.
+        Yes, as long as your application targets standard Web Workers specification APIs such as fetch, Request, Response, URL, and Web Crypto. Popular routing frameworks like Hono, Elysia, and itty-router are completely runtime-agnostic by default. Migrating Hono or Elysia codebases usually requires zero code changes: you simply substitute your wrangler deploy command with our compiled deploy CLI tool.
         <div className="faq-code" aria-label="Code block detailing migration commands">
-          # Before<br />
-          wrangler deploy<br /><br />
-          # After<br />
-          datavec deploy<br /><br />
-          # Code: unchanged.
+          # Before (Cloudflare)<br />
+          $ wrangler deploy<br /><br />
+          # After (DataVec Compiled C)<br />
+          $ datavec deploy<br /><br />
+          # Application codebase: 100% unchanged.
         </div>
-        If your code uses Node.js-specific APIs (fs, net, child_process) or WebSockets, those aren't supported
-        yet. We say so upfront on the compatibility page.
       </>
     )
   },
   {
-    question: "What is the Web Workers standard?",
-    answer: "The Web Workers standard is an Ecma International specification (TC55) establishing a uniform JavaScript API surface across browsers, edge nodes, and servers. This baseline covers standard functions like fetch, Request, Response, URL, TextEncoder, and Streams. Because major modern platforms like Cloudflare Workers, Deno Deploy, Vercel Edge, and Fastly Compute conform to this standard, any application targeting these APIs will run identically on DataVec without manual modifications."
+    question: "What exactly is the Web Workers API standard?",
+    answer: "The Web Workers standard (maintained by standard organizations including TC55) specifies a standard, uniform JavaScript API surface across browsers, server runtimes, and edge environments. It establishes baseline APIs like fetch, Request, Response, URL, URLSearchParams, Headers, TextEncoder, and Streams. Since platforms like Deno Deploy, Vercel Edge, and Cloudflare Workers adhere to these standard specs, applications targetting them compile flawlessly onto DataVec native edge process containers."
   },
   {
-    question: "What exactly does the flat rate include?",
-    answer: "Our standard plans cover all compute resources, bandwidth transit, automatic HTTPS provisioning, edge routing, HTTP/1.1 and HTTP/2 support, and full developer dashboard access. We do not count requests, cap network bandwidth, meter CPU cycles, or charge seat fees, so your monthly invoice remains completely static regardless of traffic spikes."
+    question: "What resource limits are included in standard flat-rate plans?",
+    answer: "Our standard pricing tiers cover all compute allocations, edge routing resources, automatic TLS provisioning, global HTTP/2 pipelines, and developer telemetry charts. We do not count requests, count CPU milliseconds, or throttle egress bandwidth under standard usage limits. If your application starts approaching the upper boundaries of your tier, we reach out to discuss transition options rather than locking your execution or charging sudden multipliers."
   },
   {
-    question: "How are cold starts actually 0ms?",
-    answer: "Cold start latency is eliminated because our native compiler translates your source JavaScript files directly into high-performance native C binaries before deployment. When an incoming request reaches your endpoint, our purpose-built native runtime loads the binary directly, avoiding the need to spin up a JavaScript interpreter, initialize a V8 engine instance, or warm up a JIT compiler. While standard platforms suffer cold starts by initializing fresh virtualized runtimes, DataVec executes native machine code instantly."
+    question: "How are cold starts physically reduced to absolute 0ms?",
+    answer: "Traditional serverless platforms spin up a new virtual machine, initialize a V8 JavaScript runtime isolate, and execute a JIT compilation warm-up loop for incoming requests. This introduces cold-start latency. DataVec compiles JavaScript source code directly into a static C-based standalone machine binary before deployment. When an incoming request reaches your edge node, the kernel loads the binary instantly. It executes native machine code without any virtualized start-up overhead."
   },
   {
-    question: "What if I go over the limits on Pro or Business?",
-    answer: "If your application consistently exceeds the high-level recommendations of your tier, we will reach out directly to discuss your resource needs instead of automatically throttling your traffic or billing you for overage. We prefer to work with you to transition your project to a more suitable plan or customized flat rate, ensuring your billing remains entirely transparent and free of surprise charges."
+    question: "Is DataVec optimized for high-volume AI workloads?",
+    answer: "Absolutely. Our native runtime is highly optimized for AI pipelines, offering full native support for server-sent events (SSE), chunked JSON streams, cryptographic verification handshakes, and upstream API gateways. Libraries like OpenAI and Anthropic SDKs deploy natively without alterations. Furthermore, because flat rate plans eliminate duration-based metering, you can run active generative streaming connections for minutes at a time without accumulating expensive microsecond-based computing bills."
   },
   {
-    question: "Does this work for AI workloads?",
-    answer: "Yes, our infrastructure is optimized for AI integrations, with full native support for streaming HTTP responses, Server-Sent Events (SSE), chunked transfer encoding, and secure upstream proxy configurations. Standard tools like the OpenAI and Anthropic SDKs conform to Web Workers standards and deploy without adjustments. This environment is highly advantageous for AI streaming workflows, as long-running connection durations do not incur the microsecond-based execution surcharges common on traditional serverless platforms."
-  },
-  {
-    question: "Can I test it before committing?",
-    answer: "Yes, you can email hello@datavec.com to request a temporary test deployment of your actual codebase. Setting up a sandbox deployment typically takes about twenty minutes, allowing you to run performance benchmarks on your own endpoints and review real resource consumption metrics before making any long-term decisions."
+    question: "Can I benchmark my codebase before migrating?",
+    answer: "Yes. You can contact hello@datavec.com to request an ephemeral developer sandbox deployment of your active codebase. Setting up a temporary sandbox typically takes less than twenty minutes, enabling your team to run performance benchmarks on actual edge nodes and verify latency margins before committing."
   }
 ];
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState(null);
-
-  const toggleIndex = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <section className="faq z" id="faq">
       <div className="wrap">
         <div className="section-header-center">
-          <span className="sec-eye">FAQ</span>
-          <h2>Frequently asked questions about our technology and billing</h2>
+          <span className="sec-eye">Developer FAQ</span>
+          <h2>Frequently asked questions about technology and pricing</h2>
         </div>
 
-        <div className="faq-list" id="faqList">
-          {FAQ_DATA.map((item, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div key={index} className={`faq-item ${isOpen ? 'open' : ''}`}>
-                <button
-                  className="faq-q"
-                  onClick={() => toggleIndex(index)}
-                  aria-expanded={isOpen ? 'true' : 'false'}
-                >
-                  {item.question}
-                  <span className="faq-arrow" aria-hidden="true">
-                    {isOpen ? '−' : '+'}
-                  </span>
-                </button>
-                <div className="faq-a-container">
-                  <div className="faq-a">
-                    <div className="faq-a-inner">
-                      {item.answer}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <Accordion 
+          variant="separated" 
+          radius="lg" 
+          defaultValue={null}
+          styles={{
+            root: { maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' },
+            item: { background: 'var(--surface)', border: '1px solid var(--border)', transition: 'var(--transition)' },
+            control: { padding: '12px 24px', outline: 'none' },
+            label: { color: 'var(--text)', fontSize: '15.5px', fontWeight: 700, fontFamily: 'var(--font-sans)', textAlign: 'left' },
+            chevron: { color: 'var(--accent-mint)', fontSize: '18px' },
+            panel: { background: 'rgba(255, 255, 255, 0.01)', borderTop: '1px solid var(--border)' },
+            content: { padding: '24px', fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6 }
+          }}
+        >
+          {FAQ_DATA.map((item, index) => (
+            <Accordion.Item key={index} value={`item-${index}`} className="faq-item">
+              <Accordion.Control className="faq-q">{item.question}</Accordion.Control>
+              <Accordion.Panel className="faq-a">
+                {item.answer}
+              </Accordion.Panel>
+            </Accordion.Item>
+          ))}
+        </Accordion>
       </div>
     </section>
   );
 }
+

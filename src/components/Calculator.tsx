@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
+import { Select } from '@mantine/core';
 
 // Register only the required Chart.js elements for a lightweight bundle
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
@@ -15,26 +16,26 @@ const NAMES = {
 };
 
 const COLORS = {
-  vercel: '#BA7517',
-  aws: '#E24B4A',
-  cloudflare: '#f77f00',
-  azure: '#185FA5',
-  gcp: '#534AB7'
+  vercel: '#a78bfa',     // Brand Electric Violet-ish
+  aws: '#f87171',        // Soft red
+  cloudflare: '#fbbf24', // Amber/Orange
+  azure: '#3b82f6',      // Blue
+  gcp: '#06b6d4'         // Cyan
 };
 
 // Helper metrics functions
-const getDuration = (intensity) => {
+const getDuration = (intensity: string) => {
   return intensity === 'light' ? 0.15 : intensity === 'medium' ? 0.6 : 2.5; // in seconds
 };
 
-const getMemory = (intensity) => {
+const getMemory = (intensity: string) => {
   return intensity === 'light' ? 0.25 : intensity === 'medium' ? 0.5 : 1.0; // in GB
 };
 
 /**
  * Estimate monthly bill for a given provider
  */
-function estimateBill(provider, reqM, intensity, bandwidthGB) {
+function estimateBill(provider: string, reqM: number, intensity: string, bandwidthGB: number) {
   const d = getDuration(intensity);
   const m = getMemory(intensity);
   const totalRequests = reqM * 1e6;
@@ -81,7 +82,7 @@ function estimateBill(provider, reqM, intensity, bandwidthGB) {
 }
 
 // Format currency helper
-const formatCurrency = (amount) => '$' + Math.round(amount).toLocaleString();
+const formatCurrency = (amount: number) => '$' + Math.round(amount).toLocaleString();
 
 export default function Calculator() {
   const [provider, setProvider] = useState('cloudflare');
@@ -89,8 +90,8 @@ export default function Calculator() {
   const [intensity, setIntensity] = useState('medium');
   const [bandwidthGB, setBandwidthGB] = useState(15000);
 
-  const canvasRef = useRef(null);
-  const chartInstanceRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const chartInstanceRef = useRef<Chart | null>(null);
 
   // Perform bill estimations
   const providers = ['vercel', 'aws', 'cloudflare', 'azure', 'gcp'];
@@ -107,9 +108,10 @@ export default function Calculator() {
     if (!canvasRef.current) return;
 
     const ctx = canvasRef.current;
-    const labels = [NAMES[provider].split(' ')[0], 'DataVec'];
+    const providerShortName = NAMES[provider].split(' ')[0];
+    const labels = [providerShortName, 'DataVec Flat'];
     const data = [Math.round(selectedProviderBill), Math.round(flatRate)];
-    const bgColors = [COLORS[provider], '#00e090'];
+    const bgColors = [COLORS[provider], '#00f5a0']; // Hyper Mint for DataVec
 
     if (chartInstanceRef.current) {
       // Update existing chart
@@ -126,8 +128,9 @@ export default function Calculator() {
           datasets: [{
             data,
             backgroundColor: bgColors,
-            borderRadius: 6,
-            borderSkipped: false
+            borderRadius: 4,
+            borderSkipped: false,
+            barPercentage: 0.55
           }]
         },
         options: {
@@ -136,6 +139,13 @@ export default function Calculator() {
           plugins: {
             legend: { display: false },
             tooltip: {
+              backgroundColor: '#0f1115',
+              titleColor: '#f3f4f6',
+              bodyColor: '#a78bfa',
+              borderColor: 'rgba(255, 255, 255, 0.08)',
+              borderWidth: 1,
+              titleFont: { family: 'var(--font-mono)', size: 11 },
+              bodyFont: { family: 'var(--font-mono)', size: 12, weight: 'bold' },
               callbacks: {
                 label: (context) => ' ' + formatCurrency(context.parsed.y) + '/mo'
               }
@@ -144,8 +154,8 @@ export default function Calculator() {
           scales: {
             x: {
               ticks: {
-                font: { size: 13, weight: 500 },
-                color: '#d8eaf8',
+                font: { family: 'var(--font-mono)', size: 12, weight: 600 },
+                color: '#8a8f98',
                 maxRotation: 0
               },
               grid: { display: false },
@@ -153,14 +163,14 @@ export default function Calculator() {
             },
             y: {
               ticks: {
-                font: { size: 11 },
-                color: '#6a8fae',
+                font: { family: 'var(--font-mono)', size: 11 },
+                color: '#4b5563',
                 callback: (value) => {
                   const num = typeof value === 'number' ? value : parseFloat(value);
                   return num >= 1000 ? '$' + Math.round(num / 1000) + 'K' : '$' + num;
                 }
               },
-              grid: { color: 'rgba(23, 32, 53, 0.4)' },
+              grid: { color: 'rgba(255, 255, 255, 0.04)' },
               border: { display: false }
             }
           }
@@ -177,110 +187,172 @@ export default function Calculator() {
     };
   }, [provider, reqM, intensity, bandwidthGB, selectedProviderBill, flatRate]);
 
+  // Mantine Styles configuration helper
+  const selectStyles = {
+    root: { display: 'flex', flexDirection: 'column' as const, gap: '8px' },
+    label: { 
+      fontFamily: 'var(--font-mono)', 
+      fontSize: '11px', 
+      fontWeight: 700, 
+      color: 'var(--text-muted)', 
+      textTransform: 'uppercase' as const, 
+      letterSpacing: '0.08em' 
+    },
+    input: { 
+      background: 'var(--surface)', 
+      border: '1px solid var(--border-strong)', 
+      borderRadius: 'var(--r-md)',
+      color: 'var(--text)', 
+      fontFamily: 'var(--font-sans)', 
+      fontSize: '14.5px', 
+      height: '46px', 
+      padding: '12px',
+      outline: 'none',
+      transition: 'var(--transition)'
+    },
+    dropdown: { 
+      background: '#0d0f14', 
+      border: '1px solid var(--border-strong)',
+      borderRadius: 'var(--r-md)'
+    },
+    option: {
+      fontFamily: 'var(--font-sans)',
+      fontSize: '14px',
+      color: 'var(--text-muted)',
+      padding: '10px 12px',
+      transition: 'var(--transition)'
+    }
+  };
+
   return (
     <section className="calc z" id="calc">
       <div className="wrap">
         <div className="section-header-center">
-          <span className="sec-eye">Enterprise pricing calculator</span>
-          <h2>Calculate your <em className="em2">enterprise savings</em> compared<br />to traditional providers</h2>
-          <p className="sec-sub">Select your current cloud provider and configure your estimated resource footprint to see a
-            direct cost comparison against our flat-rate alternatives. If your monthly usage falls below 500 million
-            requests, our standard Business tier offers complete coverage without any complex utility calculations.</p>
+          <span className="sec-eye">Cost Optimization</span>
+          <h2>Estimate your enterprise hosting <em className="em2">savings margins</em></h2>
+          <p className="sec-sub">
+            Configure your monthly application footprint metrics below. See a transparent comparative estimate detailing the savings compiled native infrastructure yields over utility-metered serverless clouds.
+          </p>
         </div>
+
         <div className="calc-wrap">
+          {/* Controls Box */}
           <div className="calc-controls">
-            <div className="cf">
-              <label htmlFor="provider">Compare against</label>
-              <select
-                id="provider"
-                value={provider}
-                onChange={(e) => setProvider(e.target.value)}
-              >
-                <option value="cloudflare">Cloudflare Workers</option>
-                <option value="vercel">Vercel Edge Functions</option>
-                <option value="aws">AWS Lambda</option>
-                <option value="azure">Azure Functions</option>
-                <option value="gcp">Google Cloud Run</option>
-              </select>
-            </div>
-            <div className="cf">
-              <label htmlFor="req">Monthly requests</label>
-              <select
-                id="req"
-                value={reqM}
-                onChange={(e) => setReqM(parseFloat(e.target.value))}
-              >
-                <option value="750">500M – 1 billion</option>
-                <option value="2500">1B – 5 billion</option>
-                <option value="7500">5B+</option>
-              </select>
-            </div>
-            <div className="cf">
-              <label htmlFor="compute">Compute intensity</label>
-              <select
-                id="compute"
-                value={intensity}
-                onChange={(e) => setIntensity(e.target.value)}
-              >
-                <option value="light">Light: auth, DB reads, simple APIs</option>
-                <option value="medium">Medium: REST APIs, transforms</option>
-                <option value="heavy">Heavy: AI inference, image and video</option>
-              </select>
-            </div>
-            <div className="cf">
-              <label htmlFor="bw">Monthly bandwidth</label>
-              <select
-                id="bw"
-                value={bandwidthGB}
-                onChange={(e) => setBandwidthGB(parseFloat(e.target.value))}
-              >
-                <option value="15000">10 – 25 TB</option>
-                <option value="37500">25 – 50 TB</option>
-                <option value="75000">50 TB+</option>
-              </select>
-            </div>
+            <Select
+              label="Current Edge Provider"
+              value={provider}
+              onChange={(val) => setProvider(val || 'cloudflare')}
+              data={[
+                { value: 'cloudflare', label: 'Cloudflare Workers' },
+                { value: 'vercel', label: 'Vercel Edge Functions' },
+                { value: 'aws', label: 'AWS Lambda' },
+                { value: 'azure', label: 'Azure Functions' },
+                { value: 'gcp', label: 'Google Cloud Run' }
+              ]}
+              styles={selectStyles}
+              allowDeselect={false}
+            />
+
+            <Select
+              label="Est. Monthly Requests"
+              value={String(reqM)}
+              onChange={(val) => setReqM(parseFloat(val || '750'))}
+              data={[
+                { value: '750', label: '500 Million – 1 Billion' },
+                { value: '2500', label: '1 Billion – 5 Billion' },
+                { value: '7500', label: '5 Billion+' }
+              ]}
+              styles={selectStyles}
+              allowDeselect={false}
+            />
+
+            <Select
+              label="Average Compute Footprint"
+              value={intensity}
+              onChange={(val) => setIntensity(val || 'medium')}
+              data={[
+                { value: 'light', label: 'Light: simple APIs, routing, auth' },
+                { value: 'medium', label: 'Medium: REST gateways, active routing' },
+                { value: 'heavy', label: 'Heavy: generative streams, AI nodes' }
+              ]}
+              styles={selectStyles}
+              allowDeselect={false}
+            />
+
+            <Select
+              label="Monthly Network Egress"
+              value={String(bandwidthGB)}
+              onChange={(val) => setBandwidthGB(parseFloat(val || '15000'))}
+              data={[
+                { value: '15000', label: '10 – 25 TB Bandwidth' },
+                { value: '37500', label: '25 – 50 TB Bandwidth' },
+                { value: '75000', label: '50 TB+ Bandwidth' }
+              ]}
+              styles={selectStyles}
+              allowDeselect={false}
+            />
           </div>
+
+          {/* Results Summary & Interactive Graph */}
           <div className="calc-results">
             <div className="calc-summary-grid">
               <div className="calc-card">
-                <div className="calc-card-label" id="compLabel">
-                  {NAMES[provider]} Est. Bill
+                <div className="calc-card-label">
+                  {NAMES[provider].split(' ')[0]} Bill
                 </div>
-                <div className="calc-card-value" id="compBill">
-                  {formatCurrency(selectedProviderBill)}/mo
+                <div className="calc-card-value">
+                  {formatCurrency(selectedProviderBill)}<span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text-muted)' }}>/mo</span>
                 </div>
-                <div className="calc-card-note">per month</div>
+                <div className="calc-card-note">Metered utility pricing</div>
               </div>
+
               <div className="calc-card-accent">
-                <div className="calc-card-label">DataVec Flat Rate</div>
-                <div className="calc-card-value" id="flatRate">
-                  {formatCurrency(flatRate)}/mo
+                <div className="calc-card-label" style={{ color: 'var(--accent-mint)' }}>
+                  DataVec Flat Rate
                 </div>
-                <div className="calc-card-note" id="savingsLine" style={{
-                  color: savings > 0 ? 'var(--accent2)' : 'var(--text2)'
-                }}>
+                <div className="calc-card-value" style={{ color: 'var(--accent-mint)' }}>
+                  {formatCurrency(flatRate)}<span style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(0, 245, 160, 0.7)' }}>/mo</span>
+                </div>
+                <div 
+                  className="calc-card-note"
+                  style={{
+                    color: savings > 0 ? 'var(--accent-mint)' : 'var(--text-muted)',
+                    fontWeight: savings > 0 ? 600 : 400
+                  }}
+                >
                   {savings > 0
-                    ? `You save ${formatCurrency(savings)}/mo vs ${NAMES[provider].split(' ')[0]}`
-                    : 'DataVec provides stable enterprise flat rate billing'
+                    ? `Saves ${formatCurrency(savings)}/month`
+                    : 'Guaranteed predictable flat pricing'
                   }
                 </div>
               </div>
             </div>
+
+            {/* Savings Bar Chart */}
             <div className="chart-wrap">
               <canvas ref={canvasRef} id="chart"></canvas>
             </div>
-            <p className="calc-note">Estimates use verified May 2026 published pricing. AWS includes API Gateway and
-              CloudWatch charges. Cloudflare has no egress fees. DataVec flat rate minimum $2,500/mo.</p>
+
+            <p className="calc-note">
+              Calculations utilize verified May 2026 published vendor rates. AWS Lambda includes API Gateway overhead. Cloudflare features zero egress. DataVec enterprise baseline floor starts at $2,500/mo.
+            </p>
+
             <div className="calc-actions">
-              <a href="mailto:hello@datavec.com?subject=DataVec Enterprise pricing inquiry" className="btn-primary">Get a
-                precise quote</a>
-              <a href="#pricing" className="btn-ghost">View standard plans</a>
+              <a href="mailto:hello@datavec.com?subject=DataVec Enterprise pricing savings quote" className="btn-primary">
+                Get a custom quote
+              </a>
+              <a href="#pricing" className="btn-ghost">
+                View standard plans
+              </a>
             </div>
-            <p className="calc-fine">Running under 500M requests/month? The <a href="#pricing">Business plan at $149/mo</a>
-              covers you with zero metering.</p>
+
+            <p className="calc-fine">
+              Serving under 500M operations/month? Our standard <a href="#pricing">Business Plan at $149/mo</a> has you fully covered with zero utility metering.
+            </p>
           </div>
         </div>
       </div>
     </section>
   );
 }
+

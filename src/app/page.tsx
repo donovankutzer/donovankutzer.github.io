@@ -3,7 +3,6 @@ import Hero from '@/components/Hero';
 import Stats from '@/components/Stats';
 import Pitch from '@/components/Pitch';
 import HowItWorks from '@/components/HowItWorks';
-import Compatibility from '@/components/Compatibility';
 import Technology from '@/components/Technology';
 import Pricing from '@/components/Pricing';
 import Calculator from '@/components/Calculator';
@@ -14,12 +13,11 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main>
+      <main style={{ paddingTop: '72px' }}>
         <Hero />
         <Stats />
         <Pitch />
         <HowItWorks />
-        <Compatibility />
         <Technology />
         <Pricing />
         <Calculator />
@@ -29,3 +27,4 @@ export default function Home() {
     </>
   );
 }
+

@@ -28,9 +28,9 @@ export PATH="/Users/donovankutzer/.nvm/versions/node/v24.15.0/bin:$PATH" && npm 
 1.  **Strict TypeScript**:
     *   All components (`src/components/`) and app routes (`src/app/`) use **TypeScript (`.tsx` / `.ts`)**.
     *   Imports use the absolute path alias `@/` mapped to `./src/` (configured in `tsconfig.json`).
-2.  **Pure Custom CSS**:
-    *   All styling is strictly managed in `src/app/globals.css`.
-    *   **No Tailwind CSS**, CSS Modules, or dynamic component-library frameworks are permitted. Keep code pure and high-performance.
+2.  **Component Libraries & Flexible Styling**:
+    *   Dynamic component libraries (such as shadcn/ui, Mantine, Radix, or Chakra UI) and styling frameworks (such as Tailwind CSS or CSS Modules) are **fully permitted and encouraged** to facilitate robust theming and fast feature additions.
+    *   Avoid strict pure custom CSS limits if external library components provide superior theming interfaces or interactive capabilities.
     *   Maintain button layouts with `white-space: nowrap` and `flex-shrink: 0` to prevent text wrapping in flex/grid containers.
 3.  **Static Site Exports**:
     *   The project exports statically to `out/` and deploys cleanly to GitHub Pages via `npm run deploy` (which triggers `gh-pages`).

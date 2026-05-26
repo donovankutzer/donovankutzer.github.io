@@ -1,3 +1,5 @@
+import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
+import '@mantine/core/styles.css';
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 
@@ -10,9 +12,16 @@ const ibmPlexSans = IBM_Plex_Sans({
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-mono',
   display: 'swap',
+});
+
+const theme = createTheme({
+  fontFamily: 'var(--font-sans), sans-serif',
+  fontFamilyMonospace: 'var(--font-mono), monospace',
+  primaryColor: 'indigo',
+  defaultRadius: 'md',
 });
 
 export const metadata = {
@@ -29,14 +38,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
+    <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
+      <head>
+        <ColorSchemeScript defaultColorScheme="dark" />
+      </head>
       <body>
-        {/* Atmospheric Orbs */}
-        <div className="orb orb-1" aria-hidden="true"></div>
-        <div className="orb orb-2" aria-hidden="true"></div>
-        <div className="orb orb-3" aria-hidden="true"></div>
-        {children}
+        <MantineProvider theme={theme} defaultColorScheme="dark">
+          {/* Atmospheric Orbs */}
+          <div className="orb orb-1" aria-hidden="true"></div>
+          <div className="orb orb-2" aria-hidden="true"></div>
+          <div className="orb orb-3" aria-hidden="true"></div>
+          {children}
+        </MantineProvider>
       </body>
     </html>
   );
 }
+

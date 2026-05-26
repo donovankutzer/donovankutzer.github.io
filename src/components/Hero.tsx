@@ -1,59 +1,143 @@
+'use client';
+
+import { useState } from 'react';
+
+type WorkloadType = 'routing' | 'crypto' | 'sse';
+
+const BENCHMARKS = {
+  routing: {
+    title: "Hono API Routing",
+    sub: "Processes a complex nested endpoint router with custom JSON payload returns.",
+    data: [
+      { name: "DataVec compiled C", val: "0.08ms", pct: 100, tag: "dv" },
+      { name: "Deno Deploy", val: "0.95ms", pct: 12, tag: "de" },
+      { name: "Cloudflare Workers", val: "1.15ms", pct: 8, tag: "cf" },
+      { name: "Vercel Edge", val: "12.40ms", pct: 2, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", val: "45.20ms", pct: 0.5, tag: "aw" }
+    ],
+    winner: "Compiling JavaScript AST to C stateful coroutines yields direct machine execution speed."
+  },
+  crypto: {
+    title: "JWT Token Verification",
+    sub: "Decodes, parses, and cryptographically signs high-volume OAuth signatures.",
+    data: [
+      { name: "DataVec compiled C", val: "0.12ms", pct: 100, tag: "dv" },
+      { name: "Deno Deploy", val: "1.48ms", pct: 11, tag: "de" },
+      { name: "Cloudflare Workers", val: "1.84ms", pct: 8, tag: "cf" },
+      { name: "Vercel Edge", val: "18.20ms", pct: 1.5, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", val: "62.10ms", pct: 0.5, tag: "aw" }
+    ],
+    winner: "Native C crypto APIs execute inside isolated micro-heaps with zero lock overhead."
+  },
+  sse: {
+    title: "SSE AI Streaming Payload",
+    sub: "Maintains concurrent chunked transfer streams optimized for generative outputs.",
+    data: [
+      { name: "DataVec compiled C", val: "4.80ms", pct: 100, tag: "dv" },
+      { name: "Deno Deploy", val: "24.20ms", pct: 20, tag: "de" },
+      { name: "Cloudflare Workers", val: "28.50ms", pct: 17, tag: "cf" },
+      { name: "Vercel Edge", val: "128.40ms", pct: 4, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", val: "340.50ms", pct: 1.4, tag: "aw" }
+    ],
+    winner: "Stackless coroutines coordinate I/O stream buffers without memory GC pauses."
+  }
+};
+
 export default function Hero() {
+  const [activeWorkload, setActiveWorkload] = useState<WorkloadType>('routing');
+  const current = BENCHMARKS[activeWorkload];
+
   return (
-    <section className="hero z">
+    <section className="hero z" style={{ padding: '60px 0 100px' }}>
       <div className="wrap">
         <div className="hero-grid">
+          {/* Left copy */}
           <div>
             <div className="eyebrow">
-              <span className="eyebrow-dot"></span>
-              JavaScript Cloud Platform · Web Workers · Flat Rate
+              <span className="eyebrow-badge">DataVec</span>
+              <span className="eyebrow-sep"></span>
+              <span className="eyebrow-text">Compiled Runtime · M:N Scheduling · Flat Rate</span>
             </div>
-            <h1><span className="c1">JavaScript </span> that runs like <span className="c2"> C</span></h1>
-            <p className="hero-sub">A high-performance alternative for teams currently on Cloudflare Workers, Vercel Edge, or Deno. No garbage collector, no cold starts, and one flat monthly rate.</p>
-            <div className="migrate-note">
+            <h1 style={{ marginBottom: '24px' }}>
+              <span className="c1">JavaScript that runs like </span>
+              <span className="c2">C</span>
+            </h1>
+            <p className="hero-sub">
+              A high-performance server alternative for teams currently on Cloudflare Workers, Vercel Edge, or Deno. No garbage collector, zero cold starts, and one transparent flat monthly rate.
+            </p>
+
+            <div className="migrate-note" style={{ background: 'rgba(99, 102, 241, 0.04)', borderColor: 'var(--border)' }}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              Drop-in compatibility with standard Web Workers APIs, Hono, itty-router, and Elysia.
+              <span>
+                Drop-in compatible with standard Web Workers, Hono, and Elysia APIs. Built on native coroutine scheduling for massive vertical scaling.
+              </span>
             </div>
+
             <div className="btn-group">
               <a href="#pricing" className="btn-primary">Start for $19/month</a>
-              <a href="#calc" className="btn-ghost">See what you'd pay</a>
+              <a href="#calc" className="btn-ghost">Compare server savings</a>
             </div>
-            <p className="hero-fine">We don't charge for individual requests or set up hidden bandwidth thresholds, so you
-              never have to worry about surprise overage bills. Get in touch at hello@datavec.com.</p>
+
+            <p className="hero-fine">
+              We never charge for requests or metered CPU time. Flat rates locked forever.
+            </p>
           </div>
+
+          {/* Right interactive benchmarks */}
           <div>
-            <div className="terminal" aria-label="Terminal showing a deploy command">
-              <div className="term-bar">
-                <div className="td td-r"></div>
-                <div className="td td-y"></div>
-                <div className="td td-g"></div>
-                <span className="term-title">datavec deploy</span>
+            <div className="benchmark-panel" style={{ marginBottom: 0, boxShadow: 'var(--shadow-md)' }}>
+              <div className="benchmark-header">
+                <div className="benchmark-title-wrap">
+                  <h3 style={{ fontSize: '16px' }}>{current.title}</h3>
+                  <p style={{ fontSize: '11.5px', marginTop: '4px' }}>{current.sub}</p>
+                </div>
+                <div className="benchmark-selectors">
+                  <button
+                    className={`benchmark-btn ${activeWorkload === 'routing' ? 'active' : ''}`}
+                    onClick={() => setActiveWorkload('routing')}
+                  >
+                    Router
+                  </button>
+                  <button
+                    className={`benchmark-btn ${activeWorkload === 'crypto' ? 'active' : ''}`}
+                    onClick={() => setActiveWorkload('crypto')}
+                  >
+                    Crypto
+                  </button>
+                  <button
+                    className={`benchmark-btn ${activeWorkload === 'sse' ? 'active' : ''}`}
+                    onClick={() => setActiveWorkload('sse')}
+                  >
+                    Streaming
+                  </button>
+                </div>
               </div>
-              <div className="term-body">
-                <div><span className="t-dim">// Your existing Web Worker</span></div>
-                <div><span className="t-blue">export default</span> <span className="t-w">{"{"}</span></div>
-                <div><span className="t-blue">  async</span> <span className="t-w">fetch(request) {"{"}</span></div>
-                <div><span className="t-blue">    const</span> <span className="t-w">auth = request.headers.get(</span><span className="t-green">'Authorization'</span><span className="t-w">);</span></div>
-                <div><span className="t-blue">    if</span> <span className="t-w">(!auth?.startsWith(</span><span className="t-green">'Bearer '</span><span className="t-w">)) {"{"}</span></div>
-                <div><span className="t-blue">      return new</span> <span className="t-w">Response(</span><span className="t-green">'Unauthorized'</span><span className="t-w">, {"{"} status: 401 {"}"});</span></div>
-                <div><span className="t-w">    {"}"}</span></div>
-                <div><span className="t-blue">    const</span> <span className="t-w">data = </span><span className="t-blue">await</span> <span className="t-w">request.json();</span></div>
-                <div><span className="t-blue">    return</span> <span className="t-w">Response.json({"{"} success: </span><span className="t-blue">true</span><span className="t-w">, data {"}"});</span></div>
-                <div><span className="t-w">  {"}"}</span></div>
-                <div><span className="t-w">{"}"}</span></div>
-                <div>{" "}</div>
-                <div><span className="t-dim">$ </span><span className="t-w">datavec deploy</span></div>
-                <div><span className="t-dim">→ </span><span className="t-blue">DataVec compiling JS → C...</span></div>
-                <div><span className="t-dim">→ </span><span className="t-blue">DataVec runtime: 104 KB</span></div>
-                <div><span className="t-dim">→ </span><span className="t-blue">TLS provisioned</span></div>
-                <div><span className="t-green">✓ Live: https://yourapp.datavec.io</span></div>
-                <div>{" "}</div>
-                <div><span className="t-dim"># Cold start: </span><span className="t-green">0ms </span><span className="t-dim">
-                  Deploy: </span><span className="t-green">3.8s</span></div>
-                <div><span className="t-dim"># This month's bill: </span><span className="t-green">$149.00</span><span
-                  className="t-dim"> <span className="term-cursor" aria-hidden="true"></span></span></div>
+
+              <div className="benchmark-graph" style={{ padding: '24px 20px' }}>
+                {current.data.map((row) => {
+                  const isWinner = row.tag === 'dv';
+                  return (
+                    <div key={row.name} className={`benchmark-row ${isWinner ? 'active-winner' : ''}`} style={{ gridTemplateColumns: '150px 1fr 70px', gap: '14px' }}>
+                      <span className="benchmark-name" style={{ fontSize: '12px' }}>
+                        <span className={`benchmark-dot-tag ${row.tag}`} />
+                        {row.name}
+                      </span>
+                      <div className="benchmark-bar-container" style={{ height: '20px' }}>
+                        <div
+                          className={`benchmark-bar ${row.tag}`}
+                          style={{ width: `${row.pct}%` }}
+                        />
+                      </div>
+                      <span className="benchmark-val" style={{ fontSize: '11px' }}>{row.val}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="benchmark-footer" style={{ fontSize: '11px', padding: '12px 16px' }}>
+                <span>{current.winner}</span>
               </div>
             </div>
           </div>

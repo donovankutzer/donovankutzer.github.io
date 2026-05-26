@@ -2,6 +2,10 @@ export default function Navbar() {
   return (
     <header>
       <nav aria-label="Main Navigation">
+        {/* Glowing Junction Dots */}
+        <div className="junction-node bl" aria-hidden="true" />
+        <div className="junction-node br" aria-hidden="true" />
+
         <a className="nav-logo" href="#">
           <div className="logo-mark">
             <svg viewBox="0 0 16 16" aria-hidden="true">
@@ -16,17 +20,19 @@ export default function Navbar() {
               <line x1="5.8" y1="10.2" x2="3.2" y2="12.8" />
             </svg>
           </div>
-          <span className="logo-text">Data<em>Vec</em></span>
+          <span className="logo-text">Data<em>vec</em></span>
         </a>
+
         <ul className="nav-links">
           <li><a href="#how">How it works</a></li>
-          <li><a href="#runs">What runs</a></li>
+          <li><a href="#runs">Compatibility</a></li>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#calc">Calculator</a></li>
           <li><a href="#faq">FAQ</a></li>
         </ul>
+
         <div className="nav-right">
-          <a href="mailto:hello@datavec.com" className="btn-nav">Get started</a>
+          <a href="mailto:hello@datavec.com?subject=DataVec - get started" className="btn-nav">Get started</a>
         </div>
       </nav>
     </header>

@@ -1,95 +1,103 @@
 export default function Compatibility() {
   return (
     <>
-      {/* COMPATIBILITY (WHAT RUNS) */}
       <section className="runs z" id="runs">
         <div className="wrap">
           <div className="section-header-center">
-            <span className="sec-eye">Compatibility</span>
-            <h2>Production compatibility and design focus</h2>
-            <p className="sec-sub">DataVec is designed as a high-performance alternative to traditional edge runtimes. Review our current Web Workers compatibility alongside our active engineering focus.</p>
+            <span className="sec-eye">Technical Standards</span>
+            <h2>Production compatibility and design scope</h2>
+            <p className="sec-sub">
+              DataVec is optimized specifically for highly concurrent edge compute pipelines. Review our exact Web Workers API footprint alongside our engineering design limits.
+            </p>
           </div>
+
           <div className="runs-grid">
+            {/* Fully Supported Today */}
             <div className="runs-card yes">
               <div className="runs-label yes">✓ Fully Supported Today</div>
+              
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✓</span>
+                <span className="run-icon">✓</span>
+                <span className="run-text">
+                  <strong>Standard Web Workers APIs</strong>
+                  <small>Direct integration for `fetch`, `Request`, `Response`, `URL`, `Blob`, `TextEncoder`, and cryptographic libraries.</small>
+                </span>
+              </div>
+
+              <div className="run-row">
+                <span className="run-icon">✓</span>
                 <span className="run-text">
                   <strong>Standard Edge Routers</strong>
-                  <small>Run Hono, itty-router, Elysia, and other modern routing libraries with zero code changes.</small>
+                  <small>Deploy Hono, Elysia, and itty-router services natively with zero modifications required.</small>
                 </span>
               </div>
+
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✓</span>
-                <span className="run-text">
-                  <strong>Web Workers Standard APIs</strong>
-                  <small>Full native support for `fetch`, `Request`, `Response`, `URL`, `Blob`, `TextEncoder`, and cryptographic functions.</small>
-                </span>
-              </div>
-              <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✓</span>
+                <span className="run-icon">✓</span>
                 <span className="run-text">
                   <strong>Real-Time AI Streaming</strong>
-                  <small>Optimized pipelines for server-sent events (SSE), chunked transfers, and zero-buffering LLM/AI outputs.</small>
+                  <small>Optimized pipelines for server-sent events (SSE), chunked uploads, and zero-buffering response layouts.</small>
                 </span>
               </div>
+
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✓</span>
-                <span className="run-text">
-                  <strong>Micro-Thread Actor Workloads</strong>
-                  <small>Concurrent tasks, background workers, and scheduled jobs orchestrated by our custom low-overhead native scheduler.</small>
-                </span>
-              </div>
-              <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✓</span>
+                <span className="run-icon">✓</span>
                 <span className="run-text">
                   <strong>High-Volume Cryptography</strong>
-                  <small>Native Web Crypto API implementations for blistering-fast JWT token verification and OAuth session operations.</small>
+                  <small>Web Crypto API bindings compiling into lightning-fast native JWT verification and session handshakes.</small>
                 </span>
               </div>
+
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✓</span>
+                <span className="run-icon">✓</span>
                 <span className="run-text">
-                  <strong>Embedded Storage</strong>
-                  <small>Blazing-fast embedded SQLite database access via server-client drivers. Perfect for configurations and state cache.</small>
+                  <strong>Embedded Storage Pools</strong>
+                  <small>High-speed embedded SQLite drivers. Perfect for static state storage, mapping configuration, and caching.</small>
                 </span>
               </div>
+
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✓</span>
+                <span className="run-icon">✓</span>
                 <span className="run-text">
                   <strong>Automated Global TLS</strong>
-                  <small>Point your domain and deploy. Automatic, instant HTTPS certification and global routing are provisioned natively.</small>
+                  <small>Point your domain and deploy. Automatic, instant HTTPS certification and global edge routing are provisioned natively.</small>
                 </span>
               </div>
             </div>
+
+            {/* Active Focus & Scope */}
             <div className="runs-card no">
-              <div className="runs-label no">Active Focus & Core Scope</div>
+              <div className="runs-label no">◷ Roadmap & Architectural Scope</div>
+
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">◷</span>
+                <span className="run-icon">◷</span>
                 <span className="run-text">
                   <strong>Edge SSR Frameworks</strong>
-                  <small>API routes and Edge runtimes for Next.js, Remix, and SvelteKit deploy today. Full HTML SSR rendering pipelines are in active development.</small>
+                  <small>API routes deploy today. Statically compiled Next.js, Remix, and SvelteKit HTML render streams are actively building.</small>
                 </span>
               </div>
+
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">◷</span>
+                <span className="run-icon">◷</span>
                 <span className="run-text">
                   <strong>External Database Pools</strong>
-                  <small>Direct integration with SQLite and HTTP storage (Upstash/Redis) is live. Lightweight connection pooling for PostgreSQL/MySQL is next.</small>
+                  <small>SQLite is live. Connection drivers for high-performance pooling to external Postgres, MySQL, and Redis endpoints are in queue.</small>
                 </span>
               </div>
+
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">◷</span>
+                <span className="run-icon">◷</span>
                 <span className="run-text">
                   <strong>Native WebSockets</strong>
-                  <small>Our event-driven compilation pipeline supports the protocol; production-ready WebSocket routing gateways are coming soon.</small>
+                  <small>Compile routines compile WS frames perfectly. Structured routing gateways for high scale channels are coming soon.</small>
                 </span>
               </div>
+
               <div className="run-row">
-                <span className="run-icon" aria-hidden="true">✗</span>
+                <span className="run-icon">✗</span>
                 <span className="run-text">
-                  <strong>What it's NOT: A Node.js Replacement</strong>
-                  <small>We do not support legacy, heavy Node.js APIs (such as `fs`, `child_process`, or legacy native addons). DataVec is a sleek, purpose-built alternative for modern Web Workers environments.</small>
+                  <strong>Non-Goal: Legacy Node.js Support</strong>
+                  <small>We do not support legacy, CPU-heavy Node APIs (fs, child_process, net, or heavy native C++ addons). DataVec is designed exclusively for sleeker, modern edge worker standards.</small>
                 </span>
               </div>
             </div>
@@ -97,10 +105,10 @@ export default function Compatibility() {
         </div>
       </section>
 
-      {/* FRAMEWORKS STRIP */}
+      {/* FRAMEWORKS BADGES CLOUD */}
       <section className="frameworks z">
         <div className="wrap">
-          <h2 className="fw-label">Deploy your modern Web Workers stack to DataVec today</h2>
+          <h2 className="fw-label">Works with your existing Web Workers stack out-of-the-box</h2>
           <div className="fw-row">
             <span className="fw-tag featured">Hono</span>
             <span className="fw-tag featured">itty-router</span>
