@@ -10,11 +10,11 @@ const BENCHMARKS = {
     title: "Next.js Static Routing",
     sub: "Processes a complex nested endpoint router with custom JSON payload returns.",
     data: [
-      { name: "DataVec compiled C", val: "0.08ms", pct: 100, tag: "dv" },
-      { name: "Deno Deploy", val: "0.95ms", pct: 12, tag: "de" },
-      { name: "Cloudflare Workers", val: "1.15ms", pct: 8, tag: "cf" },
-      { name: "Vercel Edge", val: "12.40ms", pct: 2, tag: "ve" },
-      { name: "AWS Lambda (Node.js)", val: "45.20ms", pct: 0.5, tag: "aw" }
+      { name: "DataVec compiled C", val: "0.08ms", pct: 1.5, tag: "dv" },
+      { name: "Deno Deploy", val: "0.95ms", pct: 2.1, tag: "de" },
+      { name: "Cloudflare Workers", val: "1.15ms", pct: 2.5, tag: "cf" },
+      { name: "Vercel Edge", val: "12.40ms", pct: 27.4, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", val: "45.20ms", pct: 100, tag: "aw" }
     ],
     winner: "Compiling JavaScript AST to C stateful coroutines yields direct machine execution speed."
   },
@@ -22,11 +22,11 @@ const BENCHMARKS = {
     title: "JWT Token Verification",
     sub: "Decodes, parses, and cryptographically signs high-volume OAuth signatures.",
     data: [
-      { name: "DataVec compiled C", val: "0.12ms", pct: 100, tag: "dv" },
-      { name: "Deno Deploy", val: "1.48ms", pct: 11, tag: "de" },
-      { name: "Cloudflare Workers", val: "1.84ms", pct: 8, tag: "cf" },
-      { name: "Vercel Edge", val: "18.20ms", pct: 1.5, tag: "ve" },
-      { name: "AWS Lambda (Node.js)", val: "62.10ms", pct: 0.5, tag: "aw" }
+      { name: "DataVec compiled C", val: "0.12ms", pct: 1.5, tag: "dv" },
+      { name: "Deno Deploy", val: "1.48ms", pct: 2.4, tag: "de" },
+      { name: "Cloudflare Workers", val: "1.84ms", pct: 3.0, tag: "cf" },
+      { name: "Vercel Edge", val: "18.20ms", pct: 29.3, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", val: "62.10ms", pct: 100, tag: "aw" }
     ],
     winner: "Native C crypto APIs execute inside isolated micro-heaps with zero lock overhead."
   },
@@ -34,11 +34,11 @@ const BENCHMARKS = {
     title: "SSE AI Streaming Payload",
     sub: "Maintains concurrent chunked transfer streams optimized for generative outputs.",
     data: [
-      { name: "DataVec compiled C", val: "4.80ms", pct: 100, tag: "dv" },
-      { name: "Deno Deploy", val: "24.20ms", pct: 20, tag: "de" },
-      { name: "Cloudflare Workers", val: "28.50ms", pct: 17, tag: "cf" },
-      { name: "Vercel Edge", val: "128.40ms", pct: 4, tag: "ve" },
-      { name: "AWS Lambda (Node.js)", val: "340.50ms", pct: 1.4, tag: "aw" }
+      { name: "DataVec compiled C", val: "4.80ms", pct: 1.5, tag: "dv" },
+      { name: "Deno Deploy", val: "24.20ms", pct: 7.1, tag: "de" },
+      { name: "Cloudflare Workers", val: "28.50ms", pct: 8.4, tag: "cf" },
+      { name: "Vercel Edge", val: "128.40ms", pct: 37.7, tag: "ve" },
+      { name: "AWS Lambda (Node.js)", val: "340.50ms", pct: 100, tag: "aw" }
     ],
     winner: "Stackless coroutines coordinate I/O stream buffers without memory GC pauses."
   }
@@ -152,7 +152,7 @@ export default function Hero() {
           <Grid.Col span={{ base: 12, md: 7 }}>
             <Stack gap="lg" w="100%">
             <Paper 
-              p="xl" 
+              p={{ base: 'md', sm: 'xl' }} 
               style={{ 
                 background: 'var(--surface)', 
                 border: '1px solid var(--border-strong)',
@@ -179,9 +179,9 @@ export default function Hero() {
                   value={activeWorkload}
                   onChange={(val) => setActiveWorkload(val as WorkloadType)}
                   data={[
-                    { label: 'Static Routing', value: 'routing' },
-                    { label: 'JWT Verification', value: 'crypto' },
-                    { label: 'SSE AI Streaming', value: 'sse' }
+                    { label: <span style={{ display: 'inline-flex', gap: '3px' }}><span className="hidden-mobile">Static </span>Routing</span>, value: 'routing' },
+                    { label: <span style={{ display: 'inline-flex', gap: '3px' }}>JWT<span className="hidden-mobile"> Verification</span></span>, value: 'crypto' },
+                    { label: <span style={{ display: 'inline-flex', gap: '3px' }}>SSE<span className="hidden-mobile"> AI Streaming</span></span>, value: 'sse' }
                   ]}
                   fullWidth
                   styles={{

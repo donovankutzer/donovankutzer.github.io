@@ -282,3 +282,10 @@ body::after {
     padding: 24px 16px !important;
   }
 }
+
+/* Responsive visibility helper utility */
+@media (max-width: 576px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+}
