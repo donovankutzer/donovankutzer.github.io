@@ -48,30 +48,12 @@ export default function Pricing() {
         <Tabs 
           value={activeTier} 
           onChange={(val) => setActiveTier(val as 'pro' | 'business' | 'enterprise')}
-          orientation="vertical"
           variant="unstyled"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1.3fr',
-            gap: '40px',
-            background: 'var(--surface)',
-            border: '1px solid var(--border-strong)',
-            borderRadius: 'var(--r-lg)',
-            overflow: 'hidden',
-            boxShadow: 'var(--shadow-sm)',
-            minHeight: '480px'
-          }}
+          className="responsive-app-tabs pricing-tabs"
         >
           {/* Spec Selectors on Left */}
           <Tabs.List 
-            style={{ 
-              padding: '44px',
-              background: '#0d1016',
-              borderRight: '1px solid var(--border)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '28px'
-            }}
+            className="app-tabs-list pricing-list"
           >
             <Text size="xs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '8px', letterSpacing: '0.05em' }}>
               Select Core Subscription Plan
@@ -86,8 +68,8 @@ export default function Pricing() {
                 <Tabs.Tab
                   key={tier.val}
                   value={tier.val}
+                  className="app-tab-item"
                   style={{
-                    width: '100%',
                     background: activeTier === tier.val ? 'rgba(16, 185, 129, 0.06)' : 'transparent',
                     border: '1px solid',
                     borderColor: activeTier === tier.val ? 'rgba(16, 185, 129, 0.25)' : 'transparent',
@@ -113,7 +95,7 @@ export default function Pricing() {
           </Tabs.List>
 
           {/* Spec Telemetry details on Right */}
-          <div style={{ padding: '44px', display: 'flex', flexDirection: 'column' }}>
+          <div className="app-tabs-panels-wrap pricing-panels" style={{ display: 'flex', flexDirection: 'column' }}>
             {/* Pro Panel */}
             <Tabs.Panel value="pro">
               <Stack gap="xl">
@@ -152,7 +134,7 @@ export default function Pricing() {
                 </Button>
 
                 {/* System Specs Telemetry Grid */}
-                <SimpleGrid cols={3} spacing="md" mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
+                <SimpleGrid cols={3} spacing={{ base: 'xs', sm: 'md' }} mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
                   {[
                     { label: 'CPU Nodes', val: 'Static', active: true },
                     { label: 'Cold Latency', val: '0.00ms', active: false },
@@ -216,7 +198,7 @@ export default function Pricing() {
                 </Button>
 
                 {/* System Specs Telemetry Grid */}
-                <SimpleGrid cols={3} spacing="md" mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
+                <SimpleGrid cols={3} spacing={{ base: 'xs', sm: 'md' }} mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
                   {[
                     { label: 'CPU Nodes', val: 'Dynamic', active: true },
                     { label: 'Cold Latency', val: '0.00ms', active: false },
@@ -297,7 +279,7 @@ export default function Pricing() {
                 </Stack>
 
                 {/* System Specs Telemetry Grid */}
-                <SimpleGrid cols={3} spacing="md" mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
+                <SimpleGrid cols={3} spacing={{ base: 'xs', sm: 'md' }} mt="xl" style={{ borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
                   {[
                     { label: 'CPU Nodes', val: 'Dedicated', active: true },
                     { label: 'Cold Latency', val: '0.00ms', active: false },

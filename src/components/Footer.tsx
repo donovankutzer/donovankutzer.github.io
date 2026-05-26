@@ -8,7 +8,7 @@ export default function Footer() {
       {/* FINAL CTA PANEL */}
       <section 
         style={{ 
-          padding: '100px 0', 
+          padding: '60px 16px', 
           borderTop: '1px solid var(--border-strong)', 
           background: 'rgba(99, 102, 241, 0.01)', 
           position: 'relative', 
@@ -24,7 +24,13 @@ export default function Footer() {
             Deploy standard Web Workers application stacks and execute at native C speed under a stable flat-rate monthly invoice.
           </Text>
           
-          <Group justify="center" gap="md">
+          <Flex 
+            justify="center" 
+            gap="md" 
+            wrap="wrap" 
+            direction={{ base: 'column', sm: 'row' }}
+            style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}
+          >
             <Button 
               component="a" 
               href="mailto:hello@datavec.com?subject=DataVec - get started" 
@@ -59,7 +65,7 @@ export default function Footer() {
             >
               Request a test deployment
             </Button>
-          </Group>
+          </Flex>
 
           <Text size="xs" c="dimmed" mt="xl" style={{ fontFamily: 'var(--font-mono)' }}>
             Sandbox credentials · hello@datavec.com · Founding member pricing locked for active signups
@@ -70,7 +76,7 @@ export default function Footer() {
       {/* FOOTER */}
       <footer 
         style={{ 
-          padding: '80px 0 40px', 
+          padding: '60px 16px 40px', 
           borderTop: '1px solid var(--border-strong)', 
           position: 'relative', 
           zIndex: 1, 
@@ -122,7 +128,7 @@ export default function Footer() {
 
             {/* Links Columns */}
             <Grid.Col span={{ base: 12, md: 8 }}>
-              <SimpleGrid cols={{ base: 2, sm: 3 }} spacing="xl">
+              <SimpleGrid cols={{ base: 1, xs: 2, sm: 3 }} spacing="lg">
                 {/* Platform Links */}
                 <Stack gap="sm">
                   <Text size="xs" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>

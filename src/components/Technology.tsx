@@ -44,7 +44,7 @@ export default function Technology() {
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
           {/* Column 1: The Compiler (Interactive Symbol Map) */}
           <Paper 
-            p="xl" 
+            p={{ base: 'md', sm: 'xl' }} 
             style={{ 
               background: 'var(--surface)', 
               border: '1px solid var(--border-strong)',
@@ -89,7 +89,7 @@ export default function Technology() {
               {/* Column Nodes */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
                 {/* JS Column */}
-                <Stack gap="xs">
+                <Stack gap="xs" style={{ minWidth: 0 }}>
                   {[
                     { id: 'header' as SymbolId, label: 'req.headers.get(...)' },
                     { id: 'db' as SymbolId, label: 'env.DB_BINDING.query' },
@@ -113,16 +113,29 @@ export default function Technology() {
                         transition: 'all 0.15s ease',
                         height: '48px',
                         display: 'flex',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        overflow: 'hidden'
                       }}
                     >
-                      {node.label}
+                      <Text 
+                        size="xs" 
+                        span 
+                        style={{ 
+                          fontFamily: 'inherit',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          width: '100%'
+                        }}
+                      >
+                        {node.label}
+                      </Text>
                     </div>
                   ))}
                 </Stack>
 
                 {/* C Column */}
-                <Stack gap="xs">
+                <Stack gap="xs" style={{ minWidth: 0 }}>
                   {[
                     { id: 'header' as SymbolId, label: 'get_header(...)' },
                     { id: 'db' as SymbolId, label: 'db_query(...)' },
@@ -146,10 +159,23 @@ export default function Technology() {
                         transition: 'all 0.15s ease',
                         height: '48px',
                         display: 'flex',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        overflow: 'hidden'
                       }}
                     >
-                      {node.label}
+                      <Text 
+                        size="xs" 
+                        span 
+                        style={{ 
+                          fontFamily: 'inherit',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          width: '100%'
+                        }}
+                      >
+                        {node.label}
+                      </Text>
                     </div>
                   ))}
                 </Stack>
@@ -187,7 +213,7 @@ export default function Technology() {
 
           {/* Column 2: The Runtime (Visual Stack Comparison) */}
           <Paper 
-            p="xl" 
+            p={{ base: 'md', sm: 'xl' }} 
             style={{ 
               background: 'var(--surface)', 
               border: '1px solid var(--border-strong)',

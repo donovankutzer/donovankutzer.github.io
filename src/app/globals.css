@@ -185,3 +185,100 @@ body::after {
 .benchmark-dot-tag.cf { background: #fdba74; }
 .benchmark-dot-tag.ve { background: #cbd5e1; }
 .benchmark-dot-tag.aw { background: #f87171; }
+
+/* ==========================================
+   Responsive Tabs & Layout Systems for Pitch & Pricing
+   ========================================== */
+.responsive-app-tabs {
+  display: grid;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  min-height: 480px;
+}
+
+.responsive-app-tabs.pitch-tabs {
+  grid-template-columns: 240px 1fr;
+}
+
+.responsive-app-tabs.pricing-tabs {
+  grid-template-columns: 1fr 1.3fr;
+}
+
+/* Sidebar Tab List */
+.app-tabs-list {
+  background: #141822 !important;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.app-tabs-list.pitch-list {
+  padding: 16px;
+}
+
+.app-tabs-list.pricing-list {
+  padding: 44px;
+}
+
+/* Tab item buttons */
+.app-tab-item {
+  width: 100%;
+  text-align: left;
+}
+
+/* Panels content wrapper */
+.app-tabs-panels-wrap {
+  flex: 1;
+}
+
+.app-tabs-panels-wrap.pitch-panels {
+  padding: 40px;
+  background: #0f131a;
+}
+
+.app-tabs-panels-wrap.pricing-panels {
+  padding: 44px;
+}
+
+@media (max-width: 991px) {
+  .responsive-app-tabs.pitch-tabs,
+  .responsive-app-tabs.pricing-tabs {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .app-tabs-list.pitch-list,
+  .app-tabs-list.pricing-list {
+    flex-direction: row !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    padding: 12px !important;
+    gap: 12px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide scrollbars on modern devices */
+  .app-tabs-list.pitch-list::-webkit-scrollbar,
+  .app-tabs-list.pricing-list::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .app-tab-item {
+    width: auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  .app-tabs-panels-wrap.pitch-panels,
+  .app-tabs-panels-wrap.pricing-panels {
+    padding: 24px 16px !important;
+  }
+}

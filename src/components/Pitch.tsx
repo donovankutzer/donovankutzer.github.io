@@ -26,29 +26,12 @@ export default function Pitch() {
         <Tabs 
           value={activeScreen} 
           onChange={(val) => setActiveScreen(val as ScreenType)}
-          orientation="vertical"
           variant="unstyled"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '240px 1fr',
-            background: 'var(--surface)',
-            border: '1px solid var(--border-strong)',
-            borderRadius: 'var(--r-lg)',
-            overflow: 'hidden',
-            boxShadow: 'var(--shadow-md)',
-            minHeight: '480px'
-          }}
+          className="responsive-app-tabs pitch-tabs"
         >
           {/* Sidebar Tab List */}
           <Tabs.List 
-            style={{ 
-              background: '#0d1016', 
-              borderRight: '1px solid var(--border)',
-              display: 'flex',
-              flexDirection: 'column',
-              padding: '16px',
-              gap: '8px'
-            }}
+            className="app-tabs-list pitch-list"
           >
             {[
               { val: 'cost', icon: '📊', label: 'Billing Comparison' },
@@ -58,8 +41,8 @@ export default function Pitch() {
               <Tabs.Tab
                 key={tab.val}
                 value={tab.val}
+                className="app-tab-item"
                 style={{
-                  width: '100%',
                   background: activeScreen === tab.val ? 'rgba(16, 185, 129, 0.06)' : 'transparent',
                   border: '1px solid',
                   borderColor: activeScreen === tab.val ? 'rgba(16, 185, 129, 0.25)' : 'transparent',
@@ -84,7 +67,7 @@ export default function Pitch() {
           </Tabs.List>
 
           {/* Screen Content Panels */}
-          <div style={{ padding: '40px', background: '#090b10' }}>
+          <div className="app-tabs-panels-wrap pitch-panels">
             {/* Screen 1: Cost Comparative Metrics */}
             <Tabs.Panel value="cost">
               <Stack gap="xl">
@@ -108,37 +91,39 @@ export default function Pitch() {
                       overflow: 'hidden'
                     }}
                   >
-                    <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                      <thead>
-                        <tr style={{ borderBottom: '1px solid var(--border-strong)' }}>
-                          <th style={{ padding: '12px 16px', fontSize: '11px', fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Metric / Spec</th>
-                          <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 700, color: 'var(--accent-mint)', fontFamily: 'var(--font-mono)' }}>DataVec compiled C</th>
-                          <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 700, color: 'white', fontFamily: 'var(--font-mono)' }}>Cloudflare Workers</th>
-                          <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 700, color: 'white', fontFamily: 'var(--font-mono)' }}>Vercel Edge</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {[
-                          { metric: 'Pricing Model', dv: 'Flat monthly rate', cf: 'Metered requests', ve: 'Metered CPU + Seats', dvColor: 'var(--accent-mint)', cfColor: '#f87171', veColor: '#f87171' },
-                          { metric: 'Starter Price', dv: '$19.00 / mo', cf: '$5.00 / mo', ve: '$20.00 / user / mo', dvColor: 'var(--accent-mint)', cfColor: 'white', veColor: 'white' },
-                          { metric: 'Bandwidth Fees', dv: 'Included ($0)', cf: 'Free', ve: '$0.15 / GB metered', dvColor: 'var(--accent-mint)', cfColor: 'var(--accent-mint)', veColor: '#f87171' },
-                          { metric: 'Cold Starts', dv: '0.00ms latency', cf: '~5.00ms (V8 GC)', ve: '50ms - 200ms delay', dvColor: 'var(--accent-mint)', cfColor: '#f87171', veColor: '#f87171' }
-                        ].map((row, idx) => (
-                          <tr 
-                            key={idx} 
-                            style={{ 
-                              borderBottom: idx === 3 ? 'none' : '1px solid var(--border)',
-                              background: 'transparent',
-                            }}
-                          >
-                            <td style={{ padding: '16px', fontSize: '13px', fontWeight: 600, color: 'var(--text-muted)' }}>{row.metric}</td>
-                            <td style={{ padding: '16px', fontSize: '13px', fontWeight: 700, color: row.dvColor, background: 'rgba(16, 185, 129, 0.02)' }}>{row.dv}</td>
-                            <td style={{ padding: '16px', fontSize: '13px', fontWeight: 600, color: row.cfColor }}>{row.cf}</td>
-                            <td style={{ padding: '16px', fontSize: '13px', fontWeight: 600, color: row.veColor }}>{row.ve}</td>
+                    <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '650px' }}>
+                        <thead>
+                          <tr style={{ borderBottom: '1px solid var(--border-strong)' }}>
+                            <th style={{ padding: '12px 16px', fontSize: '11px', fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Metric / Spec</th>
+                            <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 700, color: 'var(--accent-mint)', fontFamily: 'var(--font-mono)' }}>DataVec compiled C</th>
+                            <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 700, color: 'white', fontFamily: 'var(--font-mono)' }}>Cloudflare Workers</th>
+                            <th style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 700, color: 'white', fontFamily: 'var(--font-mono)' }}>Vercel Edge</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {[
+                            { metric: 'Pricing Model', dv: 'Flat monthly rate', cf: 'Metered requests', ve: 'Metered CPU + Seats', dvColor: 'var(--accent-mint)', cfColor: '#f87171', veColor: '#f87171' },
+                            { metric: 'Starter Price', dv: '$19.00 / mo', cf: '$5.00 / mo', ve: '$20.00 / user / mo', dvColor: 'var(--accent-mint)', cfColor: 'white', veColor: 'white' },
+                            { metric: 'Bandwidth Fees', dv: 'Included ($0)', cf: 'Free', ve: '$0.15 / GB metered', dvColor: 'var(--accent-mint)', cfColor: 'var(--accent-mint)', veColor: '#f87171' },
+                            { metric: 'Cold Starts', dv: '0.00ms latency', cf: '~5.00ms (V8 GC)', ve: '50ms - 200ms delay', dvColor: 'var(--accent-mint)', cfColor: '#f87171', veColor: '#f87171' }
+                          ].map((row, idx) => (
+                            <tr 
+                              key={idx} 
+                              style={{ 
+                                borderBottom: idx === 3 ? 'none' : '1px solid var(--border)',
+                                background: 'transparent',
+                              }}
+                            >
+                              <td style={{ padding: '16px', fontSize: '13px', fontWeight: 600, color: 'var(--text-muted)' }}>{row.metric}</td>
+                              <td style={{ padding: '16px', fontSize: '13px', fontWeight: 700, color: row.dvColor, background: 'rgba(16, 185, 129, 0.02)' }}>{row.dv}</td>
+                              <td style={{ padding: '16px', fontSize: '13px', fontWeight: 600, color: row.cfColor }}>{row.cf}</td>
+                              <td style={{ padding: '16px', fontSize: '13px', fontWeight: 600, color: row.veColor }}>{row.ve}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </Paper>
                 </Box>
 
