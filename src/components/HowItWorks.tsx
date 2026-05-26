@@ -7,21 +7,18 @@ const MONITOR_LOGS = [
   `[MONITOR: WRITE LOGS]
 $ cat src/index.ts
 ------------------------------------------------------------
-import { Hono } from 'hono';
-const app = new Hono();
-
-app.get('/api/users', async (c) => {
-  const token = c.req.header('Authorization');
-  if (!token?.startsWith('Bearer ')) {
-    return c.json({ error: 'Unauthorized' }, 401);
+export default {
+  async fetch(request, env) {
+    const token = request.headers.get('Authorization');
+    if (!token?.startsWith('Bearer ')) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    return Response.json({ success: true, data: [] });
   }
-  return c.json({ success: true, data: [] });
-});
-
-export default app;
+};
 ------------------------------------------------------------
 ✓ Standard Web Worker structure detected.
-✓ Framework: Hono v4.4.0 verified.
+✓ Framework: Next.js Static API build verified.
 ✓ Imports checked: Zero bulky Node.js filesystem dependencies.`,
 
   // Step 1: Compile
@@ -34,7 +31,7 @@ $ datavec compile src/index.ts --optimize
 [4] Generating C header definitions:
     → struct Request { char* path; char* headers; ... };
     → struct Response { int status; char* body; ... };
-[5] Translating ECMAScript Hono router to C callback indices
+[5] Translating ECMAScript router to C callback indices
 [6] Invoking GCC compiler optimization flags (-O3)
 
 ✓ Native C compilation completed in 3.4 seconds.
@@ -55,13 +52,13 @@ $ datavec run --inspect
     → Virtual memory allocated: 2.1 MB
     → Cold start latency: 0.00ms
 
-✓ Live listener bound: https://hono-app.datavec.io`,
+✓ Live listener bound: https://app.datavec.io`,
 
   // Step 3: Flat Rate
   `[MONITOR: SYSTEM BILLING]
 $ datavec billing --verify
 ------------------------------------------------------------
-Project ID: hono-edge-service
+Project ID: nextjs-edge-service
 Billing Tier: Developer Pro ($19.00/mo flat)
 
 [Invoice Diagnostic Report]
@@ -99,7 +96,7 @@ export default function HowItWorks() {
               <span className="timeline-step-badge">[PHASE 01 / BUILD]</span>
               <h3>Write standard JavaScript</h3>
               <p>
-                Build endpoints using Hono, Elysia, or itty-router conforming to standard Web Workers specifications.
+                Build endpoints using Next.js static layouts or standard Web Worker APIs conforming to edge specifications.
               </p>
             </div>
 

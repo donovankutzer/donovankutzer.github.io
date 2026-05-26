@@ -6,17 +6,17 @@ type SymbolId = 'header' | 'db' | 'json' | null;
 
 const SYMBOLS = {
   header: {
-    js: "c.req.header('Authorization')",
+    js: "req.headers.get('Authorization')",
     c: "get_header(req, \"Authorization\")",
     desc: "Translates standard dynamic JavaScript request contexts directly into static pointer-indexed header lookups in C, bypassing V8 scope mapping by leveraging isolated micro-heaps."
   },
   db: {
-    js: "c.env.DB_BINDING.query(...)",
+    js: "env.DB_BINDING.query(...)",
     c: "db_query(get_env_db(\"DB_BINDING\"))",
     desc: "Bridges asynchronous JS environment bindings directly to static, lockless SQLite client structures using a structured memory layout with `struct iovec` ring buffers for auto-aggregating I/O operations."
   },
   json: {
-    js: "return c.json(data, 200)",
+    js: "Response.json(data, { status: 200 })",
     c: "return create_response(200, serialize_to_json(data))",
     desc: "Replaces JavaScript heap GC allocations with stackless coroutines utilizing readiness-oriented standard I/O blocking operations over stream buffers, eliminating runtime GC pauses."
   }
@@ -50,27 +50,27 @@ export default function Technology() {
             <div className="symbol-playground">
               {/* JS Column */}
               <div className="symbol-play-col">
-                <span className="symbol-play-label">JavaScript (Hono)</span>
+                <span className="symbol-play-label">JavaScript (Next.js / Web Standard)</span>
                 <div 
                   className={`symbol-node ${hoveredSymbol === 'header' ? 'active' : ''}`}
                   onMouseEnter={() => setHoveredSymbol('header')}
                   onMouseLeave={() => setHoveredSymbol(null)}
                 >
-                  c.req.header(...)
+                  req.headers.get(...)
                 </div>
                 <div 
                   className={`symbol-node ${hoveredSymbol === 'db' ? 'active' : ''}`}
                   onMouseEnter={() => setHoveredSymbol('db')}
                   onMouseLeave={() => setHoveredSymbol(null)}
                 >
-                  c.env.DB_BINDING.query
+                  env.DB_BINDING.query
                 </div>
                 <div 
                   className={`symbol-node ${hoveredSymbol === 'json' ? 'active' : ''}`}
                   onMouseEnter={() => setHoveredSymbol('json')}
                   onMouseLeave={() => setHoveredSymbol(null)}
                 >
-                  c.json(data)
+                  Response.json(data)
                 </div>
               </div>
 

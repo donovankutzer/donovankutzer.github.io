@@ -6,7 +6,7 @@ type WorkloadType = 'routing' | 'crypto' | 'sse';
 
 const BENCHMARKS = {
   routing: {
-    title: "Hono API Routing",
+    title: "Next.js Static Routing",
     sub: "Processes a complex nested endpoint router with custom JSON payload returns.",
     data: [
       { name: "DataVec compiled C", val: "0.08ms", pct: 100, tag: "dv" },
@@ -71,7 +71,7 @@ export default function Hero() {
                 <polyline points="20 6 9 17 4 12" />
               </svg>
               <span>
-                Drop-in compatible with standard Web Workers, Hono, and Elysia APIs. Built on native coroutine scheduling for massive vertical scaling.
+                Drop-in compatible with standard Web Workers, Next.js, and static site APIs. Built on native coroutine scheduling for massive vertical scaling.
               </span>
             </div>
 

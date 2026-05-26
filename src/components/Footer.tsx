@@ -54,7 +54,7 @@ export default function Footer() {
             
             <div className="foot-col">
               <h4>Guides</h4>
-              <a href="#">Hono deployment</a>
+              <a href="#">Next.js deployment</a>
               <a href="#">Elysia routing</a>
               <a href="#">Workers migration</a>
               <a href="#">Web Workers API spec</a>

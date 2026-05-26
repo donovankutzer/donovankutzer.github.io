@@ -27,12 +27,12 @@ const theme = createTheme({
 export const metadata = {
   title: "DataVec — Web Workers Hosting. Native C Speed. Flat Rate.",
   description: "DataVec compiles your Web Workers JavaScript to native C and serves it at native speed on a flat rate. No request meters, no bandwidth overages, just fast, secure, and predictable hosting.",
-  keywords: "web workers, serverless flat rate, cloudflare workers alternative, deno deploy, edge hosting, js to c compiler, hono hosting, hono, elysia",
+  keywords: "web workers, serverless flat rate, cloudflare workers alternative, deno deploy, edge hosting, js to c compiler, next.js static hosting, next.js, elysia",
   openGraph: {
     type: "website",
     url: "https://datavec.io/",
     title: "DataVec — Web Workers Hosting. Native C Speed. Flat Rate.",
-    description: "Deploy Hono, Elysia, and itty-router apps natively compiled to C on a flat monthly bill. Zero cold starts, 300K+ requests/sec.",
+    description: "Deploy Next.js static builds, Elysia, and web worker apps natively compiled to C on a flat monthly bill. Zero cold starts, 300K+ requests/sec.",
   }
 };
 

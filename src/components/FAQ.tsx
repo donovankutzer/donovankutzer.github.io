@@ -7,7 +7,7 @@ const FAQ_DATA = [
     question: "Does my Cloudflare Workers code run on DataVec without modifications?",
     answer: (
       <>
-        Yes, as long as your application targets standard Web Workers specification APIs such as fetch, Request, Response, URL, and Web Crypto. Popular routing frameworks like Hono, Elysia, and itty-router are completely runtime-agnostic by default. Migrating Hono or Elysia codebases usually requires zero code changes: you simply substitute your wrangler deploy command with our compiled deploy CLI tool.
+        Yes, as long as your application targets standard Web Workers specification APIs such as fetch, Request, Response, URL, and Web Crypto. Modern frameworks like Next.js static builds, Elysia, and standard web runtimes are fully supported by default. Migrating standard static deployments or API service codebases usually requires zero code changes: you simply substitute your build command with our compiled deploy CLI tool.
         <div className="faq-code" aria-label="Code block detailing migration commands">
           # Before (Cloudflare)<br />
           $ wrangler deploy<br /><br />

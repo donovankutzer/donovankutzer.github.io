@@ -146,7 +146,7 @@ export default function Pitch() {
                     Compatible Web Worker Frameworks &amp; SDKs
                   </h4>
                   <div className="fw-row" style={{ maxWidth: '100%', margin: '0' }}>
-                    <span className="fw-tag featured">Hono Router</span>
+                    <span className="fw-tag featured">Next.js (Static)</span>
                     <span className="fw-tag featured">itty-router</span>
                     <span className="fw-tag featured">Elysia API</span>
                     <span className="fw-tag">Remix (Edge)</span>
