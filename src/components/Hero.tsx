@@ -229,7 +229,7 @@ export default function Hero() {
                         <div
                           className={`benchmark-bar ${row.tag}`}
                           style={{ 
-                            width: `${maxMs > 0 ? Math.max(2, (row.ms / maxMs) * 100) : 0}%`, 
+                            width: `${maxMs > 0 ? Math.max(2, Math.sqrt(row.ms / maxMs) * 100) : 0}%`, 
                             height: '100%', 
                             background: isWinner ? 'var(--accent-mint)' : 'var(--border-strong)',
                             borderRadius: '4px',

@@ -102,7 +102,7 @@ export default function Calculator() {
 
     const ctx = canvasRef.current;
     const providerShortName = NAMES[provider].split(' ')[0];
-    const labels = [providerShortName, 'DataVec Flat'];
+    const labels = [providerShortName, 'DataVec'];
     const data = [Math.round(selectedProviderBill), Math.round(flatRate)];
     const bgColors = [COLORS[provider], '#00f5a0'];
 
@@ -179,28 +179,28 @@ export default function Calculator() {
 
   const selectStyles = {
     root: { display: 'flex', flexDirection: 'column' as const, gap: '8px' },
-    label: { 
-      fontFamily: 'var(--font-mono)', 
-      fontSize: '11px', 
-      fontWeight: 700, 
-      color: 'var(--text-muted)', 
-      textTransform: 'uppercase' as const, 
-      letterSpacing: '0.08em' 
+    label: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px',
+      fontWeight: 700,
+      color: 'var(--text-muted)',
+      textTransform: 'uppercase' as const,
+      letterSpacing: '0.08em'
     },
-    input: { 
-      background: 'var(--surface)', 
-      border: '1px solid var(--border-strong)', 
+    input: {
+      background: 'var(--surface)',
+      border: '1px solid var(--border-strong)',
       borderRadius: 'var(--r-md)',
-      color: 'var(--text)', 
-      fontFamily: 'var(--font-sans)', 
-      fontSize: '14.5px', 
-      height: '46px', 
+      color: 'var(--text)',
+      fontFamily: 'var(--font-sans)',
+      fontSize: '14.5px',
+      height: '46px',
       padding: '12px',
       outline: 'none',
       transition: 'var(--transition)'
     },
-    dropdown: { 
-      background: '#0d0f14', 
+    dropdown: {
+      background: '#0d0f14',
       border: '1px solid var(--border-strong)',
       borderRadius: 'var(--r-md)'
     },
@@ -230,7 +230,7 @@ export default function Calculator() {
 
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
           {/* Controls Box */}
-          <Paper 
+          <Paper
             p="xl"
             style={{
               background: '#0d1016',
@@ -297,7 +297,7 @@ export default function Calculator() {
           </Paper>
 
           {/* Results Summary & Interactive Graph */}
-          <Paper 
+          <Paper
             p="xl"
             style={{
               background: 'var(--surface)',
@@ -309,12 +309,12 @@ export default function Calculator() {
             }}
           >
             <SimpleGrid cols={2} spacing="md">
-              <Paper 
-                p="md" 
-                style={{ 
-                  background: 'rgba(255,255,255,0.01)', 
-                  border: '1px solid var(--border-strong)', 
-                  borderRadius: 'var(--r-md)' 
+              <Paper
+                p="md"
+                style={{
+                  background: 'rgba(255,255,255,0.01)',
+                  border: '1px solid var(--border-strong)',
+                  borderRadius: 'var(--r-md)'
                 }}
               >
                 <Text size="xxs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>
@@ -327,12 +327,12 @@ export default function Calculator() {
                 <Text size="xxs" c="dimmed" mt={4}>Metered utility pricing</Text>
               </Paper>
 
-              <Paper 
-                p="md" 
-                style={{ 
-                  background: 'rgba(16, 185, 129, 0.03)', 
-                  border: '1px solid rgba(16, 185, 129, 0.25)', 
-                  borderRadius: 'var(--r-md)' 
+              <Paper
+                p="md"
+                style={{
+                  background: 'rgba(16, 185, 129, 0.03)',
+                  border: '1px solid rgba(16, 185, 129, 0.25)',
+                  borderRadius: 'var(--r-md)'
                 }}
               >
                 <Text size="xxs" fw={700} c="var(--accent-mint)" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>
@@ -342,10 +342,10 @@ export default function Calculator() {
                   {formatCurrency(flatRate)}
                   <span style={{ fontSize: '11px', fontWeight: 500, color: 'rgba(0, 245, 160, 0.7)' }}>/mo</span>
                 </Text>
-                <Text 
-                  size="xxs" 
-                  c={savings > 0 ? 'var(--accent-mint)' : 'var(--text-dim)'} 
-                  fw={savings > 0 ? 600 : 400} 
+                <Text
+                  size="xxs"
+                  c={savings > 0 ? 'var(--accent-mint)' : 'var(--text-dim)'}
+                  fw={savings > 0 ? 600 : 400}
                   mt={4}
                 >
                   {savings > 0
