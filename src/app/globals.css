@@ -2,26 +2,26 @@
 
 :root {
   /* Sophisticated Slate-Charcoal & Steel Palette (Brightened and more vibrant) */
-  --bg: #181d2b;
-  --bg-grid: #1e2536;
-  --surface: #242c3f;
-  --surface-hover: #2e384f;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.18);
-  --border-active: rgba(99, 102, 241, 0.45);
+  --bg: #202738;
+  --bg-grid: #283146;
+  --surface: #2b354c;
+  --surface-hover: #374360;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --border-active: rgba(99, 102, 241, 0.55);
   
   /* Brand Accents */
-  --accent: #5f55fa; /* Vibrant Indigo */
-  --accent-hover: #4f46e5;
+  --accent: #6d64ff; /* Vibrant Brighter Indigo */
+  --accent-hover: #5f55fa;
   --accent-mint: #10b981; /* Premium Mint Emerald */
-  --accent-mint-dim: rgba(16, 185, 129, 0.12);
+  --accent-mint-dim: rgba(16, 185, 129, 0.15);
   --accent-gold: #f59e0b;
-  --accent-gold-dim: rgba(245, 158, 11, 0.12);
+  --accent-gold-dim: rgba(245, 158, 11, 0.15);
   
-  /* Modern Refined Text Colors */
-  --text: #f8fafc; /* Crisp slate white */
-  --text-muted: #cbd5e1; /* Clearer, brighter slate gray */
-  --text-dim: #94a3b8; /* Slate comments */
+  /* Modern Refined Text Colors (Significantly higher contrast) */
+  --text: #ffffff; /* Crisp slate white (pure white for contrast) */
+  --text-muted: #f1f5f9; /* Clearer, brighter slate gray */
+  --text-dim: #cbd5e1; /* Slate comments */
 
   /* Border Radii & Custom transitions */
   --r-sm: 6px;
@@ -65,10 +65,10 @@ body::before {
   inset: 0;
   background-image: 
     /* Denser, elegant micro dot matrix (slightly higher opacity for vibrancy) */
-    radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 0),
+    radial-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 0),
     /* Sparse, delicate large blueprint grids */
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 24px 24px, 120px 120px, 120px 120px;
   pointer-events: none;
   z-index: 0;
@@ -79,7 +79,7 @@ body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.22) 0%, rgba(16, 185, 129, 0.08) 40%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.28) 0%, rgba(16, 185, 129, 0.12) 40%, rgba(0, 0, 0, 0) 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -96,21 +96,21 @@ body::after {
 .orb-1 {
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, transparent 80%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 80%);
   top: -300px;
   right: -200px;
 }
 .orb-2 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(0, 245, 160, 0.16) 0%, transparent 80%);
+  background: radial-gradient(circle, rgba(0, 245, 160, 0.22) 0%, transparent 80%);
   bottom: 10%;
   left: -200px;
 }
 .orb-3 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.09) 0%, transparent 80%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 80%);
   top: 40%;
   right: -100px;
 }
@@ -209,7 +209,7 @@ body::after {
 
 /* Sidebar Tab List */
 .app-tabs-list {
-  background: #141822 !important;
+  background: #1c2333 !important;
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -237,7 +237,7 @@ body::after {
 
 .app-tabs-panels-wrap.pitch-panels {
   padding: 40px;
-  background: #0f131a;
+  background: #171f2d;
 }
 
 .app-tabs-panels-wrap.pricing-panels {

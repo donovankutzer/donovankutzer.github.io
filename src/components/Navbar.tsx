@@ -11,7 +11,7 @@ export default function Navbar() {
         left: 0, 
         right: 0, 
         height: '72px', 
-        background: 'rgba(14, 17, 23, 0.85)', 
+        background: 'rgba(32, 39, 56, 0.85)', 
         backdropFilter: 'blur(12px)', 
         borderBottom: '1px solid var(--border-strong)', 
         zIndex: 1000 

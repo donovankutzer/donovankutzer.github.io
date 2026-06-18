@@ -147,10 +147,10 @@ export default function HowItWorks() {
 
           {/* Interactive Compiler Inspector Monitor on the right */}
           <Stack gap={0} w="100%">
-            <Paper 
+             <Paper 
               p="xs"
               style={{ 
-                background: '#0d1016',
+                background: 'var(--bg-grid)',
                 borderTop: '1px solid var(--border-strong)',
                 borderLeft: '1px solid var(--border-strong)',
                 borderRight: '1px solid var(--border-strong)',
@@ -178,7 +178,7 @@ export default function HowItWorks() {
             <Paper
               p="xl"
               style={{
-                background: '#090b10',
+                background: '#161c28',
                 border: '1px solid var(--border-strong)',
                 borderBottomLeftRadius: 'var(--r-lg)',
                 borderBottomRightRadius: 'var(--r-lg)',

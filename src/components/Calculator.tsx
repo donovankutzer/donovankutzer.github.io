@@ -200,7 +200,7 @@ export default function Calculator() {
       transition: 'var(--transition)'
     },
     dropdown: {
-      background: '#0d0f14',
+      background: '#202738',
       border: '1px solid var(--border-strong)',
       borderRadius: 'var(--r-md)'
     },
@@ -233,7 +233,7 @@ export default function Calculator() {
           <Paper
             p="xl"
             style={{
-              background: '#0d1016',
+              background: 'var(--bg-grid)',
               border: '1px solid var(--border-strong)',
               borderRadius: 'var(--r-lg)',
               display: 'flex',
