@@ -321,19 +321,18 @@ body::after {
 }
 
 .sec-eye {
-  display: inline-block !important;
-  background: rgba(99, 102, 241, 0.08) !important;
-  border: 1px solid var(--border-active) !important;
-  padding: 6px 14px !important;
-  border-radius: 100px !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
+  display: block !important;
+  color: var(--cyan) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  color: var(--accent) !important;
+  font-size: 12px !important;
+  margin-bottom: 12px !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
   font-family: var(--font-mono), monospace !important;
-  margin-bottom: 20px !important;
-  letter-spacing: 0.05em !important;
-  white-space: nowrap !important;
 }
 
 /* Global Heading Scales & Spacings */
