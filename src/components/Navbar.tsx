@@ -93,7 +93,6 @@ export default function Navbar() {
               style={{ 
                 background: 'var(--accent)', 
                 color: 'white', 
-                borderRadius: 'var(--r-sm)',
                 fontWeight: 600
               }}
             >

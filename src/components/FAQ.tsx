@@ -10,13 +10,13 @@ const FAQ_DATA = [
         <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
           Yes, as long as your application targets standard Web Workers specification APIs such as fetch, Request, Response, URL, and Web Crypto. Modern frameworks like Next.js static builds, Elysia, and standard web runtimes are fully supported by default. Migrating standard static deployments or API service codebases usually requires zero code changes: you simply substitute your build command with our compiled deploy CLI tool.
         </Text>
-        <div 
+        <div
           aria-label="Code block detailing migration commands"
-          style={{ 
-            background: 'rgba(0, 0, 0, 0.3)', 
-            border: '1px solid var(--border-strong)', 
-            borderRadius: 'var(--r-md)', 
-            padding: '16px', 
+          style={{
+            background: 'rgba(0, 0, 0, 0.3)',
+            border: '1px solid var(--border-strong)',
+            borderRadius: 'var(--r-md)',
+            padding: '16px',
             fontFamily: 'var(--font-mono)',
             fontSize: '12px',
             color: '#a78bfa',
@@ -59,7 +59,7 @@ export default function FAQ() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="faq">
       <Container size="lg">
-        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div className="section-header-left" style={{ textAlign: 'left', marginBottom: '48px' }}>
           <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
             Developer FAQ
           </span>
@@ -68,9 +68,9 @@ export default function FAQ() {
           </Title>
         </div>
 
-        <Accordion 
-          variant="separated" 
-          radius="lg" 
+        <Accordion
+          variant="separated"
+          radius="lg"
           defaultValue={null}
           styles={{
             root: { maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' },

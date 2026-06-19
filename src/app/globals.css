@@ -17,11 +17,13 @@
   --accent-mint-dim: rgba(16, 185, 129, 0.15);
   --accent-gold: #f59e0b;
   --accent-gold-dim: rgba(245, 158, 11, 0.15);
+  --cyan: #06b6d4; /* Vibrant Cyan */
   
   /* Modern Refined Text Colors (Significantly higher contrast) */
   --text: #ffffff; /* Crisp slate white (pure white for contrast) */
   --text-muted: #f1f5f9; /* Clearer, brighter slate gray */
-  --text-dim: #cbd5e1; /* Slate comments */
+  --text-dim: #aeb8d9; /* Beautiful light grey */
+  --mantine-color-dimmed: #aeb8d9 !important;
 
   /* Border Radii & Custom transitions */
   --r-sm: 6px;
@@ -288,4 +290,47 @@ body::after {
   .hidden-mobile {
     display: none !important;
   }
+}
+
+/* ==========================================
+   Button Styling & Pill Design
+   ========================================== */
+.mantine-Button-root {
+  border-radius: 9999px !important;
+  transition: var(--transition);
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.btn-gradient:hover {
+  opacity: 0.95 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+}
+
+/* ==========================================
+   Section Headers & Eyebrows
+   ========================================== */
+.section-header {
+  text-align: left !important;
+  margin-bottom: 48px !important;
+}
+
+.sec-eye {
+  display: block !important;
+  color: var(--cyan) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  font-size: 12px !important;
+  margin-bottom: 12px !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-family: var(--font-mono), monospace !important;
 }

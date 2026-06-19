@@ -78,7 +78,7 @@ export default function HowItWorks() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="how">
       <Container size="lg">
-        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div className="section-header-left" style={{ textAlign: 'left', marginBottom: '48px' }}>
           <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
             Infrastructure Pipeline
           </span>
@@ -92,9 +92,9 @@ export default function HowItWorks() {
 
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
           {/* Timeline steps on the left */}
-          <Timeline 
-            active={activeStep} 
-            bulletSize={30} 
+          <Timeline
+            active={activeStep}
+            bulletSize={30}
             lineWidth={2}
             styles={{
               item: { cursor: 'pointer', transition: 'all 0.2s ease' }
@@ -106,7 +106,7 @@ export default function HowItWorks() {
               { title: '104 KB Runtime Engine', desc: 'Serve requests instantly on a standalone native process coordinating SSL handshakes, routing, and database drivers.', badge: 'PHASE 03 / RUN' },
               { title: 'Predictable Billing Locks', desc: 'Maintain total budget control with fixed monthly billing caps that physically disable metered overage invoices.', badge: 'PHASE 04 / AUDIT' }
             ].map((step, idx) => (
-              <Timeline.Item 
+              <Timeline.Item
                 key={idx}
                 bullet={
                   <span style={{ fontSize: '11px', fontWeight: 'bold', color: activeStep === idx ? 'var(--accent-mint)' : 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
@@ -121,9 +121,9 @@ export default function HowItWorks() {
                   transition: 'all 0.25s ease'
                 }}
               >
-                <Paper 
-                  p="md" 
-                  style={{ 
+                <Paper
+                  p="md"
+                  style={{
                     background: activeStep === idx ? 'var(--surface)' : 'transparent',
                     border: '1px solid',
                     borderColor: activeStep === idx ? 'var(--border-strong)' : 'transparent',
@@ -147,9 +147,9 @@ export default function HowItWorks() {
 
           {/* Interactive Compiler Inspector Monitor on the right */}
           <Stack gap={0} w="100%">
-             <Paper 
+            <Paper
               p="xs"
-              style={{ 
+              style={{
                 background: 'var(--bg-grid)',
                 borderTop: '1px solid var(--border-strong)',
                 borderLeft: '1px solid var(--border-strong)',
@@ -174,7 +174,7 @@ export default function HowItWorks() {
                 telemetry
               </Text>
             </Paper>
-            
+
             <Paper
               p="xl"
               style={{
@@ -190,7 +190,7 @@ export default function HowItWorks() {
                 active_screen_0{activeStep + 1}
               </span>
               <pre style={{ margin: 0, overflowX: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-                <Code 
+                <Code
                   block
                   style={{
                     background: 'transparent',

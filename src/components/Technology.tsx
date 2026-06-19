@@ -29,7 +29,7 @@ export default function Technology() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="tech">
       <Container size="lg">
-        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div className="section-header-left" style={{ textAlign: 'left', marginBottom: '48px' }}>
           <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
             Architectural Schematics
           </span>
@@ -43,20 +43,20 @@ export default function Technology() {
 
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
           {/* Column 1: The Compiler (Interactive Symbol Map) */}
-          <Paper 
-            p={{ base: 'md', sm: 'xl' }} 
-            style={{ 
-              background: 'var(--surface)', 
+          <Paper
+            p={{ base: 'md', sm: 'xl' }}
+            style={{
+              background: 'var(--surface)',
               border: '1px solid var(--border-strong)',
               borderRadius: 'var(--r-lg)',
               boxShadow: 'var(--shadow-sm)'
             }}
           >
-            <span 
-              style={{ 
-                display: 'inline-block', 
-                background: 'rgba(99, 102, 241, 0.08)', 
-                color: 'var(--accent)', 
+            <span
+              style={{
+                display: 'inline-block',
+                background: 'rgba(99, 102, 241, 0.08)',
+                color: 'var(--accent)',
                 border: '1px solid var(--border-active)',
                 borderRadius: 'var(--r-sm)',
                 padding: '4px 10px',
@@ -95,7 +95,7 @@ export default function Technology() {
                     { id: 'db' as SymbolId, label: 'env.DB_BINDING.query' },
                     { id: 'json' as SymbolId, label: 'Response.json(data)' }
                   ].map((node) => (
-                    <div 
+                    <div
                       key={node.id}
                       className={`symbol-node ${hoveredSymbol === node.id ? 'active' : ''}`}
                       onMouseEnter={() => setHoveredSymbol(node.id)}
@@ -117,10 +117,10 @@ export default function Technology() {
                         overflow: 'hidden'
                       }}
                     >
-                      <Text 
-                        size="xs" 
-                        span 
-                        style={{ 
+                      <Text
+                        size="xs"
+                        span
+                        style={{
                           fontFamily: 'inherit',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
@@ -141,7 +141,7 @@ export default function Technology() {
                     { id: 'db' as SymbolId, label: 'db_query(...)' },
                     { id: 'json' as SymbolId, label: 'create_response(...)' }
                   ].map((node) => (
-                    <div 
+                    <div
                       key={node.id}
                       className={`symbol-node ${hoveredSymbol === node.id ? 'active-mint' : ''}`}
                       onMouseEnter={() => setHoveredSymbol(node.id)}
@@ -163,10 +163,10 @@ export default function Technology() {
                         overflow: 'hidden'
                       }}
                     >
-                      <Text 
-                        size="xs" 
-                        span 
-                        style={{ 
+                      <Text
+                        size="xs"
+                        span
+                        style={{
                           fontFamily: 'inherit',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
@@ -183,10 +183,10 @@ export default function Technology() {
             </div>
 
             {/* Translation Details Box */}
-            <Paper 
-              p="md" 
-              style={{ 
-                background: 'rgba(0,0,0,0.2)', 
+            <Paper
+              p="md"
+              style={{
+                background: 'rgba(0,0,0,0.2)',
                 border: '1px solid var(--border)',
                 borderRadius: 'var(--r-md)',
                 minHeight: '80px',
@@ -212,20 +212,20 @@ export default function Technology() {
           </Paper>
 
           {/* Column 2: The Runtime (Visual Stack Comparison) */}
-          <Paper 
-            p={{ base: 'md', sm: 'xl' }} 
-            style={{ 
-              background: 'var(--surface)', 
+          <Paper
+            p={{ base: 'md', sm: 'xl' }}
+            style={{
+              background: 'var(--surface)',
               border: '1px solid var(--border-strong)',
               borderRadius: 'var(--r-lg)',
               boxShadow: 'var(--shadow-sm)'
             }}
           >
-            <span 
-              style={{ 
-                display: 'inline-block', 
-                background: 'rgba(16, 185, 129, 0.08)', 
-                color: 'var(--accent-mint)', 
+            <span
+              style={{
+                display: 'inline-block',
+                background: 'rgba(16, 185, 129, 0.08)',
+                color: 'var(--accent-mint)',
                 border: '1px solid rgba(16, 185, 129, 0.2)',
                 borderRadius: 'var(--r-sm)',
                 padding: '4px 10px',
@@ -251,9 +251,9 @@ export default function Technology() {
                   DataVec compiled C
                 </Text>
                 {['Deductive Socket Poller (0ms)', 'Stackless Coroutine (0ms)', 'Isolated Micro-Heap SQLite (0ms)'].map((layer, idx) => (
-                  <Paper 
+                  <Paper
                     key={idx}
-                    p="xs" 
+                    p="xs"
                     style={{
                       background: 'rgba(16, 185, 129, 0.04)',
                       border: '1px solid var(--accent-mint)',
@@ -278,9 +278,9 @@ export default function Technology() {
                   Virtualized Edge Isolate
                 </Text>
                 {['API Gateway (metered)', 'Firecracker VM (startup)', 'V8 Isolate engine', 'Node.js Runtime & GC', 'Dynamic JS Route (V8 Heap)'].map((layer, idx) => (
-                  <Paper 
+                  <Paper
                     key={idx}
-                    p="xs" 
+                    p="xs"
                     style={{
                       background: 'rgba(255, 255, 255, 0.01)',
                       border: '1px solid var(--border-strong)',

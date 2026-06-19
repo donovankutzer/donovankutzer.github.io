@@ -8,6 +8,7 @@ import Pricing from '@/components/Pricing';
 import Calculator from '@/components/Calculator';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
+import Platform from '@/components/Platform';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Navbar />
       <main style={{ paddingTop: '72px' }}>
         <Hero />
+        <Platform />
         <Stats />
         <Pitch />
         <HowItWorks />

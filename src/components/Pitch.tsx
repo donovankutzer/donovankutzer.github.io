@@ -11,26 +11,26 @@ export default function Pitch() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="runs">
       <Container size="lg">
-        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
+        <div className="section-header">
+          <span className="sec-eye">
             Capability Matrix
           </span>
           <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
             Direct comparison &amp; capabilities showcase
           </Title>
-          <Text size="md" c="dimmed" style={{ maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
+          <Text size="md" c="dimmed" style={{ maxWidth: '640px', lineHeight: 1.6 }}>
             DataVec replaces virtualized serverless runtime layers with compiled execution. Explore our billing, API standard compliance, and supported frameworks below.
           </Text>
         </div>
 
-        <Tabs 
-          value={activeScreen} 
+        <Tabs
+          value={activeScreen}
           onChange={(val) => setActiveScreen(val as ScreenType)}
           variant="unstyled"
           className="responsive-app-tabs pitch-tabs"
         >
           {/* Sidebar Tab List */}
-          <Tabs.List 
+          <Tabs.List
             className="app-tabs-list pitch-list"
           >
             {[
@@ -79,13 +79,13 @@ export default function Pitch() {
                     Comparing flat monthly subscriptions vs utility-metered edge networks.
                   </Text>
                 </div>
-                
+
                 {/* Desktop view: Combined spec matrix table */}
                 <Box visibleFrom="md">
-                  <Paper 
-                    p="xl" 
-                    style={{ 
-                      borderRadius: 'var(--r-md)', 
+                  <Paper
+                    p="xl"
+                    style={{
+                      borderRadius: 'var(--r-md)',
                       background: 'rgba(255, 255, 255, 0.01)',
                       border: '1px solid var(--border-strong)',
                       overflow: 'hidden'
@@ -108,9 +108,9 @@ export default function Pitch() {
                             { metric: 'Bandwidth Fees', dv: 'Included ($0)', cf: 'Free', ve: '$0.15 / GB metered', dvColor: 'var(--accent-mint)', cfColor: 'var(--accent-mint)', veColor: '#f87171' },
                             { metric: 'Cold Starts', dv: '0.00ms latency', cf: '~5.00ms (V8 GC)', ve: '50ms - 200ms delay', dvColor: 'var(--accent-mint)', cfColor: '#f87171', veColor: '#f87171' }
                           ].map((row, idx) => (
-                            <tr 
-                              key={idx} 
-                              style={{ 
+                            <tr
+                              key={idx}
+                              style={{
                                 borderBottom: idx === 3 ? 'none' : '1px solid var(--border)',
                                 background: 'transparent',
                               }}
@@ -131,10 +131,10 @@ export default function Pitch() {
                 <Box hiddenFrom="md">
                   <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
                     {/* DataVec */}
-                    <Paper 
-                      p="xl" 
-                      style={{ 
-                        borderRadius: 'var(--r-md)', 
+                    <Paper
+                      p="xl"
+                      style={{
+                        borderRadius: 'var(--r-md)',
                         background: 'rgba(99, 102, 241, 0.02)',
                         border: '1px solid var(--border-active)'
                       }}
@@ -151,10 +151,10 @@ export default function Pitch() {
                     </Paper>
 
                     {/* Cloudflare */}
-                    <Paper 
-                      p="xl" 
-                      style={{ 
-                        borderRadius: 'var(--r-md)', 
+                    <Paper
+                      p="xl"
+                      style={{
+                        borderRadius: 'var(--r-md)',
                         background: 'var(--surface)',
                         border: '1px solid var(--border)'
                       }}
@@ -171,10 +171,10 @@ export default function Pitch() {
                     </Paper>
 
                     {/* Vercel */}
-                    <Paper 
-                      p="xl" 
-                      style={{ 
-                        borderRadius: 'var(--r-md)', 
+                    <Paper
+                      p="xl"
+                      style={{
+                        borderRadius: 'var(--r-md)',
                         background: 'var(--surface)',
                         border: '1px solid var(--border)'
                       }}
@@ -206,10 +206,10 @@ export default function Pitch() {
                   </Text>
                 </div>
 
-                <Paper 
-                  p="xl" 
-                  style={{ 
-                    borderLeft: '3px solid var(--accent-mint)', 
+                <Paper
+                  p="xl"
+                  style={{
+                    borderLeft: '3px solid var(--accent-mint)',
                     background: 'var(--surface)',
                     borderTop: '1px solid var(--border)',
                     borderRight: '1px solid var(--border)',
@@ -220,7 +220,7 @@ export default function Pitch() {
                   <Text size="sm" fw={700} c="var(--accent-mint)" mb="lg" style={{ fontFamily: 'var(--font-mono)' }}>
                     ✓ Compliant Edge Standard APIs
                   </Text>
-                  
+
                   <Stack gap="md">
                     {[
                       { title: 'Standard fetch Request & Response', desc: 'Direct handling for standard WinterTC `Request`, `Response`, `Headers`, and dynamic cryptographic functions.' },
@@ -253,11 +253,11 @@ export default function Pitch() {
                   </Text>
                 </div>
 
-                <Paper 
-                  p="xl" 
-                  style={{ 
-                    background: 'var(--surface)', 
-                    border: '1px solid var(--border)', 
+                <Paper
+                  p="xl"
+                  style={{
+                    background: 'var(--surface)',
+                    border: '1px solid var(--border)',
                     borderRadius: 'var(--r-md)',
                     textAlign: 'center'
                   }}
@@ -265,12 +265,12 @@ export default function Pitch() {
                   <Text size="xs" fw={700} c="dimmed" mb="xl" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                     Compatible Web Worker Frameworks &amp; SDKs
                   </Text>
-                  
+
                   <Flex wrap="wrap" gap="sm" justify="center">
                     {['Next.js (Static)', 'itty-router', 'Elysia API', 'Remix (Edge)', 'tRPC', 'Zod validator', 'jose (JWT)', 'Fauna DB', 'Upstash Redis', 'OpenAI SDK', 'Anthropic SDK', 'Stripe SDK'].map((tag, i) => {
                       const isFeatured = i < 3;
                       return (
-                        <span 
+                        <span
                           key={tag}
                           className={`fw-tag ${isFeatured ? 'featured' : ''}`}
                           style={{

@@ -9,7 +9,7 @@ export default function Pricing() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="pricing">
       <Container size="lg">
-        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div className="section-header-left" style={{ textAlign: 'left', marginBottom: '48px' }}>
           <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
             Configurator Console
           </span>
@@ -45,14 +45,14 @@ export default function Pricing() {
           </div>
         </Paper>
 
-        <Tabs 
-          value={activeTier} 
+        <Tabs
+          value={activeTier}
           onChange={(val) => setActiveTier(val as 'pro' | 'business' | 'enterprise')}
           variant="unstyled"
           className="responsive-app-tabs pricing-tabs"
         >
           {/* Spec Selectors on Left */}
-          <Tabs.List 
+          <Tabs.List
             className="app-tabs-list pricing-list"
           >
             <Text size="xs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '8px', letterSpacing: '0.05em' }}>
@@ -126,7 +126,6 @@ export default function Pricing() {
                     background: 'var(--accent)',
                     color: 'white',
                     fontWeight: 600,
-                    borderRadius: 'var(--r-md)',
                     textAlign: 'center'
                   }}
                 >
@@ -186,11 +185,10 @@ export default function Pricing() {
                   href="mailto:hello@datavec.com?subject=DataVec - Business Plan Subscription"
                   size="md"
                   style={{
-                    background: 'var(--surface-hover)',
+                    background: 'var(--accent)',
                     border: '1px solid var(--border-strong)',
                     color: 'white',
                     fontWeight: 600,
-                    borderRadius: 'var(--r-md)',
                     textAlign: 'center'
                   }}
                 >
@@ -254,7 +252,6 @@ export default function Pricing() {
                       background: 'var(--accent)',
                       color: 'white',
                       fontWeight: 600,
-                      borderRadius: 'var(--r-md)',
                       textAlign: 'center'
                     }}
                   >
@@ -269,7 +266,6 @@ export default function Pricing() {
                       borderColor: 'var(--border-strong)',
                       color: 'white',
                       fontWeight: 600,
-                      borderRadius: 'var(--r-md)',
                       textAlign: 'center',
                       background: 'rgba(255,255,255,0.01)'
                     }}

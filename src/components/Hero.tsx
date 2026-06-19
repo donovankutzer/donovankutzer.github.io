@@ -56,215 +56,209 @@ export default function Hero() {
           {/* Left copy */}
           <Grid.Col span={{ base: 12, md: 5 }}>
             <Stack gap="xl">
-            <div className="eyebrow" style={{ alignSelf: 'flex-start' }}>
-              <span className="eyebrow-badge">DataVec</span>
-              <span className="eyebrow-sep"></span>
-              <span className="eyebrow-text">Compiled Runtime · M:N Scheduling · Flat Rate</span>
-            </div>
-            
-            <Stack gap="md">
-              <Title 
-                order={1} 
-                style={{ 
-                  fontSize: '44px', 
-                  lineHeight: 1.15,
-                  fontWeight: 800,
-                  letterSpacing: '-0.02em'
+              <div className="eyebrow" style={{ alignSelf: 'flex-start' }}>
+                <span className="eyebrow-badge">DataVec</span>
+                <span className="eyebrow-sep"></span>
+                <span className="eyebrow-text">Compiled Runtime · M:N Scheduling · Flat Rate</span>
+              </div>
+
+              <Stack gap="md">
+                <Title
+                  order={1}
+                  style={{
+                    fontSize: '44px',
+                    lineHeight: 1.15,
+                    fontWeight: 800,
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  <span className="c1" style={{ color: 'var(--text)' }}>JavaScript at C-speed. </span>
+                  <span className="c2" style={{ color: 'var(--accent-mint)' }}>No cold starts. </span>
+                  <span className="c1" style={{ color: 'var(--text)' }}>No billing shock.</span>
+                </Title>
+
+                <Text size="lg" c="dimmed" style={{ lineHeight: 1.6 }}>
+                  DataVec is a cloud runtime for high-volume JavaScript backends. Write JavaScript, deploy normally, and DataVec compiles it into optimized C, keeps workloads resident in memory, and runs them on predictable flat-rate infrastructure.
+                </Text>
+              </Stack>
+
+              <Paper
+                p="md"
+                style={{
+                  background: 'rgba(99, 102, 241, 0.04)',
+                  borderColor: 'var(--border)',
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  borderRadius: 'var(--r-md)',
+                  display: 'flex',
+                  gap: '14px',
+                  alignItems: 'flex-start'
                 }}
               >
-                <span className="c1" style={{ color: 'var(--text)' }}>JavaScript that runs like </span>
-                <span className="c2" style={{ color: 'var(--accent-mint)' }}>C</span>
-              </Title>
-              
-              <Text size="lg" c="dimmed" style={{ lineHeight: 1.6 }}>
-                A high-performance server alternative for teams currently on Cloudflare Workers, Vercel Edge, or Deno. No garbage collector, zero cold starts, and one transparent flat monthly rate.
-              </Text>
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  style={{ width: '20px', height: '20px', stroke: 'var(--accent)', strokeWidth: 2, fill: 'none', flexShrink: 0, marginTop: '2px' }}
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <Text size="sm" c="dimmed">
+                  Drop-in compatible with standard Web Workers, Next.js, and static site APIs. Built on native coroutine scheduling for massive vertical scaling.
+                </Text>
+              </Paper>
+
+              <Group gap="md">
+                <Button
+                  component="a"
+                  href="#pricing"
+                  size="lg"
+                  className="btn-gradient"
+                  style={{
+                    fontWeight: 600,
+                    padding: '0 28px',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
+                  }}
+                >
+                  Start for $19/month
+                </Button>
+                <Button
+                  component="a"
+                  href="#calc"
+                  variant="outline"
+                  size="lg"
+                  style={{
+                    borderColor: 'var(--border-strong)',
+                    color: 'var(--text)',
+                    fontWeight: 600,
+                    padding: '0 28px',
+                    background: 'rgba(255,255,255,0.01)',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
+                  }}
+                >
+                  Compare server savings
+                </Button>
+              </Group>
             </Stack>
+          </Grid.Col>
 
-            <Paper 
-              p="md" 
-              style={{ 
-                background: 'rgba(99, 102, 241, 0.04)', 
-                borderColor: 'var(--border)',
-                borderWidth: '1px',
-                borderStyle: 'solid',
-                borderRadius: 'var(--r-md)',
-                display: 'flex',
-                gap: '14px',
-                alignItems: 'flex-start'
-              }}
-            >
-              <svg 
-                viewBox="0 0 24 24" 
-                aria-hidden="true" 
-                style={{ width: '20px', height: '20px', stroke: 'var(--accent)', strokeWidth: 2, fill: 'none', flexShrink: 0, marginTop: '2px' }}
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <Text size="sm" c="dimmed">
-                Drop-in compatible with standard Web Workers, Next.js, and static site APIs. Built on native coroutine scheduling for massive vertical scaling.
-              </Text>
-            </Paper>
-
-            <Group gap="md">
-              <Button 
-                component="a" 
-                href="#pricing" 
-                size="lg" 
-                style={{ 
-                  background: 'var(--accent)', 
-                  color: 'white',
-                  fontWeight: 600,
-                  padding: '0 28px',
-                  borderRadius: 'var(--r-md)',
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0
-                }}
-              >
-                Start for $19/month
-              </Button>
-              <Button 
-                component="a" 
-                href="#calc" 
-                variant="outline" 
-                size="lg"
-                style={{ 
-                  borderColor: 'var(--border-strong)',
-                  color: 'var(--text)',
-                  fontWeight: 600,
-                  padding: '0 28px',
-                  borderRadius: 'var(--r-md)',
-                  background: 'rgba(255,255,255,0.01)',
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0
-                }}
-              >
-                Compare server savings
-              </Button>
-            </Group>
-
-            <Text size="xs" c="dimmed" style={{ fontFamily: 'var(--font-mono)' }}>
-              We never charge for requests or metered CPU time. Flat rates locked forever.
-            </Text>
-          </Stack>
-        </Grid.Col>
-          
           {/* Right interactive benchmarks */}
           <Grid.Col span={{ base: 12, md: 7 }}>
             <Stack gap="lg" w="100%">
-            <Paper 
-              p={{ base: 'md', sm: 'xl' }} 
-              style={{ 
-                background: 'var(--surface)', 
-                border: '1px solid var(--border-strong)',
-                borderRadius: 'var(--r-lg)',
-                boxShadow: 'var(--shadow-md)',
-              }}
-            >
-              {/* Benchmark Header */}
-              <Flex 
-                direction="column" 
-                gap="md"
-                style={{ borderBottom: '1px solid var(--border)', paddingBottom: '16px', marginBottom: '16px' }}
-              >
-                <Stack gap={4}>
-                  <Title order={3} style={{ fontSize: '17px', fontWeight: 800 }}>
-                    {current.title}
-                  </Title>
-                  <Text size="xs" c="dimmed">
-                    {current.sub}
-                  </Text>
-                </Stack>
-                
-                <SegmentedControl
-                  value={activeWorkload}
-                  onChange={(val) => setActiveWorkload(val as WorkloadType)}
-                  data={[
-                    { label: <span style={{ display: 'inline-flex', gap: '3px' }}><span className="hidden-mobile">Static </span>Routing</span>, value: 'routing' },
-                    { label: <span style={{ display: 'inline-flex', gap: '3px' }}>JWT<span className="hidden-mobile"> Verification</span></span>, value: 'crypto' },
-                    { label: <span style={{ display: 'inline-flex', gap: '3px' }}>SSE<span className="hidden-mobile"> AI Streaming</span></span>, value: 'sse' }
-                  ]}
-                  fullWidth
-                  styles={{
-                    root: { background: 'rgba(0, 0, 0, 0.25)', border: '1px solid var(--border-strong)', padding: '4px', borderRadius: 'var(--r-md)' },
-                    indicator: { background: 'var(--accent)' },
-                    control: { color: 'var(--text-muted)' },
-                    label: {
-                      fontSize: '12px',
-                      fontWeight: 600,
-                      fontFamily: 'var(--font-mono)',
-                      padding: '8px 10px',
-                      whiteSpace: 'nowrap'
-                    }
-                  }}
-                />
-              </Flex>
-
-              {/* Benchmark Graph */}
-              <Stack gap="md" py="xs">
-                {current.data.map((row) => {
-                  const isWinner = row.tag === 'dv';
-                  return (
-                    <SimpleGrid 
-                      key={row.name} 
-                      cols={3} 
-                      spacing="md" 
-                      style={{ 
-                        gridTemplateColumns: '150px 1fr 60px', 
-                        alignItems: 'center',
-                        background: isWinner ? 'rgba(16, 185, 129, 0.03)' : 'transparent',
-                        padding: isWinner ? '6px 8px' : '0 8px',
-                        borderRadius: 'var(--r-sm)',
-                        border: isWinner ? '1px dashed rgba(16, 185, 129, 0.2)' : '1px solid transparent'
-                      }}
-                    >
-                      <Group gap="xs" style={{ whiteSpace: 'nowrap' }}>
-                        <span className={`benchmark-dot-tag ${row.tag}`} />
-                        <Text size="xs" fw={isWinner ? 700 : 500} c={isWinner ? 'white' : 'dimmed'}>
-                          {row.name}
-                        </Text>
-                      </Group>
-                      
-                      <div className="benchmark-bar-container" style={{ height: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', overflow: 'hidden' }}>
-                        <div
-                          className={`benchmark-bar ${row.tag}`}
-                          style={{ 
-                            width: `${maxMs > 0 ? Math.max(2, Math.sqrt(row.ms / maxMs) * 100) : 0}%`, 
-                            height: '100%', 
-                            background: isWinner ? 'var(--accent-mint)' : 'var(--border-strong)',
-                            borderRadius: '4px',
-                            transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-                          }}
-                        />
-                      </div>
-                      
-                      <Text size="xs" fw={700} c={isWinner ? 'var(--accent-mint)' : 'dimmed'} ta="right" style={{ fontFamily: 'var(--font-mono)' }}>
-                        {row.ms}ms
-                      </Text>
-                    </SimpleGrid>
-                  );
-                })}
-              </Stack>
-
-              {/* Benchmark Footer */}
-              <Paper 
-                p="xs" 
-                mt="md"
-                style={{ 
-                  background: 'rgba(255,255,255,0.02)', 
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--r-sm)'
+              <Paper
+                p={{ base: 'md', sm: 'xl' }}
+                style={{
+                  background: 'var(--surface)',
+                  border: '1px solid var(--border-strong)',
+                  borderRadius: 'var(--r-lg)',
+                  boxShadow: 'var(--shadow-md)',
                 }}
               >
-                <Text size="xs" c="dimmed" style={{ fontFamily: 'var(--font-mono)', textAlign: 'center' }}>
-                  {current.winner}
-                </Text>
+                {/* Benchmark Header */}
+                <Flex
+                  direction="column"
+                  gap="md"
+                  style={{ borderBottom: '1px solid var(--border)', paddingBottom: '16px', marginBottom: '16px' }}
+                >
+                  <Stack gap={4}>
+                    <Title order={3} style={{ fontSize: '17px', fontWeight: 800 }}>
+                      {current.title}
+                    </Title>
+                    <Text size="xs" c="dimmed">
+                      {current.sub}
+                    </Text>
+                  </Stack>
+
+                  <SegmentedControl
+                    value={activeWorkload}
+                    onChange={(val) => setActiveWorkload(val as WorkloadType)}
+                    data={[
+                      { label: <span style={{ display: 'inline-flex', gap: '3px' }}><span className="hidden-mobile">Static </span>Routing</span>, value: 'routing' },
+                      { label: <span style={{ display: 'inline-flex', gap: '3px' }}>JWT<span className="hidden-mobile"> Verification</span></span>, value: 'crypto' },
+                      { label: <span style={{ display: 'inline-flex', gap: '3px' }}>SSE<span className="hidden-mobile"> AI Streaming</span></span>, value: 'sse' }
+                    ]}
+                    fullWidth
+                    styles={{
+                      root: { background: 'rgba(0, 0, 0, 0.25)', border: '1px solid var(--border-strong)', padding: '4px', borderRadius: 'var(--r-md)' },
+                      indicator: { background: 'var(--accent)' },
+                      control: { color: 'var(--text-muted)' },
+                      label: {
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        fontFamily: 'var(--font-mono)',
+                        padding: '8px 10px',
+                        whiteSpace: 'nowrap'
+                      }
+                    }}
+                  />
+                </Flex>
+
+                {/* Benchmark Graph */}
+                <Stack gap="md" py="xs">
+                  {current.data.map((row) => {
+                    const isWinner = row.tag === 'dv';
+                    return (
+                      <SimpleGrid
+                        key={row.name}
+                        cols={3}
+                        spacing="md"
+                        style={{
+                          gridTemplateColumns: '150px 1fr 60px',
+                          alignItems: 'center',
+                          background: isWinner ? 'rgba(16, 185, 129, 0.03)' : 'transparent',
+                          padding: isWinner ? '6px 8px' : '0 8px',
+                          borderRadius: 'var(--r-sm)',
+                          border: isWinner ? '1px dashed rgba(16, 185, 129, 0.2)' : '1px solid transparent'
+                        }}
+                      >
+                        <Group gap="xs" style={{ whiteSpace: 'nowrap' }}>
+                          <span className={`benchmark-dot-tag ${row.tag}`} />
+                          <Text size="xs" fw={isWinner ? 700 : 500} c={isWinner ? 'white' : 'dimmed'}>
+                            {row.name}
+                          </Text>
+                        </Group>
+
+                        <div className="benchmark-bar-container" style={{ height: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', overflow: 'hidden' }}>
+                          <div
+                            className={`benchmark-bar ${row.tag}`}
+                            style={{
+                              width: `${maxMs > 0 ? Math.max(2, Math.sqrt(row.ms / maxMs) * 100) : 0}%`,
+                              height: '100%',
+                              background: isWinner ? 'var(--accent-mint)' : 'var(--border-strong)',
+                              borderRadius: '4px',
+                              transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+                            }}
+                          />
+                        </div>
+
+                        <Text size="xs" fw={700} c={isWinner ? 'var(--accent-mint)' : 'dimmed'} ta="right" style={{ fontFamily: 'var(--font-mono)' }}>
+                          {row.ms}ms
+                        </Text>
+                      </SimpleGrid>
+                    );
+                  })}
+                </Stack>
+
+                {/* Benchmark Footer */}
+                <Paper
+                  p="xs"
+                  mt="md"
+                  style={{
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--r-sm)'
+                  }}
+                >
+                  <Text size="xs" c="dimmed" style={{ fontFamily: 'var(--font-mono)', textAlign: 'center' }}>
+                    {current.winner}
+                  </Text>
+                </Paper>
               </Paper>
-            </Paper>
-          </Stack>
-        </Grid.Col>
-      </Grid>
-    </Container>
-  </section>
+            </Stack>
+          </Grid.Col>
+        </Grid>
+      </Container>
+    </section>
   );
 }

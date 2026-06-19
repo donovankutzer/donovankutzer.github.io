@@ -3,7 +3,7 @@ export default function Compatibility() {
     <>
       <section className="runs z" id="runs">
         <div className="wrap">
-          <div className="section-header-center">
+          <div className="section-header">
             <span className="sec-eye">Technical Standards</span>
             <h2>Production compatibility and design scope</h2>
             <p className="sec-sub">
@@ -15,7 +15,7 @@ export default function Compatibility() {
             {/* Fully Supported Today */}
             <div className="runs-card yes">
               <div className="runs-label yes">✓ Fully Supported Today</div>
-              
+
               <div className="run-row">
                 <span className="run-icon">✓</span>
                 <span className="run-text">

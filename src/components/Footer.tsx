@@ -35,10 +35,8 @@ export default function Footer() {
               component="a" 
               href="mailto:hello@datavec.com?subject=DataVec - get started" 
               size="lg" 
+              className="btn-gradient"
               style={{ 
-                background: 'var(--accent)', 
-                color: 'white', 
-                borderRadius: 'var(--r-md)',
                 fontWeight: 600,
                 padding: '0 28px',
                 whiteSpace: 'nowrap',
@@ -55,7 +53,6 @@ export default function Footer() {
               style={{ 
                 borderColor: 'var(--border-strong)',
                 color: 'white', 
-                borderRadius: 'var(--r-md)',
                 fontWeight: 600,
                 padding: '0 28px',
                 background: 'rgba(255,255,255,0.01)',

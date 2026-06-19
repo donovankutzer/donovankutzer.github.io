@@ -216,7 +216,7 @@ export default function Calculator() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="calc">
       <Container size="lg">
-        <div className="section-header-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div className="section-header-left" style={{ textAlign: 'left', marginBottom: '48px' }}>
           <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
             Cost Optimization
           </span>
@@ -374,7 +374,6 @@ export default function Calculator() {
                   background: 'var(--accent)',
                   color: 'white',
                   fontWeight: 600,
-                  borderRadius: 'var(--r-md)',
                   flex: 1
                 }}
               >
@@ -389,7 +388,6 @@ export default function Calculator() {
                   borderColor: 'var(--border-strong)',
                   color: 'white',
                   fontWeight: 600,
-                  borderRadius: 'var(--r-md)',
                   background: 'rgba(255,255,255,0.01)',
                   flex: 1
                 }}
