@@ -1,211 +1,205 @@
 'use client';
 
-import { useState } from 'react';
-import { Container, SimpleGrid, Paper, Stack, Flex, Title, Text, Timeline, Code } from '@mantine/core';
+import { Container, SimpleGrid, Paper, Stack, Flex, Title, Text } from '@mantine/core';
 
-const MONITOR_LOGS = [
-  // Step 0: Write
-  `[MONITOR: WRITE LOGS]
-$ cat src/index.ts
-------------------------------------------------------------
-export default {
-  async fetch(request, env) {
-    const token = request.headers.get('Authorization');
-    if (!token?.startsWith('Bearer ')) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-    return Response.json({ success: true, data: [] });
-  }
-};
-------------------------------------------------------------
-✓ Standard Web Worker structure detected.
-✓ Framework: Next.js Static API build verified.
-✓ Imports checked: Zero bulky Node.js filesystem dependencies.`,
+// Sleek Custom Icons
+const CodeIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+    <polyline points="16 18 22 12 16 6" />
+    <polyline points="8 6 2 12 8 18" />
+  </svg>
+);
 
-  // Step 1: Compile
-  `[MONITOR: COMPILER LOGS]
-$ datavec compile src/index.ts --optimize
-------------------------------------------------------------
-[1] Loading local AST compiler toolchain...
-[2] Stripping JavaScript V8 isolate contexts
-[3] Resolving allocations (physically deleting GC overhead)
-[4] Generating C header definitions:
-    → struct Request { char* path; char* headers; ... };
-    → struct Response { int status; char* body; ... };
-[5] Translating ECMAScript router to C callback indices
-[6] Invoking GCC compiler optimization flags (-O3)
+const CompileIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+    <circle cx="12" cy="12" r="3" />
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+  </svg>
+);
 
-✓ Native C compilation completed in 3.4 seconds.
-✓ Standalone static executable ready: index.bin (104 KB)`,
+const LightningIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
 
-  // Step 2: Runtime
-  `[MONITOR: RUNTIME LOGS]
-$ datavec run --inspect
-------------------------------------------------------------
-[1] Starting purpose-built DataVec native execution layer...
-[2] Listening on global edge port :443
-[3] Native libraries linked:
-    → openssl_tls_handshake (Instant global HTTPS cert)
-    → http_parser_v2 (Natively compiled HTTP/1.1 & HTTP/2)
-    → sqlite_driver_static (Direct database binding)
-[4] Microthread scheduler status:
-    → Co-routing active: 300,000 requests/sec target
-    → Virtual memory allocated: 2.1 MB
-    → Cold start latency: 0.00ms
-
-✓ Live listener bound: https://app.datavec.io`,
-
-  // Step 3: Flat Rate
-  `[MONITOR: SYSTEM BILLING]
-$ datavec billing --verify
-------------------------------------------------------------
-Project ID: nextjs-edge-service
-Billing Tier: Developer Pro ($19.00/mo flat)
-
-[Invoice Diagnostic Report]
-→ Monthly requests: 46,285,104 / 50,000,000 (92.5% cap)
-→ Metered overage charges: $0.00 (SURGE_METERING: OFF)
-→ Transit bandwidth consumed: 840 GB / 1000 GB
-→ Bandwidth surcharges: $0.00 (BANDWIDTH_METERING: OFF)
-------------------------------------------------------------
-✓ Invoice total locked: $19.00 / month
-✓ Surprise overage charges physically impossible.`
-];
+const ShieldLockIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+  </svg>
+);
 
 export default function HowItWorks() {
-  const [activeStep, setActiveStep] = useState<number>(0);
+  const steps = [
+    {
+      phase: 'PHASE 01',
+      badge: 'BUILD',
+      title: 'Write standard JavaScript',
+      desc: 'Build endpoints using Next.js static layouts, Web Workers, or WebSockets, connecting securely to Postgres databases isolated via unveil spaces.',
+      color: 'var(--cyan)',
+      icon: <CodeIcon />
+    },
+    {
+      phase: 'PHASE 02',
+      badge: 'TRANSLATE',
+      title: 'Compile directly to C',
+      desc: 'Our JSMX compiler translates JavaScript AST and WebSocket logic into highly optimized, statically allocated native C structures.',
+      color: 'var(--accent)',
+      icon: <CompileIcon />
+    },
+    {
+      phase: 'PHASE 03',
+      badge: 'RUN',
+      title: '104 KB Runtime Engine',
+      desc: 'Serve requests on a standalone process or dedicated droplets with native SSL handshakes, S3 object storage, and DB drivers.',
+      color: 'var(--accent-mint)',
+      icon: <LightningIcon />
+    },
+    {
+      phase: 'PHASE 04',
+      badge: 'AUDIT',
+      title: 'Predictable Billing Locks',
+      desc: 'Maintain total budget control with fixed monthly billing caps. Traffic spikes on droplets do not automatically become invoice surges.',
+      color: 'var(--accent)',
+      icon: <ShieldLockIcon />
+    }
+  ];
 
   return (
-    <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="how">
+    <section style={{ padding: '100px 0', position: 'relative', zIndex: 1 }} id="how">
+      {/* Background radial glow */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '800px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.03) 0%, rgba(99, 102, 241, 0.03) 50%, transparent 100%)',
+          pointerEvents: 'none',
+          zIndex: -1
+        }}
+      />
+
       <Container size="xl">
-        <div className="section-header">
+        <div className="section-header" style={{ marginBottom: '56px' }}>
           <span className="sec-eye">
             Infrastructure Pipeline
           </span>
-          <Title order={2}>
-            The compiled edge deployment pipeline
+          <Title order={2} style={{ color: 'white', fontWeight: 800 }}>
+            The Compiled Edge Deployment Pipeline
           </Title>
-          <Text size="lg" c="dimmed" style={{ maxWidth: '680px', lineHeight: 1.6 }}>
-            Hover over the compilation phases to inspect how standard JavaScript code is compiled, linked, and hosted on our native edge network.
+          <Text size="lg" c="dimmed" style={{ maxWidth: '720px', lineHeight: 1.6, marginTop: '8px' }}>
+            Explore the pipeline phases to inspect how standard JavaScript code is compiled, linked, and hosted on our native edge network.
           </Text>
         </div>
 
-        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
-          {/* Timeline steps on the left */}
-          <Timeline
-            active={activeStep}
-            bulletSize={30}
-            lineWidth={2}
-            styles={{
-              item: { cursor: 'pointer', transition: 'all 0.2s ease' }
-            }}
-          >
-            {[
-              { title: 'Write standard JavaScript', desc: 'Build endpoints using Next.js static layouts, Web Workers, or WebSockets, connecting securely to Postgres databases isolated via unveil spaces.', badge: 'PHASE 01 / BUILD' },
-              { title: 'Compile directly to C', desc: 'Our JSMX compiler translates JavaScript AST and WebSocket logic into highly optimized, statically allocated native C structures.', badge: 'PHASE 02 / TRANSLATE' },
-              { title: '104 KB Runtime Engine', desc: 'Serve requests on a standalone process or dedicated droplets with native SSL handshakes, S3 object storage, and DB drivers.', badge: 'PHASE 03 / RUN' },
-              { title: 'Predictable Billing Locks', desc: 'Maintain total budget control with fixed monthly billing caps. Traffic spikes on droplets do not automatically become invoice surges.', badge: 'PHASE 04 / AUDIT' }
-            ].map((step, idx) => (
-              <Timeline.Item
-                key={idx}
-                bullet={
-                  <span style={{ fontSize: '11px', fontWeight: 'bold', color: activeStep === idx ? 'var(--accent-mint)' : 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
-                    0{idx + 1}
-                  </span>
-                }
-                onMouseEnter={() => setActiveStep(idx)}
-                onClick={() => setActiveStep(idx)}
-                style={{
-                  opacity: activeStep === idx ? 1 : 0.45,
-                  transform: activeStep === idx ? 'translateX(8px)' : 'none',
-                  transition: 'all 0.25s ease'
-                }}
-              >
-                <Paper
-                  p="md"
-                  style={{
-                    background: activeStep === idx ? 'var(--surface)' : 'transparent',
-                    border: '1px solid',
-                    borderColor: activeStep === idx ? 'var(--border-strong)' : 'transparent',
-                    borderRadius: 'var(--r-md)',
-                    boxShadow: activeStep === idx ? 'var(--shadow-sm)' : 'none'
-                  }}
-                >
-                  <Text size="xs" fw={700} c="var(--accent)" style={{ fontFamily: 'var(--font-mono)' }}>
-                    [{step.badge}]
-                  </Text>
-                  <Text size="md" fw={700} mt={4} c="white">
-                    {step.title}
-                  </Text>
-                  <Text size="sm" c="dimmed" mt={6} style={{ lineHeight: 1.5 }}>
-                    {step.desc}
-                  </Text>
-                </Paper>
-              </Timeline.Item>
-            ))}
-          </Timeline>
-
-          {/* Interactive Compiler Inspector Monitor on the right */}
-          <Stack gap={0} w="100%">
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="xl">
+          {steps.map((step, idx) => (
             <Paper
-              p="xs"
-              style={{
-                background: 'var(--bg-grid)',
-                borderTop: '1px solid var(--border-strong)',
-                borderLeft: '1px solid var(--border-strong)',
-                borderRight: '1px solid var(--border-strong)',
-                borderTopLeftRadius: 'var(--r-lg)',
-                borderTopRightRadius: 'var(--r-lg)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '10px 16px'
-              }}
-            >
-              <Flex gap="xs">
-                <span className="dot-r" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }} />
-                <span className="dot-y" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }} />
-                <span className="dot-g" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }} />
-              </Flex>
-              <Text size="xs" fw={600} c="dimmed" style={{ fontFamily: 'var(--font-mono)' }}>
-                compiler_inspector.log
-              </Text>
-              <Text size="xs" fw={600} c="var(--accent)" style={{ fontFamily: 'var(--font-mono)' }}>
-                telemetry
-              </Text>
-            </Paper>
-
-            <Paper
+              key={idx}
               p="xl"
               style={{
-                background: '#161c28',
+                background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0.003) 100%)',
                 border: '1px solid var(--border-strong)',
-                borderBottomLeftRadius: 'var(--r-lg)',
-                borderBottomRightRadius: 'var(--r-lg)',
-                minHeight: '400px',
-                position: 'relative'
+                borderRadius: 'var(--r-lg)',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                cursor: 'default',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: '270px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border-active)';
+                e.currentTarget.style.transform = 'translateY(-6px)';
+                e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.05)';
+                const bar = e.currentTarget.querySelector('.g-bar') as HTMLElement;
+                if (bar) bar.style.width = '100%';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border-strong)';
+                e.currentTarget.style.transform = 'none';
+                e.currentTarget.style.boxShadow = 'none';
+                const bar = e.currentTarget.querySelector('.g-bar') as HTMLElement;
+                if (bar) bar.style.width = '24px';
               }}
             >
-              <span style={{ position: 'absolute', top: '12px', right: '16px', fontSize: '10px', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)', letterSpacing: '0.05em' }}>
-                active_screen_0{activeStep + 1}
-              </span>
-              <pre style={{ margin: 0, overflowX: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-                <Code
-                  block
+              {/* Glowing Top Line */}
+              <div
+                className="g-bar"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  height: '3px',
+                  width: '24px',
+                  background: step.color,
+                  transition: 'width 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
+              />
+
+              {/* Huge Background Number */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '-15px',
+                  right: '10px',
+                  fontSize: '90px',
+                  fontWeight: 900,
+                  fontFamily: 'var(--font-mono)',
+                  opacity: 0.03,
+                  color: 'white',
+                  userSelect: 'none',
+                  pointerEvents: 'none'
+                }}
+              >
+                0{idx + 1}
+              </div>
+
+              <Stack gap="md" style={{ zIndex: 2 }}>
+                {/* Icon Container */}
+                <Flex
+                  align="center"
+                  justify="center"
                   style={{
-                    background: 'transparent',
-                    padding: 0,
-                    color: '#a78bfa',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '12.5px',
-                    lineHeight: 1.55
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: 'var(--r-md)',
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                    color: step.color
                   }}
                 >
-                  {MONITOR_LOGS[activeStep]}
-                </Code>
-              </pre>
+                  {step.icon}
+                </Flex>
+
+                <Stack gap={4}>
+                  <Flex align="center" gap="xs">
+                    <Text size="xs" fw={700} style={{ fontFamily: 'var(--font-mono)', color: step.color, letterSpacing: '0.08em' }}>
+                      {step.phase}
+                    </Text>
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.15)' }} />
+                    <Text size="xs" fw={700} c="dimmed" style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.08em' }}>
+                      {step.badge}
+                    </Text>
+                  </Flex>
+
+                  <Title order={3} style={{ fontSize: '18px', fontWeight: 800, color: 'white', marginTop: '2px' }}>
+                    {step.title}
+                  </Title>
+                </Stack>
+
+                <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
+                  {step.desc}
+                </Text>
+              </Stack>
             </Paper>
-          </Stack>
+          ))}
         </SimpleGrid>
       </Container>
     </section>
