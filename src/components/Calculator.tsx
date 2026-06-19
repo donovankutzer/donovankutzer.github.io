@@ -216,14 +216,14 @@ export default function Calculator() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="calc">
       <Container size="lg">
-        <div className="section-header-left" style={{ textAlign: 'left', marginBottom: '48px' }}>
-          <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
+        <div className="section-header">
+          <span className="sec-eye">
             Cost Optimization
           </span>
-          <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+          <Title order={2}>
             Estimate your enterprise hosting <em className="em2" style={{ color: 'var(--accent-mint)', fontStyle: 'normal' }}>savings margins</em>
           </Title>
-          <Text size="md" c="dimmed" style={{ maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
+          <Text size="lg" c="dimmed" style={{ maxWidth: '680px', lineHeight: 1.6 }}>
             Configure your monthly application footprint metrics below. See a transparent comparative estimate detailing the savings compiled native infrastructure yields over utility-metered serverless clouds.
           </Text>
         </div>

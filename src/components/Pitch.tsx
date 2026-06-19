@@ -15,10 +15,10 @@ export default function Pitch() {
           <span className="sec-eye">
             Capability Matrix
           </span>
-          <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+          <Title order={2}>
             Direct comparison &amp; capabilities showcase
           </Title>
-          <Text size="md" c="dimmed" style={{ maxWidth: '640px', lineHeight: 1.6 }}>
+          <Text size="lg" c="dimmed" style={{ maxWidth: '680px', lineHeight: 1.6 }}>
             DataVec replaces virtualized serverless runtime layers with compiled execution. Explore our billing, API standard compliance, and supported frameworks below.
           </Text>
         </div>

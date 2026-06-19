@@ -59,11 +59,11 @@ export default function FAQ() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="faq">
       <Container size="lg">
-        <div className="section-header-left" style={{ textAlign: 'left', marginBottom: '48px' }}>
-          <span className="sec-eye" style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid var(--border-active)', padding: '4px 12px', borderRadius: '30px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)', marginBottom: '16px' }}>
+        <div className="section-header">
+          <span className="sec-eye">
             Developer FAQ
           </span>
-          <Title order={2} style={{ fontSize: '32px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px' }}>
+          <Title order={2}>
             Frequently asked questions about technology and pricing
           </Title>
         </div>
