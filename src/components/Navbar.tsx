@@ -20,7 +20,7 @@ export default function Navbar() {
       <Container size="xl" h="100%">
         <Flex h="100%" align="center" justify="space-between">
           {/* Logo */}
-          <a href="#" style={{ textDecoration: 'none', cursor: 'pointer' }}>
+          <a href="/" style={{ textDecoration: 'none', cursor: 'pointer' }}>
             <Group gap="xs">
               <div 
                 style={{ 
@@ -59,11 +59,9 @@ export default function Navbar() {
           {/* Navigation Links */}
           <Group gap="xl" visibleFrom="sm">
             {[
-              { href: '#how', label: 'How it works' },
-              { href: '#runs', label: 'Compatibility' },
-              { href: '#pricing', label: 'Pricing' },
-              { href: '#calc', label: 'Calculator' },
-              { href: '#faq', label: 'FAQ' }
+              { href: '/benchmarks', label: 'Benchmarks' },
+              { href: '/docs', label: 'Docs' },
+              { href: '/reference', label: 'Reference' }
             ].map((link) => (
               <Text 
                 key={link.label}
@@ -84,11 +82,23 @@ export default function Navbar() {
             ))}
           </Group>
 
-          {/* Action button */}
-          <Group>
+          {/* Action buttons */}
+          <Group gap="xs">
             <Button 
               component="a" 
-              href="mailto:hello@datavec.com?subject=DataVec - get started" 
+              href="/contact" 
+              variant="subtle"
+              size="xs" 
+              style={{ 
+                color: 'var(--text-dim)', 
+                fontWeight: 600
+              }}
+            >
+              Contact Sales
+            </Button>
+            <Button 
+              component="a" 
+              href="/console" 
               size="xs" 
               style={{ 
                 background: 'var(--accent)', 
@@ -96,7 +106,7 @@ export default function Navbar() {
                 fontWeight: 600
               }}
             >
-              Get started
+              Login
             </Button>
           </Group>
         </Flex>
