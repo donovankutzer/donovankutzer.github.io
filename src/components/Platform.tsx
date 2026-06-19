@@ -3,7 +3,7 @@ import { Container, Title, Text } from '@mantine/core';
 export default function Platform() {
     return (
         <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="platform">
-            <Container size="lg">
+            <Container size="xl">
                 <div className="section-header">
                     <span className="sec-eye">
                         Platform

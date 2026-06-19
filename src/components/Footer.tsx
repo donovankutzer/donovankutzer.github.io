@@ -80,7 +80,7 @@ export default function Footer() {
           background: '#090b10' 
         }}
       >
-        <Container size="lg">
+        <Container size="xl">
           <Grid>
             {/* Brand details */}
             <Grid.Col span={{ base: 12, md: 4 }}>

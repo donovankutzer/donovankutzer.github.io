@@ -10,7 +10,7 @@ export default function Pitch() {
 
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="runs">
-      <Container size="lg">
+      <Container size="xl">
         <div className="section-header">
           <span className="sec-eye">
             Capability Matrix

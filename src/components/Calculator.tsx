@@ -215,7 +215,7 @@ export default function Calculator() {
 
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="calc">
-      <Container size="lg">
+      <Container size="xl">
         <div className="section-header">
           <span className="sec-eye">
             Cost Optimization

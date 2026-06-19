@@ -56,11 +56,6 @@ export default function Hero() {
           {/* Left copy */}
           <Grid.Col span={{ base: 12, md: 5 }}>
             <Stack gap="xl">
-              <div className="eyebrow" style={{ alignSelf: 'flex-start' }}>
-                <span className="eyebrow-badge">DataVec</span>
-                <span className="eyebrow-sep"></span>
-                <span className="eyebrow-text">Compiled Runtime · M:N Scheduling · Flat Rate</span>
-              </div>
 
               <Stack gap="md">
                 <Title

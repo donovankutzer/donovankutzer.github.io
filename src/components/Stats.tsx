@@ -6,7 +6,7 @@ export default function Stats() {
   return (
     <Stack gap="xl" style={{ position: 'relative', zIndex: 1 }}>
       {/* COMPATIBILITY STRIP */}
-      <Container size="lg" w="100%">
+      <Container size="xl" w="100%">
         <Paper
           p="md"
           style={{
@@ -36,7 +36,7 @@ export default function Stats() {
       </Container>
 
       {/* CORE METRICS GRID SECTION */}
-      <Container size="lg" w="100%" py={40}>
+      <Container size="xl" w="100%" py={40}>
         <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="lg">
           {[
             { val: '0ms', label: 'Cold start time', color: 'var(--accent-mint)' },

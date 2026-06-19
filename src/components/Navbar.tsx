@@ -17,7 +17,7 @@ export default function Navbar() {
         zIndex: 1000 
       }}
     >
-      <Container size="lg" h="100%">
+      <Container size="xl" h="100%">
         <Flex h="100%" align="center" justify="space-between">
           {/* Logo */}
           <a href="#" style={{ textDecoration: 'none', cursor: 'pointer' }}>

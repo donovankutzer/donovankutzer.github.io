@@ -58,7 +58,7 @@ const FAQ_DATA = [
 export default function FAQ() {
   return (
     <section style={{ padding: '80px 0', position: 'relative', zIndex: 1 }} id="faq">
-      <Container size="lg">
+      <Container size="xl">
         <div className="section-header">
           <span className="sec-eye">
             Developer FAQ
