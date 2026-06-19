@@ -223,10 +223,10 @@ export default function Pitch() {
 
                   <Stack gap="md">
                     {[
-                      { title: 'Standard fetch Request & Response', desc: 'Direct handling for standard WinterTC `Request`, `Response`, `Headers`, and dynamic cryptographic functions.' },
-                      { title: 'High-Speed Web Crypto Standards', desc: 'Direct JWT token signature verification and cryptographic session management compiled directly to native code.' },
-                      { title: 'SSE AI Streaming pipelines', desc: 'Optimized transfer pipelines handling Server-Sent Events with stackless coroutines, eliminating V8 heap garbage-collection pauses.' },
-                      { title: 'Static SQLite and REST clients', desc: 'Direct pre-compiled embedded SQLite drivers and out-of-process HTTP stream pollers executing queries with optimal latency.' }
+                      { title: 'Standard fetch & WebSocket Streams', desc: 'Direct compilation of WinterTC `Request`/`Response` structures and high-throughput real-time WebSocket socket connections.' },
+                      { title: 'Postgres Wire Format & Unveil Spaces', desc: 'Standard wire-format database client support, completely isolated inside custom unveil process spaces for network security.' },
+                      { title: 'Droplet & S3 Object Store Deploys', desc: 'Deploy compiled runtimes directly to leased Digital Ocean droplets using our custom R2-based S3 object storage web worker.' },
+                      { title: 'Custom & Automatic Domain Registration', desc: 'Register new domains or bind existing ones dynamically, serving a default configured site with automated SSL certification.' }
                     ].map((item, i) => (
                       <Flex key={i} gap="md" align="flex-start">
                         <span style={{ color: 'var(--accent-mint)', fontWeight: 'bold' }}>✓</span>
@@ -267,7 +267,7 @@ export default function Pitch() {
                   </Text>
 
                   <Flex wrap="wrap" gap="sm" justify="center">
-                    {['Next.js (Static)', 'itty-router', 'Elysia API', 'Remix (Edge)', 'tRPC', 'Zod validator', 'jose (JWT)', 'Fauna DB', 'Upstash Redis', 'OpenAI SDK', 'Anthropic SDK', 'Stripe SDK'].map((tag, i) => {
+                    {['Next.js (Static)', 'itty-router', 'Elysia API', 'WebSockets', 'PostgreSQL', 'S3 Object Store', 'Remix (Edge)', 'tRPC', 'Zod validator', 'jose (JWT)', 'Upstash Redis', 'OpenAI SDK', 'Anthropic SDK', 'Stripe SDK'].map((tag, i) => {
                       const isFeatured = i < 3;
                       return (
                         <span

@@ -8,7 +8,7 @@ const FAQ_DATA = [
     answer: (
       <Stack gap="sm">
         <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
-          Yes, as long as your application targets standard Web Workers specification APIs such as fetch, Request, Response, URL, and Web Crypto. Modern frameworks like Next.js static builds, Elysia, and standard web runtimes are fully supported by default. Migrating standard static deployments or API service codebases usually requires zero code changes: you simply substitute your build command with our compiled deploy CLI tool.
+          Yes, as long as your application targets standard Web Workers specification APIs such as fetch, Request, Response, URL, Web Crypto, and WebSockets. Modern frameworks like Next.js static builds, Elysia, and standard web runtimes are fully supported, along with direct PostgreSQL database connections in unveil spaces. Migrating standard static deployments or API service codebases usually requires zero code changes: you simply substitute your build command with our compiled deploy CLI tool.
         </Text>
         <div
           aria-label="Code block detailing migration commands"
@@ -39,11 +39,11 @@ const FAQ_DATA = [
   },
   {
     question: "What resource limits are included in standard flat-rate plans?",
-    answer: "Our standard pricing tiers cover all compute allocations, edge routing resources, automatic TLS provisioning, global HTTP/2 pipelines, and developer telemetry charts. We do not count requests, count CPU milliseconds, or throttle egress bandwidth under standard usage limits. If your application starts approaching the upper boundaries of your tier, we reach out to discuss transition options rather than locking your execution or charging sudden multipliers."
+    answer: "Our standard pricing tiers cover all compute allocations, edge routing resources, automatic TLS provisioning, global HTTP/2 pipelines, and developer telemetry charts. You can also compile and deploy directly onto leased Digital Ocean droplets with integrated S3 object storage (running our R2-compatible storage API). We do not count requests, count CPU milliseconds, or throttle egress bandwidth under standard usage limits. If your application starts approaching the upper boundaries of your tier, we reach out to discuss transition options."
   },
   {
     question: "How are cold starts physically reduced to absolute 0ms?",
-    answer: "Traditional serverless platforms spin up a new virtual machine, initialize a V8 JavaScript runtime isolate, and execute a JIT compilation warm-up loop for incoming requests. This introduces cold-start latency. DataVec compiles JavaScript source code directly into a static C-based standalone machine binary before deployment. When an incoming request reaches your edge node, the kernel loads the binary instantly. It executes native machine code without any virtualized start-up overhead."
+    answer: "Traditional serverless platforms spin up a new virtual machine, initialize a V8 JavaScript runtime isolate, and execute a JIT compilation warm-up loop for incoming requests. This introduces cold-start latency. DataVec compiles JavaScript and WebSocket source code directly into a static C-based standalone machine binary before deployment. When an incoming request reaches your edge node or dedicated droplet, the kernel loads the binary instantly. It executes native machine code without any virtualized start-up overhead."
   },
   {
     question: "Is DataVec optimized for high-volume AI workloads?",

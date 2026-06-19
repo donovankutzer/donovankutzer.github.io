@@ -11,15 +11,15 @@ export default function Reference() {
 
   const runtimeAPIs = [
     { name: "fetch(request, env)", type: "async function", desc: "Core entrypoint for Web Worker requests. Receives incoming request and bound environments.", returns: "Promise<Response>" },
-    { name: "env.DATABASE", type: "binding", desc: "Statically compiled native Sqlite database connection binding.", returns: "SqliteDatabase" },
-    { name: "env.KV", type: "binding", desc: "Fast key-value storage engine linked directly to edge instances.", returns: "KeyValueStore" }
+    { name: "env.POSTGRES_DB", type: "binding", desc: "PostgreSQL wire connection binding isolated inside custom unveil process spaces for network security.", returns: "PostgresClient" },
+    { name: "env.S3_STORE", type: "binding", desc: "R2-compatible S3 object storage web worker binding deployed on leased Digital Ocean droplets.", returns: "ObjectStorage" }
   ];
 
   const requestProperties = [
     { prop: "request.url", type: "string", desc: "The full incoming HTTP request URL string." },
     { prop: "request.method", type: "string", desc: "HTTP request verb (GET, POST, PUT, DELETE, etc.)." },
     { prop: "request.headers", type: "Headers", desc: "Map of HTTP request headers." },
-    { prop: "request.json()", type: "Promise<any>", desc: "Asynchronously parses the request body as JSON payload." }
+    { prop: "request.websocket", type: "WebSocket", desc: "Incoming WebSocket stream connection instance for real-time bi-directional messaging." }
   ];
 
   return (
@@ -149,28 +149,28 @@ export default function Reference() {
               >
                 <Stack gap="xs">
                   <Title order={4} style={{ color: 'white', fontSize: '16px', marginBottom: '4px' }}>
-                    Sample Database Endpoint
+                    Sample WebSocket &amp; Postgres Endpoint
                   </Title>
                   <Text size="xs" c="dimmed">
-                    Example endpoint showing AST-compatible request parsing and SQLite database bindings:
+                    Example endpoint showing WebSocket streams and secure Postgres database query bindings inside unveil spaces:
                   </Text>
                   <Code block style={{ background: '#161c28', color: '#a78bfa', fontFamily: 'var(--font-mono)', fontSize: '11.5px', lineHeight: 1.55 }}>
 {`export default {
   async fetch(request, env) {
-    if (request.method !== 'POST') {
-      return Response.json({ error: 'Method Not Allowed' }, { status: 405 });
+    if (request.headers.get('Upgrade') === 'websocket') {
+      const [client, server] = new WebSocketPair();
+      server.accept();
+      server.addEventListener('message', async (event) => {
+        // Query Postgres safely inside isolated unveil space
+        const users = await env.POSTGRES_DB.query(
+          "SELECT * FROM users WHERE status = $1", 
+          [event.data]
+        );
+        server.send(JSON.stringify(users.rows));
+      });
+      return new Response(null, { status: 101, webSocket: client });
     }
-    
-    const body = await request.json();
-    const result = await env.DATABASE.query(
-      "SELECT * FROM users WHERE id = ?",
-      [body.userId]
-    );
-
-    return Response.json({
-      success: true,
-      data: result.rows
-    });
+    return new Response("Not a WebSocket connection", { status: 400 });
   }
 };`}
                   </Code>

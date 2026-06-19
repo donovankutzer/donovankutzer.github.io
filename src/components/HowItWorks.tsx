@@ -101,10 +101,10 @@ export default function HowItWorks() {
             }}
           >
             {[
-              { title: 'Write standard JavaScript', desc: 'Build endpoints using Next.js static layouts or standard Web Worker APIs conforming to edge specifications.', badge: 'PHASE 01 / BUILD' },
-              { title: 'Compile directly to C', desc: 'Our compiler translates JavaScript AST logic into highly optimized, statically allocated native C structures.', badge: 'PHASE 02 / TRANSLATE' },
-              { title: '104 KB Runtime Engine', desc: 'Serve requests instantly on a standalone native process coordinating SSL handshakes, routing, and database drivers.', badge: 'PHASE 03 / RUN' },
-              { title: 'Predictable Billing Locks', desc: 'Maintain total budget control with fixed monthly billing caps that physically disable metered overage invoices.', badge: 'PHASE 04 / AUDIT' }
+              { title: 'Write standard JavaScript', desc: 'Build endpoints using Next.js static layouts, Web Workers, or WebSockets, connecting securely to Postgres databases isolated via unveil spaces.', badge: 'PHASE 01 / BUILD' },
+              { title: 'Compile directly to C', desc: 'Our JSMX compiler translates JavaScript AST and WebSocket logic into highly optimized, statically allocated native C structures.', badge: 'PHASE 02 / TRANSLATE' },
+              { title: '104 KB Runtime Engine', desc: 'Serve requests on a standalone process or dedicated droplets with native SSL handshakes, S3 object storage, and DB drivers.', badge: 'PHASE 03 / RUN' },
+              { title: 'Predictable Billing Locks', desc: 'Maintain total budget control with fixed monthly billing caps. Traffic spikes on droplets do not automatically become invoice surges.', badge: 'PHASE 04 / AUDIT' }
             ].map((step, idx) => (
               <Timeline.Item
                 key={idx}

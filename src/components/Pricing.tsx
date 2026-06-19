@@ -113,7 +113,7 @@ export default function Pricing() {
                 </div>
 
                 <ul className="price-features" style={{ margin: 0, paddingLeft: '20px', listStyleType: 'square', color: 'var(--text-muted)' }}>
-                  {['1 active edge project compile boundary', 'Custom domain integration + automated HTTPS', 'Up to 50 Million requests / month included', 'Up to 1 TB network egress bandwidth', 'Full HTTP/1.1 & HTTP/2 transport protocols', 'Email support with engineering queue'].map((feat, i) => (
+                  {['1 active droplet deploy boundary', 'Domain registration flow + automated HTTPS', 'Full WebSocket & HTTP/2 protocol support', 'Postgres wire connections in unveil spaces', 'Custom R2-compatible S3 object store worker', 'Email support with engineering queue'].map((feat, i) => (
                     <li key={i} style={{ marginBottom: '8px', fontSize: '13.5px' }}>{feat}</li>
                   ))}
                 </ul>
@@ -175,7 +175,7 @@ export default function Pricing() {
                 </div>
 
                 <ul className="price-features" style={{ margin: 0, paddingLeft: '20px', listStyleType: 'square', color: 'var(--text-muted)' }}>
-                  {['Up to 5 active edge project compile boundaries', 'Unlimited custom domains + automated HTTPS', 'Up to 500 Million requests / month included', 'Up to 10 TB network egress bandwidth', 'Priority support tickets + 99.9% uptime SLA', 'Advanced analytics telemetry metrics & logs'].map((feat, i) => (
+                  {['Up to 5 active droplet deploy boundaries', 'Domain registration / own domain registration flow', 'WebSocket clustering & Postgres unveil bounds', 'Integrated S3 store on leased droplets', 'Priority support tickets + 99.9% uptime SLA', 'Advanced analytics telemetry metrics & logs'].map((feat, i) => (
                     <li key={i} style={{ marginBottom: '8px', fontSize: '13.5px' }}>{feat}</li>
                   ))}
                 </ul>
@@ -238,7 +238,7 @@ export default function Pricing() {
                 </div>
 
                 <ul className="price-features" style={{ margin: 0, paddingLeft: '20px', listStyleType: 'square', color: 'var(--text-muted)' }}>
-                  {['Custom memory limits & dedicated virtual heaps', 'Dedicated edge compiler lanes for custom binaries', 'Multi-tenant & private single-tenant network routing', 'Premium SLA with 24/7/365 dedicated developer support', 'Custom POSIX scheduling priorities', 'Dedicated enterprise solutions architect'].map((feat, i) => (
+                  {['Dedicated droplets lease & custom sizing', 'Custom memory limits & dedicated virtual heaps', 'Private single-tenant droplet deployment routing', 'Dedicated R2/S3 object store scaling configurations', 'Premium SLA with 24/7/365 dedicated support', 'Dedicated enterprise solutions architect'].map((feat, i) => (
                     <li key={i} style={{ marginBottom: '8px', fontSize: '13.5px' }}>{feat}</li>
                   ))}
                 </ul>

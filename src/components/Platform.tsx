@@ -14,7 +14,7 @@ export default function Platform() {
             A new execution model for JavaScript infrastructure.
           </Title>
           <Text size="lg" c="dimmed" style={{ maxWidth: '680px', lineHeight: 1.6 }}>
-            DataVec keeps the developer experience familiar while replacing the runtime underneath: no interpreter loop, no JIT warmup, no cold start dependency, and no surprise per-request infrastructure bill.
+            DataVec keeps the developer experience familiar while compiling workers to C: supporting WebSockets, Postgres database connections inside unveil spaces, and deployments on dedicated droplets with integrated S3 object storage.
           </Text>
         </div>
 
@@ -23,7 +23,7 @@ export default function Platform() {
           {[
             {
               title: "Compile at deploy time",
-              desc: "JSMX converts JavaScript into optimized C before production traffic ever hits your application.",
+              desc: "JSMX converts JavaScript/TS Web Workers and WebSocket endpoints into optimized C before production traffic hits your droplets.",
               icon: (
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" strokeWidth="2" style={{ width: '24px', height: '24px' }}>
                   <polyline points="16 18 22 12 16 6" />
@@ -34,7 +34,7 @@ export default function Platform() {
             },
             {
               title: "Stay resident in memory",
-              desc: "MNVKD keeps workloads alive and ready, eliminating the spin-up penalty that defines traditional serverless.",
+              desc: "MNVKD keeps workloads alive on leased droplets, eliminating the spin-up penalty and providing isolated unveil spaces for database connections.",
               icon: (
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" style={{ width: '24px', height: '24px' }}>
                   <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
@@ -47,7 +47,7 @@ export default function Platform() {
             },
             {
               title: "Charge by capacity",
-              desc: "Choose the server size and replica count you need. Traffic spikes do not automatically become invoice spikes.",
+              desc: "Choose the virtual server size and replica count. Traffic spikes do not automatically become surprise metered invoice surges.",
               icon: (
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-mint)" strokeWidth="2" style={{ width: '24px', height: '24px' }}>
                   <rect x="3" y="11" width="18" height="10" rx="2" />

@@ -10,9 +10,9 @@ export default function Console() {
   }, []);
 
   const projects = [
-    { name: "nextjs-edge-router", status: "Active", size: "104 KB", reqs: "46.2M", health: "100%" },
-    { name: "oauth-verifier", status: "Active", size: "94 KB", reqs: "12.8M", health: "100%" },
-    { name: "sse-streamer", status: "Active", size: "112 KB", reqs: "840K", health: "99.9%" }
+    { name: "postgres-sync-worker", status: "Active", size: "118 KB", reqs: "52.4M", health: "100%", unveil: "PG isolated", conns: "148,209 WS", hosting: "Droplet #49" },
+    { name: "r2-s3-worker-droplet", status: "Active", size: "142 KB", reqs: "18.1M", health: "99.9%", unveil: "Worker native", conns: "S3 API REST", hosting: "Droplet #50" },
+    { name: "live-websocket-streamer", status: "Active", size: "86 KB", reqs: "102.5M", health: "100%", unveil: "Worker native", conns: "452,109 WS", hosting: "Droplet #51" }
   ];
 
   return (
@@ -114,15 +114,27 @@ export default function Console() {
                             </Text>
                           </div>
                           <div>
-                            <Text size="10px" c="dimmed">HEALTH RATE</Text>
-                            <Text size="xs" fw={700} c="var(--accent-mint)" style={{ fontFamily: 'var(--font-mono)' }}>
-                              {proj.health}
+                            <Text size="10px" c="dimmed">HOST / LEASE</Text>
+                            <Text size="xs" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)' }}>
+                              {proj.hosting}
                             </Text>
                           </div>
                           <div>
-                            <Text size="10px" c="dimmed">COMPILER</Text>
-                            <Text size="xs" fw={700} c="indigo" style={{ fontFamily: 'var(--font-mono)' }}>
-                              GCC -O3
+                            <Text size="10px" c="dimmed">UNVEIL SPACE</Text>
+                            <Text size="xs" fw={700} c="var(--accent-mint)" style={{ fontFamily: 'var(--font-mono)' }}>
+                              {proj.unveil}
+                            </Text>
+                          </div>
+                          <div>
+                            <Text size="10px" c="dimmed">ACTIVE CONNS</Text>
+                            <Text size="xs" fw={700} c="var(--cyan)" style={{ fontFamily: 'var(--font-mono)' }}>
+                              {proj.conns}
+                            </Text>
+                          </div>
+                          <div>
+                            <Text size="10px" c="dimmed">HEALTH RATE</Text>
+                            <Text size="xs" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)' }}>
+                              {proj.health}
                             </Text>
                           </div>
                         </SimpleGrid>
@@ -146,12 +158,12 @@ export default function Console() {
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
               <Paper p="lg" style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)' }}>
                 <Stack gap="xs">
-                  <Title order={4} style={{ color: 'white', fontSize: '15px' }}>Compiler Telemetry Status</Title>
-                  <Text size="xs" c="dimmed">DataVec native edge listener nodes are bound globally at port :443.</Text>
+                  <Title order={4} style={{ color: 'white', fontSize: '15px' }}>Compiler &amp; Network Telemetry</Title>
+                  <Text size="xs" c="dimmed">DataVec native edge listener nodes running on leased Droplets and secure unveil database spaces.</Text>
                   <SimpleGrid cols={3} mt="sm">
                     <div>
                       <Text size="10px" c="dimmed">ACTIVE REGIONS</Text>
-                      <Text size="sm" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)' }}>28 Edge Pops</Text>
+                      <Text size="sm" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)' }}>28 Droplets</Text>
                     </div>
                     <div>
                       <Text size="10px" c="dimmed">AVG RUNTIME CPU</Text>
@@ -159,7 +171,7 @@ export default function Console() {
                     </div>
                     <div>
                       <Text size="10px" c="dimmed">MEM FOOTPRINT</Text>
-                      <Text size="sm" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)' }}>2.1 MB</Text>
+                      <Text size="sm" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)' }}>2.1 MB / Node</Text>
                     </div>
                   </SimpleGrid>
                 </Stack>
@@ -167,16 +179,16 @@ export default function Console() {
 
               <Paper p="lg" style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)' }}>
                 <Stack gap="xs">
-                  <Title order={4} style={{ color: 'white', fontSize: '15px' }}>Static Deploy Config</Title>
-                  <Text size="xs" c="dimmed">Deployment profile configurations loaded from project root.</Text>
+                  <Title order={4} style={{ color: 'white', fontSize: '15px' }}>Database &amp; Object Store Status</Title>
+                  <Text size="xs" c="dimmed">Unveil PostgreSQL spaces and R2-compatible S3 Object Stores status.</Text>
                   <SimpleGrid cols={2} mt="sm">
                     <div>
-                      <Text size="10px" c="dimmed">AUTO-SCALING TIER</Text>
-                      <Text size="sm" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)' }}>Locked Developer</Text>
+                      <Text size="10px" c="dimmed">POSTGRESQL UNVEIL</Text>
+                      <Text size="sm" fw={700} c="white" style={{ fontFamily: 'var(--font-mono)' }}>Secure Process Space</Text>
                     </div>
                     <div>
-                      <Text size="10px" c="dimmed">BILLING TIERS</Text>
-                      <Text size="sm" fw={700} c="var(--accent-mint)" style={{ fontFamily: 'var(--font-mono)' }}>$19.00 / mo locked</Text>
+                      <Text size="10px" c="dimmed">S3 OBJECT STORE</Text>
+                      <Text size="sm" fw={700} c="var(--accent-mint)" style={{ fontFamily: 'var(--font-mono)' }}>Web Worker R2 API</Text>
                     </div>
                   </SimpleGrid>
                 </Stack>

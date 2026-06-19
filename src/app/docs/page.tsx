@@ -17,23 +17,23 @@ export default function Docs() {
       items: [
         { title: "Introduction", desc: "Learn the core philosophy and compiled architecture of the DataVec edge network." },
         { title: "Quick Start Guide", desc: "Deploy your first native C Web Worker in under 3 minutes." },
-        { title: "CLI Installation", desc: "Install and authenticate the global command-line compilation toolchain." }
+        { title: "Domain Registration", desc: "Register a new domain or bind your existing one to set up a default site." }
       ]
     },
     {
-      category: "Framework Guides",
+      category: "Core Features",
       items: [
-        { title: "Next.js Static Builds", desc: "Configure routing endpoints and export static Next.js layouts to run at machine speeds." },
-        { title: "Standard Web Workers", desc: "Conform worker functions to standard EventListener interfaces." },
-        { title: "Elysia & Bun Routing", desc: "Compile high-performance REST APIs with unified schema validation." }
+        { title: "WebSocket Servers", desc: "Handle real-time, bi-directional messaging streams compiled directly to native code." },
+        { title: "PostgreSQL Connections", desc: "Query PostgreSQL databases securely via the native wire protocol isolated within process-level unveil spaces." },
+        { title: "Custom S3 Object Stores", desc: "Deploy R2-compatible S3 object stores as Web Workers built using DataVec services." }
       ]
     },
     {
       category: "CLI & Deployment",
       items: [
-        { title: "datavec compile", desc: "All compiler flags, optimizations (-O3), and target configurations." },
-        { title: "datavec deploy", desc: "Pushing build artifacts to edge locations with zero-downtime updates." },
-        { title: "Billing & Price Caps", desc: "Configure budget alerts and enforce hardware-level flat-rate limiters." }
+        { title: "Droplet Leases & Setup", desc: "Configure and lease dedicated Digital Ocean droplets for custom isolated deployments." },
+        { title: "datavec compile", desc: "All compiler flags, JS-to-C optimizations, and target droplet architectures." },
+        { title: "datavec deploy", desc: "Pushing build artifacts to droplets or global edge locations with zero-downtime." }
       ]
     }
   ];
@@ -94,7 +94,7 @@ export default function Docs() {
                     Documentation
                   </Title>
                   <Text size="md" c="dimmed" style={{ lineHeight: 1.6 }}>
-                    Learn how to build, compile, and host native edge workers using DataVec. Explore step-by-step instructions, CLI references, and framework integrations.
+                    Learn how to build, compile, and host native edge workers using DataVec. Integrate WebSocket streaming, secure Postgres databases in unveil spaces, and custom S3 object storage workers deployed onto dedicated Digital Ocean droplets.
                   </Text>
                 </Stack>
 
@@ -146,7 +146,7 @@ export default function Docs() {
                     Featured Guides
                   </Title>
                   <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
-                    {docSections.flatMap(sec => sec.items).slice(0, 4).map((item, idx) => (
+                    {docSections.flatMap(sec => sec.items).slice(0, 6).map((item, idx) => (
                       <Paper
                         key={idx}
                         p="lg"
