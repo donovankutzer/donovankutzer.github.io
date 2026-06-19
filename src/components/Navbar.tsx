@@ -1,8 +1,11 @@
 'use client';
 
-import { Container, Flex, Group, Text, Button } from '@mantine/core';
+import { Container, Flex, Group, Text, Button, Burger } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 export default function Navbar() {
+  const [opened, { toggle, close }] = useDisclosure(false);
+
   return (
     <header 
       style={{ 
@@ -83,7 +86,7 @@ export default function Navbar() {
           </Group>
 
           {/* Action buttons */}
-          <Group gap="xs">
+          <Group gap="xs" visibleFrom="sm">
             <Button 
               component="a" 
               href="/contact" 
@@ -109,8 +112,81 @@ export default function Navbar() {
               Login
             </Button>
           </Group>
+
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            hiddenFrom="sm"
+            size="sm"
+            color="white"
+          />
         </Flex>
       </Container>
+
+      {/* Mobile Dropdown Menu Overlay */}
+      {opened && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '72px',
+            left: 0,
+            right: 0,
+            background: 'rgba(32, 39, 56, 0.98)',
+            backdropFilter: 'blur(16px)',
+            borderBottom: '1px solid var(--border-strong)',
+            padding: '24px',
+            zIndex: 999,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px'
+          }}
+        >
+          {[
+            { href: '/benchmarks', label: 'Benchmarks' },
+            { href: '/docs', label: 'Docs' },
+            { href: '/reference', label: 'Reference' }
+          ].map((link) => (
+            <Text
+              key={link.label}
+              component="a"
+              href={link.href}
+              size="md"
+              fw={600}
+              c="white"
+              onClick={close}
+              style={{ textDecoration: 'none' }}
+            >
+              {link.label}
+            </Text>
+          ))}
+          <div style={{ height: '1px', background: 'var(--border)', margin: '4px 0' }} />
+          <Button
+            component="a"
+            href="/contact"
+            variant="outline"
+            onClick={close}
+            style={{
+              borderColor: 'var(--border-strong)',
+              color: 'white',
+              fontWeight: 600
+            }}
+          >
+            Contact Sales
+          </Button>
+          <Button
+            component="a"
+            href="/console"
+            onClick={close}
+            style={{
+              background: 'var(--accent)',
+              color: 'white',
+              fontWeight: 600
+            }}
+          >
+            Login
+          </Button>
+        </div>
+      )}
     </header>
   );
 }
